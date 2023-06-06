@@ -34,7 +34,7 @@
       # NixOS configuration entrypoint
       # Available through `nixos-rebuild --flake .#matts-laptop`
       nixosConfigurations = {
-        matts-laptop = nixpkgs.lib.nixosSystem {
+        "matts-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
             # Main nixos configuration file
@@ -44,10 +44,10 @@
       };
 
       # Standalone home-manager configuration entrypoint
-      # Available through `home-manager --flake .#matt@matts-laptop`
+      # Available through `home-manager --flake .#matt`
       homeConfigurations = {
-        "matt@matts-laptop" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        "matt" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             # Main home-manager configuration file
