@@ -18,6 +18,8 @@
     # Git
     git = {
       enable = true;
+      userName = "Matt Sturgeon";
+      userEmail = "matt@sturgeon.me.uk";
     };
   };
 
