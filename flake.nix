@@ -37,6 +37,8 @@
         "matts-laptop" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
+	    ./nixos/bootsplash.nix
+
             # Main nixos configuration file
             ./nixos/configuration.nix
           ];
