@@ -39,6 +39,7 @@
           modules = [
 	    ./nixos/bootsplash.nix
 	    ./nixos/gdm.nix
+	    ./nixos/gnome.nix
 
             # Main nixos configuration file
             ./nixos/configuration.nix
