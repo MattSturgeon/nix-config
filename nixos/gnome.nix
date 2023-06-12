@@ -1,23 +1,52 @@
 
-{ config, pkgs, ... }: {
-  services.xserver.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+{ config, lib, pkgs, ... }: {
 
-  environment.systemPackages = with pkgs; [
-    gnomeExtensions.appindicator
-    gnome.gnome-tweaks
-  ];
+  services.xserver = {
+    enable = true;
+    desktopManager.gnome.enable = true;
+  };
 
-  services.udev.packages = with pkgs; [
-    gnome.gnome-settings-daemon
-  ];
-
-  environment.gnome.excludePackages = (with pkgs.gnome; [
-    cheese
-    gnome-terminal
-    geary
-    tali
-    iagno
-    atomix
+  environment.systemPackages = (with pkgs.gnome; ([
+      # Manually curate core-utilities:
+      #baobab
+      #cheese
+      #eog
+      #epiphany
+      pkgs.gnome-text-editor
+      gnome-calculator
+      gnome-calendar
+      gnome-characters
+      gnome-clocks
+      pkgs.gnome-console # TODO Replace with WezTerm or Kitty
+      #gnome-contacts
+      gnome-font-viewer
+      gnome-logs
+      #gnome-maps
+      #gnome-music
+      #pkgs.gnome-photos
+      gnome-system-monitor
+      #gnome-weather
+      nautilus
+      pkgs.gnome-connections
+      simple-scan
+      totem
+      #yelp
+    ] ++ lib.optionals config.services.flatpak.enable [
+      # Since PackageKit Nix support is not there yet,
+      # only install gnome-software if flatpak is enabled.
+      gnome-software
+    ])) ++ (with pkgs.gnomeExtensions; [
+    # Install some extensions too:
+    appindicator
+    dash-to-dock
   ]);
+
+  services = {
+    # Disable core-utilities so we can install packages explicitly above
+    gnome.core-utilities.enable = false;
+
+    udev.packages = with pkgs; [
+      gnome.gnome-settings-daemon
+    ];
+  };
 }
