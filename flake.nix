@@ -54,6 +54,7 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
+	    ./home-manager/system.nix
 	    ./home-manager/git.nix
 	    ./home-manager/neovim.nix
 	    ./home-manager/firefox.nix

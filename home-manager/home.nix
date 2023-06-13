@@ -5,12 +5,6 @@
   home.username = "matt";
   home.homeDirectory = "/home/matt";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = with pkgs; [
-    # TODO add some pakages
-  ];
-
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
