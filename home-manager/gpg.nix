@@ -17,6 +17,8 @@ in {
 	defaultCacheTtlSsh = 8*h;
 	maxCacheTtl = 128*y;
 	maxCacheTtlSsh = 128*y;
+	pinentryFlavor = "gnome3";
+	grabKeyboardAndMouse = true;
     };
 
 }
