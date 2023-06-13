@@ -8,7 +8,7 @@ If the experimental feature `nix-command` and `flakes` not enabled, run `nix-she
 
 Run `nixos-rebuild --flake .#matts-laptop` to install the system configuration.
 
-Run `home-manager --flake .#matt@matts-laptop` to install the user configuration.
+Run `home-manager --flake .#matt` to install the user configuration.
 
 ## Updating
 
