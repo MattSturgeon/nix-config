@@ -8,9 +8,17 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixvim.url = "github:pta2002/nixvim";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    nixvim,
+    ...
+  }@inputs:
     let
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
@@ -61,6 +69,9 @@
 
             # Main home-manager configuration file
             ./home-manager/home.nix
+
+	    # Use nixvim modules in this configuration
+	    nixvim.homeManagerModules.nixvim
           ];
         };
       };
