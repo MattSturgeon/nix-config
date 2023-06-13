@@ -63,6 +63,7 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/system.nix
+	    ./home-manager/gpg.nix
 	    ./home-manager/git.nix
 	    ./home-manager/neovim.nix
 	    ./home-manager/firefox.nix
