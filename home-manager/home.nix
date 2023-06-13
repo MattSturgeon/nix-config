@@ -14,13 +14,6 @@
   programs = {
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
-
-    # Git
-    git = {
-      enable = true;
-      userName = "Matt Sturgeon";
-      userEmail = "matt@sturgeon.me.uk";
-    };
   };
 
   # Reload system services when changing configs
