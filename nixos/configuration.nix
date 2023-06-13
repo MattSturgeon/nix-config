@@ -61,14 +61,6 @@
     gh
   ];
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
-
   # Set your time zone.
   time.timeZone = "Europe/London";
 

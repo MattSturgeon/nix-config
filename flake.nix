@@ -55,6 +55,7 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/git.nix
+	    ./home-manager/neovim.nix
 	    ./home-manager/firefox.nix
 
             # Main home-manager configuration file
