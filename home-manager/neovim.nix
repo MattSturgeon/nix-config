@@ -1,5 +1,10 @@
 { config, pkgs, ... }: {
 
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   programs = {
     nixvim = {
       enable = true;
