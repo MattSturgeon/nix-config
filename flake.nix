@@ -46,6 +46,7 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
 	    ./nixos/bootsplash.nix
+	    ./nixos/shell.nix
 	    ./nixos/gdm.nix
 	    ./nixos/gnome.nix
 
@@ -63,6 +64,8 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/system.nix
+	    ./home-manager/shell.nix
+	    ./home-manager/starship.nix
 	    ./home-manager/gpg.nix
 	    ./home-manager/git.nix
 	    ./home-manager/neovim.nix
