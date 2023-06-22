@@ -15,4 +15,14 @@
 	};
     };
 
+    programs.fish.functions = {
+        starship_transient_prompt_func = ''
+	    if fish_is_root_user
+	        echo '# '
+	    else
+	        echo '$ '
+	    end
+	'';
+    };
+
 }
