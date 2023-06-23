@@ -70,6 +70,7 @@
 	    ./home-manager/gpg.nix
 	    ./home-manager/git.nix
 	    ./home-manager/fonts.nix
+	    ./home-manager/kitty.nix
 	    ./home-manager/neovim.nix
 	    ./home-manager/firefox.nix
 
