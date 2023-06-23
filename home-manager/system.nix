@@ -2,7 +2,7 @@
 
   home.packages = with pkgs; [
     tree
-    zellij # TODO configure
+    wl-clipboard # Manage clipboard from the CLI
   ];
 
 }

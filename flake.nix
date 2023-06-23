@@ -66,6 +66,7 @@
 	    ./home-manager/system.nix
 	    ./home-manager/shell.nix
 	    ./home-manager/starship.nix
+	    ./home-manager/zellij.nix
 	    ./home-manager/gpg.nix
 	    ./home-manager/git.nix
 	    ./home-manager/neovim.nix
