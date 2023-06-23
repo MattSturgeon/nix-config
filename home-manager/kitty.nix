@@ -2,6 +2,7 @@
 
     programs.kitty = {
 	enable = true;
+	theme = "Catppuccin-Mocha";
 	font = {
 	    name = "Jetbrains Mono";
 	    size = 12;
