@@ -8,7 +8,8 @@
 	    size = 12;
 	};
 	keybindings = {
-	    "ctrl+c" = "copy_or_interupt";
+	    "ctrl+c" = "copy_and_clear_or_interrupt";
+	    "ctrl+shift+c" = "copy_to_clipboard";
 	};
 	settings = {
             # system, background, #hex, or color name
