@@ -69,6 +69,7 @@
 	    ./home-manager/zellij.nix
 	    ./home-manager/gpg.nix
 	    ./home-manager/git.nix
+	    ./home-manager/fonts.nix
 	    ./home-manager/neovim.nix
 	    ./home-manager/firefox.nix
 
