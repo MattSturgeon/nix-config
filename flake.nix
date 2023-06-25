@@ -51,6 +51,7 @@
 	    ./nixos/input.nix
 	    ./nixos/gdm.nix
 	    ./nixos/gnome.nix
+	    ./nixos/printing.nix
 	    ./nixos/docker.nix
 
             # Main nixos configuration file
