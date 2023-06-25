@@ -58,11 +58,17 @@
 		}
 	    ];
 	};
+
 	extensions = with pkgs.vscode-extensions; [
 	   catppuccin.catppuccin-vsc 
 	   vscodevim.vim
 	   github.codespaces
 	   # ms-vscode-remote.remote-containers # Not in nixpkgs
+	   bbenoist.nix # Nix language support
+	   ms-vscode.cpptools # C & C++ Support
+	   ms-python.python # Python support
+	   bmalehorn.vscode-fish # Fish support
+	   waderyan.gitblame # Show blame info
 	];
     };
 }
