@@ -4,6 +4,10 @@
   services.xserver = {
     enable = true;
     desktopManager.gnome.enable = true;
+    
+    excludePackages = with pkgs; [
+      xterm
+    ];
   };
 
   environment.systemPackages = (with pkgs.gnome; ([
@@ -17,7 +21,7 @@
       gnome-calendar
       gnome-characters
       gnome-clocks
-      pkgs.gnome-console # TODO Replace with WezTerm or Kitty
+      #pkgs.gnome-console
       #gnome-contacts
       gnome-font-viewer
       gnome-logs
@@ -31,6 +35,10 @@
       simple-scan
       totem
       #yelp
+      
+      # Additional packages not included in core-utilities:
+      pkgs.nautilus-open-any-terminal
+      file-roller
     ] ++ lib.optionals config.services.flatpak.enable [
       # Since PackageKit Nix support is not there yet,
       # only install gnome-software if flatpak is enabled.
