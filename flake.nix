@@ -47,6 +47,7 @@
           modules = [
 	    ./nixos/bootsplash.nix
 	    ./nixos/shell.nix
+	    ./nixos/input.nix
 	    ./nixos/gdm.nix
 	    ./nixos/gnome.nix
 	    ./nixos/docker.nix
