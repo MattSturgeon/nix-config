@@ -4,6 +4,7 @@
   programs = {
     firefox = {
       enable = true;
+      package = pkgs.firefox-wayland;
       profiles.matt = {
 	id = 0;
 	name = "Matt Sturgeon";
@@ -18,5 +19,9 @@
 	# userContent = '' ''; # content CSS
       };
     };
+  };
+
+  home.sessionVariables = {
+      MOZ_ENABLE_WAYLAND = 1;
   };
 }

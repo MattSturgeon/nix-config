@@ -57,4 +57,8 @@
       gnome.gnome-settings-daemon
     ];
   };
+
+  services.pipewire.enable = true;
+  xdg.portal.enable = true;
+
 }
