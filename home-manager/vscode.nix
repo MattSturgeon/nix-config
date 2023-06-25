@@ -69,6 +69,9 @@
 	   ms-python.python # Python support
 	   bmalehorn.vscode-fish # Fish support
 	   waderyan.gitblame # Show blame info
+	   davidanson.vscode-markdownlint # Markdown language support (preview is already builtin to vscode)
+	   bierner.emojisense # 😄 emoji completion
+	   bierner.markdown-emoji # Support :emoji: syntax in markdown
 	];
     };
 }
