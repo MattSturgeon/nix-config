@@ -64,22 +64,26 @@
 	bufferline.enable = true;
 	lualine.enable = true;
 	gitsigns.enable = true;
+
 	indent-blankline = {
 	  enable = true;
 	  charList = [ "¦" ];
           charListBlankline = [ "↵" ];
 	  useTreesitter = true;
 	};
+
 	treesitter = {
 	    enable = true;
 	    indent = true;
 	    nixvimInjections = true; # Highlight lua in NixVim config
 	};
 	treesitter-context.enable = true; # Prevent context from scrolling off screen (e.g. function declaration)
+
 	nvim-cmp = {
 	  enable = true;
 	  mapping = {
             "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "C-y" = "cmp.mapping.confirm({ select = true })";
             "<Tab>" = {
               modes = [ "i" "s" ];
               action = ''
@@ -98,18 +102,41 @@
                 end
               '';
             };
+            "<S-Tab>" = {
+              modes = [ "i" "s" ];
+              action = ''
+                function(fallback)
+		  if cmp.visible() then
+                    cmp.select_prev_item()
+                  elseif luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                  else
+                    fallback()
+                  end
+                end
+              '';
+            };
 	  };
+
+          # Setting this means we don't need to explicitly enable
+	  # each completion source, so long as the plugin is listed
+          # in https://github.com/pta2002/nixvim/blob/794356625c19e881b4eae3bbbb078f3299f5c81d/plugins/completion/nvim-cmp/cmp-helpers.nix#L22
+	  autoEnableSources = true; 
+	  sources = [
+	    { name = "buffer"; groupIndex = 4; }
+	    { name = "nvim_lsp"; groupIndex = 2; }
+	    { name = "luasnip"; groupIndex = 3; }
+	    { name = "treesitter"; groupIndex = 2; }
+	    # { name = "dap"; groupIndex = 1; }
+            # { name = "copilot"; groupIndex = 1; }
+	    { name = "git"; groupIndex = 1; }
+	    { name = "conventionalcommits"; groupIndex = 1; }
+	    { name = "spell"; groupIndex = 2; }
+	    { name = "emoji"; groupIndex = 1; }
+	  ];
 	};
-	cmp-buffer.enable = true;
-	#cmp_luasnip.enable = true;
-	cmp-treesitter.enable = true;
-	#cmp-nvim-lsp.enable=true;
-	#cmp-dap.enable = true;
-        #cmp-copilot.enable = true;
-	cmp-git.enable = true; # GitHub/GitLab issue/pr completion
-	cmp-conventionalcommits.enable = true;
-	cmp-spell.enable = true;
-	cmp-emoji.enable = true;
+
+        luasnip.enable = true; # TODO install snippets
       };
     };
   };
