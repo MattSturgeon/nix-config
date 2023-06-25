@@ -61,7 +61,10 @@
       # Available through `home-manager --flake .#matt`
       homeConfigurations = {
         "matt" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = import nixpkgs {
+	      system = "x86_64-linux";
+	      config.allowUnfree = true;
+	  };
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/system.nix
@@ -73,6 +76,7 @@
 	    ./home-manager/fonts.nix
 	    ./home-manager/kitty.nix
 	    ./home-manager/neovim.nix
+	    ./home-manager/vscode.nix
 	    ./home-manager/firefox.nix
 
             # Main home-manager configuration file
