@@ -46,6 +46,7 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
 	    ./nixos/bootsplash.nix
+	    ./nixos/udisks.nix
 	    ./nixos/shell.nix
 	    ./nixos/input.nix
 	    ./nixos/gdm.nix
