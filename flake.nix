@@ -49,6 +49,7 @@
 	    ./nixos/shell.nix
 	    ./nixos/gdm.nix
 	    ./nixos/gnome.nix
+	    ./nixos/docker.nix
 
             # Main nixos configuration file
             ./nixos/configuration.nix
