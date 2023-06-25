@@ -1,10 +1,6 @@
 { config, pkgs, ... }: {
 
-    # Enable Universal 2nd Factor (Yubikey)
-    hardware.u2f.enable = true;
-    
-    # This should be implied
-    #udev.packages = [ pkgs.libu2f-host ];
+    # It is no longer required to enable hardware.u2f, udev has native support.
 
     # Allow u2f to be used for login/sudo
     # Add a key to `~/.config/Yubico/u2f_keys`

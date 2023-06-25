@@ -47,6 +47,7 @@
           modules = [
 	    ./nixos/bootsplash.nix
 	    ./nixos/udisks.nix
+	    ./nixos/u2f.nix
 	    ./nixos/shell.nix
 	    ./nixos/input.nix
 	    ./nixos/gdm.nix
