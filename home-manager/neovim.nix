@@ -137,6 +137,31 @@
 	};
 
         luasnip.enable = true; # TODO install snippets
+
+	lsp = {
+	  enable = true;
+	  # Bind keys to `vim.lsp.buf.*` functions:
+	  keymaps.lspBuf = {
+            K = "hover";
+            gD = "references";
+            gd = "definition";
+            gi = "implementation";
+            gt = "type_definition";
+          };
+	  servers = {
+	    bashls.enable = true;
+	    html.enable = true;
+	    java-language-server.enable = true;
+	    lua-ls.enable = true;
+	    nil_ls.enable = true; # Nix LS
+	    ccls.enable = true; # C/C++/ObjC LS
+	    #cangd.enable = true; # LLVM C/C++ LS
+	    rust-analyzer.enable = true;
+	    gopls.enable = true; # Golang LS
+	    tsserver.enable = true; # TypeScript & JavaScript
+	    zls.enable = true; # Zig
+	  };
+	};
       };
     };
   };
