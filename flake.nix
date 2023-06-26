@@ -63,7 +63,7 @@
       # Standalone home-manager configuration entrypoint
       # Available through `home-manager --flake .#matt`
       homeConfigurations = {
-        "matt" = home-manager.lib.homeManagerConfiguration {
+        "matt@matts-laptop" = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
 	      system = "x86_64-linux";
 	      config.allowUnfree = true;
@@ -75,6 +75,32 @@
 	    ./home-manager/starship.nix
 	    ./home-manager/zellij.nix
 	    ./home-manager/gpg.nix
+	    ./home-manager/git.nix
+	    ./home-manager/fonts.nix
+	    ./home-manager/kitty.nix
+	    ./home-manager/neovim.nix
+	    ./home-manager/vscode.nix
+	    ./home-manager/firefox.nix
+
+            # Main home-manager configuration file
+            ./home-manager/home.nix
+
+	    # Use nixvim modules in this configuration
+	    nixvim.homeManagerModules.nixvim
+          ];
+        };
+        "matt@matts-desktop" = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+	      system = "x86_64-linux";
+	      config.allowUnfree = true;
+	  };
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+	    ./home-manager/system.nix
+	    ./home-manager/shell.nix
+	    ./home-manager/starship.nix
+	    ./home-manager/zellij.nix
+	    #./home-manager/gpg.nix
 	    ./home-manager/git.nix
 	    ./home-manager/fonts.nix
 	    ./home-manager/kitty.nix
