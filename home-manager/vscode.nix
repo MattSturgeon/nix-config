@@ -64,6 +64,7 @@
 	   vscodevim.vim
 	   github.codespaces
 	   # ms-vscode-remote.remote-containers # Not in nixpkgs
+	   usernamehw.errorlens # Inline error messages
 	   bbenoist.nix # Nix language support
 	   ms-vscode.cpptools # C & C++ Support
 	   ms-python.python # Python support
