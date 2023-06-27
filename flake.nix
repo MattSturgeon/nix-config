@@ -96,6 +96,7 @@
 	  };
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
+	    ./home-manager/generic-distro.nix
 	    ./home-manager/system.nix
 	    ./home-manager/shell.nix
 	    ./home-manager/starship.nix
