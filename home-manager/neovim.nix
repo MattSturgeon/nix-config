@@ -10,14 +10,21 @@
       enable = true;
       viAlias = true;
       vimAlias = true;
+
       colorschemes.catppuccin = {
         enable = true;
         background.light = "macchiato";
         background.dark = "mocha";
       };
+
+      luaLoader.enable = true;
+      editorconfig.enable = true;
+      clipboard.providers.wl-copy.enable = true;
+
       globals = {
         mapleader = " ";
       };
+
       options = {
         number = true; # Line numbers
 	relativenumber = true; # ^Relative
@@ -26,8 +33,8 @@
 	cursorline = true; # Highlight the current line
 	scrolloff = 8; # Ensure there's at least 8 lines around the cursor
 	title = true; # Let vim set the window title
-	clipboard.providers.wl-copy = true;
       };
+
       maps = {
 	# Quick exit insert mode using `jj`
 	insert."jj" = {
@@ -66,10 +73,18 @@
         };
       };
       plugins = {
-        which-key.enable = true;
 	bufferline.enable = true;
+	fugitive.enable = true;
 	lualine.enable = true;
-	gitsigns.enable = true;
+	comment-nvim.enable = true;
+	todo-comments.enable = true;
+        which-key.enable = true;
+
+	gitsigns = {
+	    enable = true;
+	    currentLineBlame = true;
+	    currentLineBlameOpts.virtTextPos = "right_align";
+	};
 
 	indent-blankline = {
 	  enable = true;
@@ -78,12 +93,32 @@
 	  useTreesitter = true;
 	};
 
+	mini = {
+	    enable = true;
+	    modules = {
+		bracketed = {}; # Jump to various targets with []
+		pairs = {}; # ~ autopairs
+		surround = {}; # ~ surround
+		trailspace = {}; # Highlight/remove trailing whitespace
+	    };
+	};
+
+	telescope = {
+	    enable = true;
+	    extensions = {
+		frecency.enable = true;
+		fzf-native.enable = true;
+		media_files.enable = true;
+	    };
+	};
+
 	treesitter = {
 	    enable = true;
 	    indent = true;
 	    nixvimInjections = true; # Highlight lua in NixVim config
 	};
 	treesitter-context.enable = true; # Prevent context from scrolling off screen (e.g. function declaration)
+	treesitter-playground.enable = true;
 
 	nvim-cmp = {
 	  enable = true;
@@ -168,6 +203,8 @@
 	    zls.enable = true; # Zig
 	  };
 	};
+
+	lsp-lines.enable = true;
       };
 
       extraConfigLuaPre = ''
