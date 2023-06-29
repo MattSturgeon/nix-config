@@ -71,6 +71,7 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/system.nix
+	    ./home-manager/java.nix
 	    ./home-manager/shell.nix
 	    ./home-manager/starship.nix
 	    ./home-manager/zellij.nix

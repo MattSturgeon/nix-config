@@ -60,11 +60,13 @@
 	};
 
 	extensions = with pkgs.vscode-extensions; [
+	   # General
 	   catppuccin.catppuccin-vsc 
 	   vscodevim.vim
-	   github.codespaces
-	   # ms-vscode-remote.remote-containers # Not in nixpkgs
+	   github.codespaces # Using codespaces for CS50
 	   usernamehw.errorlens # Inline error messages
+
+           # Languages
 	   bbenoist.nix # Nix language support
 	   ms-vscode.cpptools # C & C++ Support
 	   ms-python.python # Python support
@@ -73,6 +75,13 @@
 	   davidanson.vscode-markdownlint # Markdown language support (preview is already builtin to vscode)
 	   bierner.emojisense # 😄 emoji completion
 	   bierner.markdown-emoji # Support :emoji: syntax in markdown
+
+           # Java
+	   redhat.java # Language support
+	   vscjava.vscode-java-debug # Debugging support
+	   vscjava.vscode-java-test # Run/debug tests
+	   vscjava.vscode-java-dependency # Manage Java projects
+	   vscjava.vscode-gradle # Gradle tasks/UI
 	];
     };
 }
