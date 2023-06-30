@@ -29,6 +29,12 @@
 	clipboard.providers.wl-copy = true;
       };
       maps = {
+	# Quick exit insert mode using `jj`
+	insert."jj" = {
+	    action = "<Esc>";
+	    silent = true;
+	};
+
         # Better up/down movement
         normalVisualOp."j" = {
 	  action = "v:count == 0 ? 'gj' : 'j'";
