@@ -10,6 +10,7 @@ in {
 	    default-key = "7082 22EA 1808 E39A 83AC  8B18 4F91 844C ED1A 8299";
 	};
     };
+
     services.gpg-agent = {
 	enable = true;
 	enableSshSupport = true;

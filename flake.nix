@@ -101,7 +101,7 @@
 	    ./home-manager/shell.nix
 	    ./home-manager/starship.nix
 	    ./home-manager/zellij.nix
-	    #./home-manager/gpg.nix
+	    ./home-manager/gpg.nix
 	    ./home-manager/git.nix
 	    ./home-manager/fonts.nix
 	    ./home-manager/kitty.nix
