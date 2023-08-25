@@ -207,6 +207,10 @@
 	lsp-lines.enable = true;
       };
 
+      extraPlugins = with pkgs.vimPlugins; [
+          vim-be-good
+      ];
+
       extraConfigLuaPre = ''
         -- Define some variables used in nvim-cmp keybinds
 	-- as per the example on nvim-cmp's wiki
