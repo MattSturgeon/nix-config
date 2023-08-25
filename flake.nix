@@ -49,6 +49,7 @@
 	    ./nixos/udisks.nix
 	    ./nixos/shell.nix
 	    ./nixos/input.nix
+	    ./nixos/sound.nix
 	    ./nixos/gdm.nix
 	    ./nixos/gnome.nix
 	    ./nixos/printing.nix
