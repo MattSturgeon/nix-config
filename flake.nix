@@ -59,6 +59,7 @@
 
             # Main nixos configuration file
             ./nixos/configuration.nix
+	    ./hardware-config/matts-laptop.nix
           ];
         };
       };

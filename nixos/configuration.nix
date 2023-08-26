@@ -6,11 +6,6 @@
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";
 
-  imports = [
-    # Include the hardware scan (`nixos-generate-config`)
-    ./hardware-configuration.nix
-  ];
-
   # FIXME get from arguments
   networking.hostName = "matts-laptop"; # Define your hostname.
 
