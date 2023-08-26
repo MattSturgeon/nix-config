@@ -1,5 +1,8 @@
 { inputs, config, lib, ... }: {
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # TODO should any of these go in the flake's `nixConfig`?
   nix.settings = {
     # Enable flakes and new 'nix' command
@@ -9,8 +12,12 @@
     auto-optimise-store = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
     
   # I don't really know what this does, but it looks useful...
   nix = {
