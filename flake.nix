@@ -48,6 +48,7 @@
 	    ./nixos/settings.nix
 
 	    ./nixos/bootsplash.nix
+	    ./nixos/sleep.nix
 	    ./nixos/udisks.nix
 	    ./nixos/shell.nix
 	    ./nixos/input.nix
