@@ -118,7 +118,6 @@
 	    nixvimInjections = true; # Highlight lua in NixVim config
 	};
 	treesitter-context.enable = true; # Prevent context from scrolling off screen (e.g. function declaration)
-	treesitter-playground.enable = true;
 
 	nvim-cmp = {
 	  enable = true;
