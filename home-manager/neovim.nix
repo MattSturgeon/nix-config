@@ -82,8 +82,10 @@
 
 	gitsigns = {
 	    enable = true;
-	    currentLineBlame = true;
-	    currentLineBlameOpts.virtTextPos = "right_align";
+	    # The right alighed virtext was getting annoying; when the window is small it can clobber actual text!
+	    # Disable git blame for now
+	    currentLineBlame = false;
+	    # currentLineBlameOpts.virtTextPos = "right_align";
 	};
 
 	indent-blankline = {
