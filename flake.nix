@@ -10,6 +10,8 @@
     };
 
     nixvim.url = "github:pta2002/nixvim";
+
+    nixgl.url = "github:guibou/nixGL";
   };
 
   outputs = {
@@ -17,6 +19,7 @@
     nixpkgs,
     home-manager,
     nixvim,
+    nixgl,
     ...
   }@inputs:
     let
@@ -37,7 +40,18 @@
         in import ./shell.nix { inherit pkgs; }
       );
 
-      # TODO Add any overlays/modules here?
+      # Package overlays
+      overlays = {
+        nixgl = nixgl.overlays.default;
+      };
+
+      legacyPackages = forAllSystems (system:
+        import nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues overlays;
+          config.allowUnfree = true;
+        }
+      );
 
       # NixOS configuration entrypoint
       # Available through `nixos-rebuild --flake .#matts-laptop`
@@ -69,10 +83,7 @@
       # Available through `home-manager --flake .#matt`
       homeConfigurations = {
         "matt@matts-laptop" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-	      system = "x86_64-linux";
-	      config.allowUnfree = true;
-	  };
+          pkgs = legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/system.nix
@@ -96,10 +107,7 @@
           ];
         };
         "matt@matts-desktop" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-	      system = "x86_64-linux";
-	      config.allowUnfree = true;
-	  };
+          pkgs = legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
 	    ./home-manager/generic-distro.nix
