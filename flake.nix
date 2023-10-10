@@ -27,6 +27,7 @@
       "aarch64-darwin"
       "x86_64-darwin"
     ];
+    defaultSystem = "x86_64-linux";
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -55,9 +56,25 @@
         config.allowUnfree = true;
       };
 
+    # Function to include a user's home-manager config in a NixOS system
+    mkUser = {
+      host,
+      user,
+      home ? "/home/${user}",
+    }: {
+      home-manager.users.${user} = import ./hosts/${host}/${user}.nix;
+      home-manager.users.${user}.home = {
+        username = user;
+        homeDirectory = home;
+      };
+    };
+
     # Function to create a standard NixOS system
     # for a given hostname & platform
-    mkSystem = name: system:
+    mkSystem = name: {
+      system ? defaultSystem,
+      users ? [],
+    }:
       nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = {inherit inputs outputs;};
@@ -68,7 +85,26 @@
             ./hosts/${name}/hardware-configuration.nix
             ./hosts/${name}/configuration.nix
             ({...}: {networking.hostName = name;})
-          ];
+          ]
+          ++ (
+            # If users are defined, include their home-manager config
+            if users == []
+            then []
+            else [
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+              }
+              (builtins.map
+                (user:
+                  mkUser {
+                    inherit user;
+                    host = name;
+                  })
+                users)
+            ]
+          );
       };
   in {
     inherit packages overlays;
@@ -85,7 +121,9 @@
 
     # NixOS configurations
     nixosConfigurations = builtins.mapAttrs mkSystem {
-      matebook = "x86_64-linux";
+      matebook = {
+        users = ["matt"];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
