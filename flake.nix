@@ -45,6 +45,14 @@
     # Make nix fmt use alejandra
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
+    # Define a bootstrapping shell, used by `nix develop`
+    devShells = forAllSystems (
+      system:
+        import ./shell.nix {
+          pkgs = nixpkgs.legacyPackages.${system};
+        }
+    );
+
     # Custom packages
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     # Custom modules
