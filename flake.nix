@@ -18,6 +18,7 @@
     ...
   } @ inputs: let
     inherit (self) outputs;
+
     # Supported systems for your flake packages, shell, etc.
     systems = [
       "aarch64-linux"
@@ -32,7 +33,46 @@
 
     # Custom overlays
     overlays = import ./overlays {inherit inputs;};
+    # Custom packages
+    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    # Custom modules
+    nixosModules = import ./modules/nixos;
+    homeManagerModules = import ./modules/home-manager;
+
+    # Modules to include in all nixos systems
+    defaultModules = [
+      ({...}: {nixpkgs.overlays = builtins.attrValues overlays;})
+      nixosModules
+      homeManagerModules
+      # TODO
+    ];
+
+    # Function to create a standard pkgs set
+    mkPkgs = system:
+      import nixpkgs {
+        inherit system;
+        overlays = builtins.attrValues overlays;
+        config.allowUnfree = true;
+      };
+
+    # Function to create a standard NixOS system
+    # for a given hostname & platform
+    mkSystem = name: system:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {inherit inputs outputs;};
+        pkgs = mkPkgs system;
+        modules =
+          defaultModules
+          ++ [
+            ./hosts/${name}/hardware-configuration.nix
+            ./hosts/${name}/configuration.nix
+            ({...}: {networking.hostName = name;})
+          ];
+      };
   in {
+    inherit packages overlays;
+
     # Make nix fmt use alejandra
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
@@ -43,29 +83,16 @@
         }
     );
 
-    # Custom packages
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    # Custom modules
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
-
     # NixOS configurations
-    nixosConfigurations = {
-      matebook = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ({...}: {nixpkgs.overlays = builtins.attrValues overlays;})
-          ./hosts/matebook/configuration.nix
-          ./hosts/matebook/hardware-configuration.nix
-        ];
-      };
+    nixosConfigurations = builtins.mapAttrs mkSystem {
+      matebook = "x86_64-linux";
     };
 
     # Standalone home-manager configuration entrypoint
     homeConfigurations = {
       "matt@desktop" = home-manager.lib.homeManagerConfiguration {
         # Home-manager requires 'pkgs' instance
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = mkPkgs "x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           ./hosts/desktop/home.nix

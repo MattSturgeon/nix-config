@@ -45,8 +45,6 @@
     };
   };
 
-  networking.hostName = "desktop";
-
   boot.loader.systemd-boot.enable = true;
 
   users.users = {
