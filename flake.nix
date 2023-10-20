@@ -37,6 +37,9 @@
       "x86_64-darwin"
     ];
 
+    # Custom functions
+    util = import ./lib {inherit inputs;};
+
     # Custom overlays
     overlays = import ./overlays {inherit inputs;};
   in {
@@ -52,6 +55,9 @@
           pkgs = nixpkgs.legacyPackages.${system};
         }
     );
+
+    # Custom library functions
+    lib = util;
 
     # Custom packages
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
