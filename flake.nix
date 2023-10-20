@@ -48,12 +48,7 @@
 
     # Custom functions
     util = import ./lib {inherit inputs outputs;};
-
-    # Custom overlays
-    overlays = import ./overlays {inherit inputs;};
   in {
-    inherit overlays;
-
     # Make nix fmt use alejandra
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
@@ -68,8 +63,6 @@
     # Custom library functions
     lib = util;
 
-    # Custom packages
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     # Custom modules
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
