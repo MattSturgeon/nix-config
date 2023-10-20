@@ -19,6 +19,15 @@
   } @ inputs: let
     inherit (self) outputs;
 
+    # Define my user, used by most configurations
+    # see initUser in lib/user.nix
+    userMatt = {
+      name = "matt";
+      description = "Matt Sturgeon";
+      initialPassword = "init";
+      isAdmin = true;
+    };
+
     /*
     Generates an attribute set by mapping a function over each system listed.
 
@@ -38,7 +47,7 @@
     ];
 
     # Custom functions
-    util = import ./lib {inherit inputs;};
+    util = import ./lib {inherit inputs outputs;};
 
     # Custom overlays
     overlays = import ./overlays {inherit inputs;};
@@ -67,25 +76,17 @@
 
     # NixOS configurations
     nixosConfigurations = {
-      matebook = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [
-          ({...}: {nixpkgs.overlays = builtins.attrValues overlays;})
-          ./hosts/matebook/configuration.nix
-          ./hosts/matebook/hardware-configuration.nix
-        ];
+      matebook = util.mkNixOSConfig {
+        hostname = "matebook";
+        hmUsers = [userMatt];
       };
     };
 
     # Standalone home-manager configuration entrypoint
     homeConfigurations = {
-      "matt@desktop" = home-manager.lib.homeManagerConfiguration {
-        # Home-manager requires 'pkgs' instance
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          ./hosts/desktop/home.nix
-        ];
+      "matt@desktop" = util.mkHMConfig {
+        hostname = "desktop";
+        user = userMatt;
       };
     };
   };
