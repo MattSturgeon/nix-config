@@ -10,6 +10,7 @@
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
   inherit (util.user) mkNixOSUserModule mkHMUserModule mkNixOSHMModule getHomeConfig;
 
+  # Platform to use when system is not provided
   defaultSystem = "x86_64-linux";
 
   # Include all inputs in specialArgs;
@@ -19,7 +20,8 @@
     // {
       inherit inputs outputs util;
     };
-in {
+
+  # Build a NixOS config, including Home Manager configs for any hmUsers specified
   mkNixOSConfig = {
     hostname,
     system ? defaultSystem,
@@ -30,7 +32,6 @@ in {
       inherit system specialArgs;
       modules =
         [
-          # TODO generic modules? global config?
           ../hosts/${hostname}/configuration.nix
           ../hosts/${hostname}/hardware-configuration.nix
           (mkNixOSUserModule (users ++ hmUsers))
@@ -48,13 +49,14 @@ in {
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.sharedModules = attrValues outputs.homeManagerModules;
               home-manager.extraSpecialArgs = specialArgs;
+              home-manager.sharedModules = attrValues outputs.homeManagerModules;
             }
           ]
         );
     };
 
+  # Builds a standalone Home Manager config, independent of NixOS
   mkHMConfig = {
     hostname,
     user,
@@ -70,4 +72,11 @@ in {
           (getHomeConfig ../hosts/${hostname} user.name)
         ];
     };
+in {
+  # Global aliases
+  inherit mkNixOSConfig mkHMConfig;
+
+  system = {
+    inherit mkNixOSConfig mkHMConfig defaultSystem;
+  };
 }

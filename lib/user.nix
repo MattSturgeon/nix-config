@@ -1,6 +1,10 @@
 {lib, ...}: let
   inherit (builtins) map listToAttrs toString length head attrNames filter readDir;
   inherit (lib) unique filterAttrs hasSuffix;
+
+  # Groups to be added to all admin users
+  adminGroups = ["wheel" "networkmanager"];
+
   # Private function to get a list of regular files whoes names end in .nix
   # Returns a list of filenames, not paths
   getNixFiles = path:
@@ -10,8 +14,23 @@
       (readDir path)
     );
 
-  adminGroups = ["wheel" "networkmanager"];
-in rec {
+  # Just an overly complex mess that looks for _either_ home.nix or <username>.nix in the host path
+  getHomeConfig = host: username: let
+    count = length matches;
+    matches =
+      filter
+      (f: f == "home.nix" || f == (username + ".nix"))
+      (getNixFiles host);
+  in
+    # Return the path to the (only) match
+    # Abort if there isn't exactly one match
+    if count == 1
+    then host + ("/" + (head matches))
+    else if count > 1
+    then abort "Multiple home files (${toString count}) found for ${username} in ${host}"
+    else abort "No valid home file found for ${username} in ${host}";
+
+  # Creates a copy of the provided attrset, ensuring all attributes are defined
   initUser = {
     name,
     description ? "",
@@ -31,6 +50,7 @@ in rec {
       ));
   };
 
+  # Build a user as per NixOS users.users."name"'s schema
   mkNixOSUser = attrs: let
     user = initUser attrs;
   in
@@ -50,6 +70,7 @@ in rec {
       else {inherit (user) initialPassword;}
     );
 
+  # Build a NixOS module to configer the user
   mkNixOSUserModule = users: let
     cfg =
       listToAttrs
@@ -67,6 +88,7 @@ in rec {
     }
   );
 
+  # Build a Home Manager module to configure the user
   mkHMUserModule = user: let
     fUser = initUser user;
   in {
@@ -74,6 +96,7 @@ in rec {
     home.homeDirectory = fUser.home;
   };
 
+  # Build a NixOS module to enable each user's Home Manager config
   mkNixOSHMModule = path: users: let
     cfg =
       listToAttrs
@@ -86,20 +109,8 @@ in rec {
   in {
     home-manager.users = cfg;
   };
-
-  # Just an overly complex mess that looks for _either_ home.nix or <username>.nix in the host path
-  getHomeConfig = host: username: let
-    count = length matches;
-    matches =
-      filter
-      (f: f == "home.nix" || f == (username + ".nix"))
-      (getNixFiles host);
-  in
-    # Return the path to the (only) match
-    # Abort if there isn't exactly one match
-    if count == 1
-    then host + ("/" + (head matches))
-    else if count > 1
-    then abort "Multiple home files (${toString count}) found for ${username} in ${host}"
-    else abort "No valid home file found for ${username} in ${host}";
+in {
+  user = {
+    inherit initUser mkNixOSUser mkNixOSUserModule mkNixOSHMModule mkHMUserModule getHomeConfig;
+  };
 }
