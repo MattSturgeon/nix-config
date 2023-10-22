@@ -1,34 +1,29 @@
-{lib, ...}: let
-  inherit (builtins) map listToAttrs toString length head attrNames filter readDir;
-  inherit (lib) unique filterAttrs hasSuffix;
+{
+  lib,
+  util,
+  ...
+}: let
+  inherit (builtins) elem map listToAttrs toString length head baseNameOf filter;
+  inherit (lib) unique;
+  inherit (util.util) nixChildren;
 
   # Groups to be added to all admin users
   adminGroups = ["wheel" "networkmanager"];
 
-  # Private function to get a list of regular files whoes names end in .nix
-  # Returns a list of filenames, not paths
-  getNixFiles = path:
-    attrNames (
-      filterAttrs
-      (k: v: v == "regular" && (hasSuffix ".nix" k))
-      (readDir path)
-    );
-
-  # Just an overly complex mess that looks for _either_ home.nix or <username>.nix in the host path
-  getHomeConfig = host: username: let
+  # Return the path to either 'home.nix' or '<username>.nix' in 'dir'.
+  # If neither or both exist, the function will abort.
+  getHomeConfig = dir: username: let
     count = length matches;
-    matches =
-      filter
-      (f: f == "home.nix" || f == (username + ".nix"))
-      (getNixFiles host);
+    chilren = nixChildren dir;
+    matches = filter (file: elem (baseNameOf file) ["home.nix" (username + ".nix")]) chilren;
   in
     # Return the path to the (only) match
     # Abort if there isn't exactly one match
     if count == 1
-    then host + ("/" + (head matches))
+    then head matches
     else if count > 1
-    then abort "Multiple home files (${toString count}) found for ${username} in ${host}"
-    else abort "No valid home file found for ${username} in ${host}";
+    then abort "Multiple home files (${toString count}) found for ${username} in ${dir}"
+    else abort "No valid home file found for ${username} in ${dir}";
 
   # Creates a copy of the provided attrset, ensuring all attributes are defined
   initUser = {
