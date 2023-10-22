@@ -1,6 +1,7 @@
-# Add your reusable NixOS modules to this directory, on their own file (https://nixos.wiki/wiki/Module).
-# These should be stuff you would like to share with others, not your personal configurations.
+# TODO this doesn't need to be an attr set; could just return a list of modules instead
+# TODO this could be generated dynamiclly by walking the directory using util.util.importSiblings
 {
   # List your module files here
-  # my-module = import ./my-module.nix;
+  nix = import ./nix.nix;
+  boot = import ./boot.nix;
 }
