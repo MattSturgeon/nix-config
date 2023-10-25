@@ -20,12 +20,12 @@
     inherit (self) outputs;
 
     # Inherit some functions from ./lib
-    inherit (outputs.lib) forAllSystems mkNixOSConfig mkHMConfig;
-    inherit (outputs.lib.util) nixChildren;
+    inherit (outputs.lib) mkNixOSConfig mkHMConfig;
+    inherit (outputs.lib.util) forAllSystems importChildren;
 
     # Define module lists, used in mkNixOSConfig & mkHMConfig
-    nixosModules = map import (nixChildren ./modules/nixos);
-    homeManagerModules = map import (nixChildren ./modules/home-manager);
+    nixosModules = importChildren ./modules/nixos;
+    homeManagerModules = importChildren ./modules/home-manager;
 
     # Define my user, used by most configurations
     # see initUser in lib/user.nix

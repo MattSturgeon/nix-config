@@ -3,16 +3,13 @@
   outputs,
   ...
 } @ attrs: let
-  # TODO overlay util into nixpkgs.lib?
-  util = outputs.lib;
   lib = inputs.nixpkgs.lib;
   inherit (builtins) filter pathExists dirOf readDir;
   inherit (lib) mapAttrsToList filterAttrs hasSuffix;
   inherit (lib.attrsets) mergeAttrsList; # no short form
 
-  # Import each file, merging the result into a single attr set.
-  # Note: assumes all files are functions that accept 'args' and return an attr set.
-  mergedImport = files: args: mergeAttrsList (map (path: import path args) files);
+  # Map a list of paths to a list of (imported) nix expressions
+  importAll = list: map import list;
 
   # Returns a list of nix files that are children of 'dir'
   # including 'default.nix' files found in child directories.
@@ -44,11 +41,20 @@
   # including 'default.nix' files found in sibling directories.
   nixSiblings = file: filter (path: path != file) (nixChildren (dirOf file));
 
-  args = attrs // {inherit util lib;};
+  # Arguments to pass to each imported sibling
+  args =
+    {
+      inherit lib;
+      util = outputs.lib;
+    }
+    // attrs;
 in
-  (mergedImport (nixSiblings ./default.nix) args)
-  // {
-    util = {
-      inherit nixChildren nixSiblings mergedImport;
-    };
-  }
+  # Merge everything in lib/, including functions defined above
+  mergeAttrsList (
+    [
+      {
+        util = {inherit nixChildren nixSiblings importAll;};
+      }
+    ]
+    ++ (map (f: f args) (importAll (nixSiblings ./default.nix)))
+  )
