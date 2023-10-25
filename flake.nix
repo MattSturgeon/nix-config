@@ -21,6 +21,11 @@
 
     # Inherit some functions from ./lib
     inherit (outputs.lib) forAllSystems mkNixOSConfig mkHMConfig;
+    inherit (outputs.lib.util) nixChildren;
+
+    # Define module lists, used in mkNixOSConfig & mkHMConfig
+    nixosModules = map import (nixChildren ./modules/nixos);
+    homeManagerModules = map import (nixChildren ./modules/home-manager);
 
     # Define my user, used by most configurations
     # see initUser in lib/user.nix
@@ -45,13 +50,10 @@
     # Custom library functions
     lib = import ./lib {inherit inputs outputs;};
 
-    # Custom modules
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
-
     # NixOS configurations
     nixosConfigurations = {
       matebook = mkNixOSConfig {
+        inherit nixosModules homeManagerModules;
         hostname = "matebook";
         hmUsers = [userMatt];
       };
@@ -60,6 +62,7 @@
     # Standalone home-manager configuration entrypoint
     homeConfigurations = {
       "matt@desktop" = mkHMConfig {
+        modules = homeManagerModules;
         hostname = "desktop";
         user = userMatt;
       };

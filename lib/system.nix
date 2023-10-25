@@ -5,7 +5,7 @@
   outputs,
   ...
 }: let
-  inherit (builtins) length attrValues;
+  inherit (builtins) length;
   inherit (lib) nixosSystem;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
   inherit (util.user) mkNixOSUserModule mkHMUserModule mkNixOSHMModule getHomeConfig;
@@ -27,6 +27,8 @@
     system ? defaultSystem,
     users ? [],
     hmUsers ? [],
+    nixosModules ? [],
+    homeManagerModules ? [],
   }:
     nixosSystem {
       inherit system specialArgs;
@@ -39,7 +41,7 @@
             networking.hostName = hostname;
           }
         ]
-        ++ (attrValues outputs.nixosModules)
+        ++ nixosModules
         ++ (
           if (length hmUsers) == 0
           then []
@@ -50,7 +52,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
-              home-manager.sharedModules = attrValues outputs.homeManagerModules;
+              home-manager.sharedModules = homeManagerModules;
             }
           ]
         );
@@ -61,12 +63,13 @@
     hostname,
     user,
     system ? defaultSystem,
+    modules ? [],
   }:
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       extraSpecialArgs = specialArgs;
       modules =
-        (attrValues outputs.homeManagerModules)
+        modules
         ++ [
           (mkHMUserModule user)
           (getHomeConfig ../hosts/${hostname} user.name)
