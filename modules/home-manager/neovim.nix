@@ -260,7 +260,10 @@ in {
             };
           };
 
-          lsp-lines.enable = true;
+          lsp-lines = {
+            enable = true;
+            currentLine = true;
+          };
         };
 
         extraPlugins = with pkgs.vimPlugins; [
