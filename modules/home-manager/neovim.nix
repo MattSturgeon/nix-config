@@ -52,43 +52,56 @@ in {
           title = true; # Let vim set the window title
         };
 
-        maps = {
-          # Quick exit insert mode using `jj`
-          insert."jj" = {
+        keymaps = [
+          {
+            # Quick exit insert mode using `jj`
+            mode = "i";
+            key = "jj";
             action = "<Esc>";
-            silent = true;
-          };
+            options.silent = true;
+          }
 
           # Better up/down movement
-          normalVisualOp."j" = {
+          {
+            key = "j";
             action = "v:count == 0 ? 'gj' : 'j'";
-            expr = true;
-            silent = true;
-          };
-          normalVisualOp."k" = {
+            options.expr = true;
+            options.silent = true;
+          }
+          {
+            key = "k";
             action = "v:count == 0 ? 'gk' : 'k'";
-            expr = true;
-            silent = true;
-          };
+            options.expr = true;
+            options.silent = true;
+          }
 
           # Better window motions
-          normal."<C-h>" = {
+          {
+            mode = "n";
+            key = "<C-h>";
             action = "<C-w>h";
-            desc = "Go to left window";
-          };
-          normal."<C-j>" = {
+            options.desc = "Go to left window";
+          }
+          {
+            mode = "n";
+            key = "<C-j>";
             action = "<C-w>j";
-            desc = "Go to lower window";
-          };
-          normal."<C-k>" = {
+            options.desc = "Go to lower window";
+          }
+          {
+            mode = "n";
+            key = "<C-k>";
             action = "<C-w>k";
-            desc = "Go to upper window";
-          };
-          normal."<C-l>" = {
+            options.desc = "Go to upper window";
+          }
+          {
+            mode = "n";
+            key = "<C-l>";
             action = "<C-w>l";
-            desc = "Go to right window";
-          };
-        };
+            options.desc = "Go to right window";
+          }
+        ];
+
         plugins = {
           bufferline.enable = true;
           fugitive.enable = true;
