@@ -145,9 +145,12 @@ in {
           treesitter = {
             enable = true;
             indent = true;
-            nixvimInjections = true; # Highlight lua in NixVim config
           };
-          treesitter-context.enable = true; # Prevent context from scrolling off screen (e.g. function declaration)
+          treesitter-context = {
+            enable = true;
+            maxLines = 4;
+            minWindowHeight = 40;
+          };
 
           nvim-cmp = {
             enable = true;
