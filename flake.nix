@@ -33,6 +33,9 @@
       ];
     in
     rec {
+      # Make `nix fmt` use alejandra
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
       # Devshell for bootstrapping
       # Acessible through `nix develop` or `nix-shell` (legacy)
       devShells = forAllSystems (system:
