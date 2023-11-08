@@ -19,6 +19,11 @@
     })
     list));
 
+  optToMap = opts:
+  lib.mapAttrs
+  (name: value: lib.hm.gvariant.mkArray lib.hm.gvariant.type.string [value])
+  (lib.filterAttrs (key: value: value != null && value != "") opts);
+
   mapListToAttrsWithI = f: list: let
     # Based on binaryMerge in mergeAttrsList
     # Divide and conquere; call f on each index and combine the result
@@ -72,37 +77,22 @@ in {
       '';
       default = [];
     };
-    wmBinds = mkOption {
-      type = with types;
-        submodule {
-          options = strOptions [
-            "activate-window-menu"
-            "toggle-message-tray"
-            "close"
-            "minimize"
-            "maximize"
-            "toggle-maximized"
-            "unmaximize"
-            "move-to-monitor-down"
-            "move-to-monitor-left"
-            "move-to-monitor-right"
-            "move-to-monitor-up"
-            "move-to-workspace-down"
-            "move-to-workspace-up"
-          ];
-        };
-      description = ''
-        Key=>binding
-      '';
-      default = {};
-    };
-    mediaBinds = mkOption {
-      description = "Key=>binding for media keys";
-      type = types.submodule {
-        options = strOptions ["next" "previous" "play"];
-      };
-      default = {};
-    };
+    wmBinds = strOptions [
+	"activate-window-menu"
+	"toggle-message-tray"
+	"close"
+	"minimize"
+	"maximize"
+	"toggle-maximized"
+	"unmaximize"
+	"move-to-monitor-down"
+	"move-to-monitor-left"
+	"move-to-monitor-right"
+	"move-to-monitor-up"
+	"move-to-workspace-down"
+	"move-to-workspace-up"
+    ];
+    mediaBinds = strOptions ["next" "previous" "play"];
   };
 
   config = {
@@ -121,10 +111,10 @@ in {
           color-scheme = "prefer-dark";
           enable-hot-corners = false;
         };
-        "org/gnome/deskotp/wm/keybinds" = cfg.wmBinds;
+        "org/gnome/deskotp/wm/keybinds" = optToMap cfg.wmBinds;
         "org/gnome/settings-daemon/plugins/media-keys" =
-          cfg.mediaBinds
-          // {custom-keybinds = lib.mapAttrsToList (name: value: "/${name}/") binds;};
+          (optToMap cfg.mediaBinds)
+          // {custom-keybinds = lib.hm.gvariant.mkArray lib.hm.gvariant.type.string (lib.mapAttrsToList (name: value: "/${name}/") binds);};
       }
       // binds;
   };
