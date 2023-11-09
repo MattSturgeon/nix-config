@@ -48,6 +48,9 @@ in {
           enabled-extensions = map (pkg: pkg.extensionUuid) cfg.extensions;
           favorite-apps = cfg.favorites;
         };
+        "org/gnome/mutter" = {
+          edge-tiling = true;
+        };
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
           enable-hot-corners = false;
