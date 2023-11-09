@@ -4,10 +4,13 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption;
+  inherit (builtins) map;
+  inherit (lib) mkOption mkDefault;
 
   cfg = config.custom.gnome;
 in {
+  imports = [./keybinds.nix];
+
   options.custom.gnome = {
     extensions = mkOption {
       type = with lib.types; listOf package;
@@ -30,6 +33,10 @@ in {
   };
 
   config = {
+    custom.gnome = {
+      keybinds.media.calculator = mkDefault "<Super>equal";
+    };
+
     home.packages = cfg.extensions;
 
     dconf = {
@@ -39,7 +46,7 @@ in {
           disable-user-extensions = false;
           dissabled-extensions = [];
           enabled-extensions = map (pkg: pkg.extensionUuid) cfg.extensions;
-	  favorite-apps = cfg.favorites;
+          favorite-apps = cfg.favorites;
         };
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
