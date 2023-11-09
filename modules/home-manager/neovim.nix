@@ -126,12 +126,12 @@ in {
           mini = {
             enable = true;
             modules = {
-              bracketed = {}; # Jump to various targets with []
-              pairs = {}; # ~ autopairs
               surround = {}; # ~ surround
               trailspace = {}; # Highlight/remove trailing whitespace
             };
           };
+
+          nvim-autopairs.enable = true;
 
           telescope = {
             enable = true;
@@ -237,7 +237,7 @@ in {
 
           lsp = {
             enable = true;
-	    
+
             # Bind keys to `vim.lsp.buf.*` functions:
             keymaps.lspBuf = {
               K = "hover";
@@ -269,7 +269,8 @@ in {
         };
 
         extraPlugins = with pkgs.vimPlugins; [
-          vim-be-good
+          vim-be-good # vim motions minigames
+          vim-sleuth # tpope's indent fixes
         ];
 
         extraConfigLuaPre = /* lua */ ''
