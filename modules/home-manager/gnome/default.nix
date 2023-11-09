@@ -52,6 +52,17 @@ in {
           color-scheme = "prefer-dark";
           enable-hot-corners = false;
         };
+        "org/gnome/desktop/peripherals/mouse" = {
+          accel-profile = "default";
+          natural-scroll = false;
+        };
+        "org/gnome/desktop/peripherals/touchpad" = {
+          send-events = "enabled";
+          tap-to-click = true;
+          two-finger-scrolling-enabled = true;
+          edge-scrolling-enabled = false;
+          natural-scroll = false;
+        };
       };
     };
   };
