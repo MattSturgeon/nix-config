@@ -178,7 +178,7 @@ in {
               "<S-Tab>" = {
                 modes = ["i" "s"];
                 action = /* lua */ ''
-	          function(fallback)
+                  function(fallback)
                     if cmp.visible() then
                       cmp.select_prev_item()
                     elseif luasnip.jumpable(-1) then
@@ -237,6 +237,7 @@ in {
 
           lsp = {
             enable = true;
+	    
             # Bind keys to `vim.lsp.buf.*` functions:
             keymaps.lspBuf = {
               K = "hover";
@@ -245,6 +246,7 @@ in {
               gi = "implementation";
               gt = "type_definition";
             };
+
             servers = {
               bashls.enable = true;
               html.enable = true;
@@ -271,16 +273,16 @@ in {
         ];
 
         extraConfigLuaPre = /* lua */ ''
-	  -- Define some variables used in nvim-cmp keybinds
+          -- Define some variables used in nvim-cmp keybinds
           -- as per the example on nvim-cmp's wiki
           local has_words_before = function()
-              unpack = unpack or table.unpack
-              local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-              return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-            end
+            unpack = unpack or table.unpack
+            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+          end
 
-            local luasnip = require("luasnip")
-            local cmp = require("cmp")
+          local luasnip = require("luasnip")
+          local cmp = require("cmp")
         '';
       };
     };
