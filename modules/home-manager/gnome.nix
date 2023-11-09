@@ -17,6 +17,16 @@ in {
         dash-to-dock
       ];
     };
+
+    favorites = mkOption {
+      type = with lib.types; listOf str;
+      description = "Favorite apps. A list of .desktop files";
+      default = [
+        "firefox.desktop"
+        "kitty.desktop"
+        "org.gnome.Nautilus.desktop"
+      ];
+    };
   };
 
   config = {
@@ -29,6 +39,7 @@ in {
           disable-user-extensions = false;
           dissabled-extensions = [];
           enabled-extensions = map (pkg: pkg.extensionUuid) cfg.extensions;
+	  favorite-apps = cfg.favorites;
         };
       };
     };
