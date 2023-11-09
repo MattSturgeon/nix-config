@@ -21,5 +21,16 @@ in {
 
   config = {
     home.packages = cfg.extensions;
+
+    dconf = {
+      enable = true;
+      settings = {
+        "org/gnome/shell" = {
+          disable-user-extensions = false;
+          dissabled-extensions = [];
+          enabled-extensions = map (pkg: pkg.extensionUuid) cfg.extensions;
+        };
+      };
+    };
   };
 }
