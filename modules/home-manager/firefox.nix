@@ -28,12 +28,16 @@ in {
             default = "duckduckgo";
             force = true; # Firefox often replaces the symlink, so force on update
           };
+          settings = {
+            "browser.aboutConfig.showWarning" = false;
+            "cookiebanners.service.mode" = 2;
+            "cookiebanners.service.mode.privateBrowsing" = 2;
+          };
           extensions = with config.nur.repos.rycee.firefox-addons; [
             darkreader
             refined-github
             violentmonkey
             privacy-badger
-            istilldontcareaboutcookies
           ];
           # extraConfig = '' ''; # user.js
           # userChrome = '' ''; # chrome CSS
