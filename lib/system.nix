@@ -40,6 +40,7 @@
           {
             networking.hostName = hostname;
           }
+          inputs.nur.nixosModules.nur
         ]
         ++ nixosModules
         ++ (
@@ -52,7 +53,9 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
-              home-manager.sharedModules = homeManagerModules;
+              home-manager.sharedModules =
+                homeManagerModules
+                ++ [inputs.nur.hmModules.nur];
             }
           ]
         );
@@ -73,6 +76,7 @@
         ++ [
           (mkHMUserModule user)
           (getHomeConfig ../hosts/${hostname} user.name)
+          inputs.nur.hmModules.nur
         ];
     };
 in {

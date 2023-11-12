@@ -25,10 +25,16 @@ in {
           name = "Matt Sturgeon";
           isDefault = true;
           search = {
-            default = "google"; # TODO Move to something more privacy respecting?
+            default = "duckduckgo";
             force = true; # Firefox often replaces the symlink, so force on update
           };
-          # extensions = [ ]; # (some are packaged in NUR)
+          extensions = with config.nur.repos.rycee.firefox-addons; [
+            darkreader
+            refined-github
+            violentmonkey
+            privacy-badger
+            istilldontcareaboutcookies
+          ];
           # extraConfig = '' ''; # user.js
           # userChrome = '' ''; # chrome CSS
           # userContent = '' ''; # content CSS
