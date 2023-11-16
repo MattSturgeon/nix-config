@@ -36,10 +36,6 @@ in {
       };
     };
 
-    home.packages = with pkgs; [
-      fx_cast_bridge
-    ];
-
     home.sessionVariables = {
       MOZ_ENABLE_WAYLAND = 1;
     };
