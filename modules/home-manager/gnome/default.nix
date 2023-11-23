@@ -18,6 +18,7 @@ in {
       default = with pkgs.gnomeExtensions; [
         appindicator
         dash-to-dock
+        overview-background
         clipboard-indicator
         pip-on-top
       ];
