@@ -255,10 +255,14 @@ in {
               nil_ls.enable = true; # Nix LS
               ccls.enable = true; # C/C++/ObjC LS
               #cangd.enable = true; # LLVM C/C++ LS
-              rust-analyzer.enable = true;
               gopls.enable = true; # Golang LS
               tsserver.enable = true; # TypeScript & JavaScript
               zls.enable = true; # Zig
+              rust-analyzer = {
+                enable = true;
+                installCargo = true;
+                installRustc = true;
+              };
             };
           };
 

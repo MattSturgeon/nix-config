@@ -18,7 +18,7 @@ in {
       default = with pkgs.gnomeExtensions; [
         appindicator
         dash-to-dock
-        clipman
+        clipboard-indicator
         pip-on-top
       ];
     };
