@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (builtins) map;
-  inherit (lib) mkOption mkDefault;
+  inherit (lib) mkOption mkDefault mkBefore;
 
   cfg = config.custom.gnome;
 in {
@@ -27,17 +27,19 @@ in {
     favorites = mkOption {
       type = with lib.types; listOf str;
       description = "Favorite apps. A list of .desktop files";
-      default = [
-        "firefox.desktop"
-        "kitty.desktop"
-        "org.gnome.Nautilus.desktop"
-      ];
+      default = [];
     };
   };
 
   config = {
     custom.gnome = {
       keybinds.media.calculator = mkDefault "<Super>equal";
+
+      favorites = mkBefore [
+        "firefox.desktop"
+        "kitty.desktop"
+        "org.gnome.Nautilus.desktop"
+      ];
     };
 
     home.packages = cfg.extensions;
