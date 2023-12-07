@@ -55,6 +55,7 @@ in {
         };
         "org/gnome/mutter" = {
           edge-tiling = true;
+          experimental-features = ["scale-monitor-framebuffer"];
         };
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
