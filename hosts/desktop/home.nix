@@ -3,7 +3,10 @@
   custom = {
     otherHost = {
       enable = true;
-      glPackages = ["kitty"];
+      glPackages = [
+        "kitty"
+        "jetbrains.idea-community"
+      ];
     };
     gnome.favorites = lib.mkAfter ["com.heroicgameslauncher.hgl.desktop" "jetbrains-idea-ce.desktop"];
   };

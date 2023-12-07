@@ -1,6 +1,7 @@
 {...}: {
   custom = {
     editors.vscode = true;
+    editors.idea = true;
   };
 
   # TODO can state version be centralised?
