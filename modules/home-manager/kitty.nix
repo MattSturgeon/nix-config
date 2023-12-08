@@ -3,7 +3,8 @@
     programs.kitty = {
       enable = true;
 
-      # Force fish even when login shell is different
+      # Enable shell completions (etc) for kitty command
+      shellIntegration.enableBashIntegration = true;
       shellIntegration.enableFishIntegration = true;
 
       # TODO define theme somewhere in config
@@ -15,6 +16,8 @@
       };
 
       settings = {
+        # Force fish even when login shell is different
+        shell = "fish";
         # system, background, #hex, or color name
         wayland_titlebar_color = "background";
       };
