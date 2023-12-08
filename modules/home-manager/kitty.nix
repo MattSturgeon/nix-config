@@ -3,6 +3,9 @@
     programs.kitty = {
       enable = true;
 
+      # Force fish even when login shell is different
+      shellIntegration.enableFishIntegration = true;
+
       # TODO define theme somewhere in config
       theme = "Catppuccin-Mocha";
 
