@@ -13,7 +13,6 @@ in {
 
   config = mkIf cfg.idea {
     home.packages = with pkgs.jetbrains; [
-      jdk
       idea-community
     ];
   };
