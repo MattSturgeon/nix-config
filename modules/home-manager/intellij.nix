@@ -5,6 +5,11 @@
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
+
+  idea-plugins = [
+    "ideavim"
+  ];
+
   cfg = config.custom.editors;
 in {
   options.custom.editors = {
@@ -13,7 +18,7 @@ in {
 
   config = mkIf cfg.idea {
     home.packages = with pkgs.jetbrains; [
-      idea-community
+      (plugins.addPlugins idea-community idea-plugins)
     ];
   };
 }
