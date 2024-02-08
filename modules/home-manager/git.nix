@@ -11,6 +11,7 @@
       };
       extraConfig = {
         init.defaultBranch = "main";
+        rebase.autosquash = true;
       };
       delta.enable = true;
     };
