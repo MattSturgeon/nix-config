@@ -160,7 +160,11 @@ in {
     };
 
     home.sessionVariables = {
+      # This should be default soon
       MOZ_ENABLE_WAYLAND = 1;
+
+      # Non-nix firefox crashes without this because profiles.ini is read-only
+      MOZ_LEGACY_PROFILES = 1;
     };
   };
 }
