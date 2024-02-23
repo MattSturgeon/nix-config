@@ -5,21 +5,31 @@
   ...
 }: let
   inherit (lib) types mkIf mkOption;
-  cfg = config.custom.browsers;
+  cfg = config.custom.browsers.firefox;
+  otherHost = config.custom.otherHost.enable;
 in {
-  options.custom.browsers = {
-    firefox = mkOption {
+  options.custom.browsers.firefox = {
+    enable = mkOption {
       type = types.bool;
       default = true;
-      description = "Enable Firefox";
+      description = "Enable Firefox config";
+    };
+    install = mkOption {
+      type = types.bool;
+      # By default, only install the actual browres on NixOS hosts
+      default = !otherHost;
+      description = "Install the actual browser";
     };
   };
 
-  config = mkIf cfg.firefox {
+  config = mkIf cfg.enable {
     programs = {
       firefox = {
         enable = true;
-        package = pkgs.firefox-wayland;
+        package =
+          if cfg.install
+          then pkgs.firefox-wayland
+          else null;
         profiles.matt = {
           id = 0;
           name = "Matt Sturgeon";
