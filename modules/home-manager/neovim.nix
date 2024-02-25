@@ -216,7 +216,7 @@ in {
               "<C-Space>" = /* lua */ ''${map}.complete()''; # Open list without typing
             };
 
-            mappingPresets = [ "insert" "cmdline" ];
+            mappingPresets = ["insert" "cmdline"];
 
             # Setting this means we don't need to explicitly enable
             # each completion source, so long as the plugin is listed
@@ -265,7 +265,7 @@ in {
           lsp = {
             enable = true;
 
-            # Bind keys to `vim.lsp.buf.*` functions:
+            # LSP keybinds (see :h lsp-buf):
             keymaps.lspBuf = {
               K = {
                 action = "hover";
@@ -274,6 +274,10 @@ in {
               gd = {
                 action = "definition";
                 desc = "Goto definition";
+              };
+              gD = {
+                action = "declaration";
+                desc = "Goto declaration";
               };
               gi = {
                 action = "implementation";
@@ -284,12 +288,17 @@ in {
                 desc = "Show references";
               };
               gt = {
+                # FIXME conflicts with "next tab page" :h gt
                 action = "type_definition";
                 desc = "Goto type definition";
               };
               ga = {
                 action = "code_action";
                 desc = "Show code actions";
+              };
+              "g*" = {
+                action = "document_symbol";
+                desc = "Show document symbols";
               };
               "<leader>rn" = {
                 action = "rename";
