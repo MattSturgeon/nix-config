@@ -36,7 +36,6 @@ in {
       keybinds.media.calculator = mkDefault "<Super>equal";
 
       favorites = mkBefore [
-        "firefox.desktop"
         "kitty.desktop"
         "org.gnome.Nautilus.desktop"
       ];

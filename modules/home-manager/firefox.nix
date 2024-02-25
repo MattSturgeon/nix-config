@@ -1,10 +1,12 @@
 {
   config,
   lib,
+  util,
   pkgs,
   ...
 }: let
   inherit (lib) types mkIf mkOption;
+  inherit (util.modules) mkFirst;
   cfg = config.custom.browsers.firefox;
   otherHost = config.custom.otherHost.enable;
 in {
@@ -20,9 +22,26 @@ in {
       default = !otherHost;
       description = "Install the actual browser";
     };
+    desktopName = mkOption {
+      type = with types; nullOr str;
+      default =
+        # The nix build of firefox uses "firefox.desktop".
+        # If we're not installing the actual browser, assume
+        # the flatpak version will be used.
+        if cfg.install
+        then "firefox.desktop"
+        else "org.mozilla.firefox.desktop";
+      description = ''The firefox desktop file to add to "favorites", or null'';
+      defaultText = ''"firefox.desktop" when `install` is true, otherwise "org.mozilla.firefox.desktop"'';
+    };
   };
 
   config = mkIf cfg.enable {
+    custom.gnome = {
+      # Add desktop entry to gnome favorites
+      favorites = mkIf (cfg.desktopName != null) (mkFirst [cfg.desktopName]);
+    };
+
     programs = {
       firefox = {
         enable = true;
