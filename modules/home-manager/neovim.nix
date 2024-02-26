@@ -50,6 +50,7 @@ in {
           cursorline = true; # Highlight the current line
           scrolloff = 8; # Ensure there's at least 8 lines around the cursor
           title = true; # Let vim set the window title
+          conceallevel = 2; # Enable syn-cchar replacements (for Obsidian)
         };
 
         keymaps = [
