@@ -13,28 +13,28 @@
   # Returns a list of nix files that are children of 'dir'
   # including 'default.nix' files found in child directories.
   nixChildren = dir: let
-    # Maps a {name=type} attr back into a path
-    # Adds '/default.nix' onto directory paths
-    pathMapper = name: type:
+    # Maps a file or directory -> module path
+    toModule = name: type:
       dir
-      + ("/" + name)
       + (
         if type == "directory"
-        then "/default.nix"
-        else ""
+        then "/${name}/default.nix"
+        else "/${name}"
       );
 
-    # Filter out attrs that aren't directories or .nix files
-    nixOrDirFilter = name: type:
+    # Filter directories and .nix files
+    moduleFilter = name: type:
       if type == "regular"
       then (hasSuffix ".nix" name)
       else type == "directory";
 
-    # Each path is a '.nix' file or a 'subdir/default.nix'
-    paths = mapAttrsToList pathMapper (filterAttrs nixOrDirFilter (readDir dir));
+    # A list of child modules
+    children = mapAttrsToList toModule (filterAttrs moduleFilter (readDir dir));
   in
     # Only return paths that actually exist
-    filter pathExists paths;
+    if pathExists dir
+    then filter pathExists children
+    else [];
 
   # Returns a list of nix files that are siblings of 'file',
   # including 'default.nix' files found in sibling directories.
