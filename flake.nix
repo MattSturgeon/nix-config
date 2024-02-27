@@ -30,7 +30,8 @@
     inherit (outputs.lib.util) forAllSystems importChildren;
 
     # Define module lists, used in mkNixOSConfig & mkHMConfig
-    nixosModules = importChildren ./modules/nixos;
+    commonModules = importChildren ./modules/common;
+    nixosModules = commonModules ++ (importChildren ./modules/nixos);
     homeManagerModules = importChildren ./modules/home-manager;
 
     # Define my user, used by most configurations
@@ -68,7 +69,7 @@
     # Standalone home-manager configuration entrypoint
     homeConfigurations = {
       "matt@desktop" = mkHMConfig {
-        modules = homeManagerModules;
+        modules = commonModules ++ homeManagerModules;
         hostname = "desktop";
         user = userMatt;
       };
