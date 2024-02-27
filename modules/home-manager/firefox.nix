@@ -82,8 +82,8 @@ in {
             "browser.newtabpage.storageVersion" = 1;
             "browser.newtabpage.pinned" = [
               {
-                "label" = "Keep";
-                "url" = "https://keep.google.com";
+                "label" = "GitHub";
+                "url" = "https://github.com";
               }
               {
                 "label" = "YouTube";
@@ -94,12 +94,8 @@ in {
                 "url" = "https://music.youtube.com";
               }
               {
-                "label" = "Amazon";
-                "url" = "https://amazon.com";
-              }
-              {
-                "label" = "GitHub";
-                "url" = "https://github.com";
+                "label" = "Monkeytype";
+                "url" = "https://monkeytype.com";
               }
             ];
 
