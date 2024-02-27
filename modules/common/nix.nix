@@ -6,6 +6,10 @@
   ...
 }: {
   config = {
+    nixpkgs.config = {
+      allowUnfree = true;
+    };
+
     nix = {
       # This is default in NixOS, but must be set for home-manager
       package = pkgs.nix;

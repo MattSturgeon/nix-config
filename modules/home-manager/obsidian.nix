@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mapAttrsToList mkIf mkOption types;
@@ -23,15 +24,22 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TODO need to enable unfree software to install Obsidian
-    #   For now, using obsidian.nvim & the obsidian flatpak is ok...
+    # TODO enable this seperately from obsidian.nvim?
+    home.packages = with pkgs; [obsidian];
 
-    # TODO configure syncthing to sync obsidian vault
+    home.sessionVariables = {
+      # Enable wayland in electron
+      NIXOS_OZONE_WL = 1;
+    };
+
+    # TODO obsidian vimrc
 
     # Setup obsidian.nvim if neovim is enabled
     programs.nixvim.plugins.obsidian = mkIf nvim {
       enable = true;
       workspaces = mapAttrsToList (name: path: {inherit name path;}) cfg.vaults;
     };
+
+    # TODO configure syncthing to sync obsidian vault
   };
 }
