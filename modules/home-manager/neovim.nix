@@ -62,20 +62,6 @@ in {
             options.silent = true;
           }
 
-          # Better up/down movement
-          {
-            key = "j";
-            action = "v:count == 0 ? 'gj' : 'j'";
-            options.expr = true;
-            options.silent = true;
-          }
-          {
-            key = "k";
-            action = "v:count == 0 ? 'gk' : 'k'";
-            options.expr = true;
-            options.silent = true;
-          }
-
           # Window motions
           {
             mode = "n";
