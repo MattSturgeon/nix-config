@@ -101,15 +101,37 @@ in {
             action = "<C-w>l";
             options.desc = "Go to right window";
           }
+
+          # Buffer motions
+          {
+            mode = "n";
+            key = "<leader>bn";
+            action = ":bn<CR>";
+            options.silent = true;
+            options.desc = "Go to next buffer";
+          }
+          {
+            mode = "n";
+            key = "<leader>bp";
+            action = ":bp<CR>";
+            options.silent = true;
+            options.desc = "Go to previous buffer";
+          }
         ];
 
         plugins = {
-          bufferline.enable = true;
           fugitive.enable = true;
           lualine.enable = true;
           comment-nvim.enable = true;
           todo-comments.enable = true;
-          which-key.enable = true;
+
+          which-key = {
+            enable = true;
+            registrations = {
+              # Group names
+              "<leader>b" = "+buffers";
+            };
+          };
 
           gitsigns = {
             enable = true;
@@ -140,6 +162,12 @@ in {
               frecency.enable = true;
               fzf-native.enable = true;
               media_files.enable = true;
+            };
+            keymaps = {
+              "<leader>bb" = {
+                action = "buffers";
+                desc = "List buffers";
+              };
             };
           };
 
