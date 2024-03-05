@@ -16,6 +16,9 @@
 
     nixgl.url = "github:nix-community/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
+
+    tmux-which-key.url = "github:alexwforsythe/tmux-which-key";
+    tmux-which-key.flake = false;
   };
 
   outputs = {

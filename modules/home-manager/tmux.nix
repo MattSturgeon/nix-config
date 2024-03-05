@@ -2,11 +2,33 @@
   config,
   lib,
   pkgs,
+  tmux-which-key,
   ...
 }: let
   inherit (lib) types mkOption mkIf getExe;
+  inherit (lib.generators) toYAML;
   cfg = config.custom.tmux;
   nvim = config.custom.editors.nvim;
+
+  # Make a tmux plugin, with optional extraConfig
+  mkPlugin = attrs: let
+    plugin = pkgs.tmuxPlugins.mkTmuxPlugin attrs;
+  in if (lib.hasAttr "extraConfig" attrs)
+  then { inherit plugin; inherit (attrs) extraConfig; }
+  else plugin;
+
+  extraPlugins = map mkPlugin [
+    {
+      pluginName = "tmux-which-key";
+      version = tmux-which-key.shortRev;
+      src = tmux-which-key;
+      rtpFilePath = "plugin.sh.tmux";
+      extraConfig = ''
+        # Use XDG config file for which-key plugin
+        set -g @tmux-which-key-xdg-enable 1;
+      '';
+    }
+  ];
 in {
   options.custom.tmux = {
     enable = mkOption {
@@ -34,6 +56,7 @@ in {
           sensible
           catppuccin
         ]
+        ++ extraPlugins
         ++ (
           # Enable tmux-navigator if using vim
           if nvim
@@ -44,6 +67,12 @@ in {
       extraConfig = ''
         # TODO
       '';
+    };
+
+    xdg.configFile = {
+      "tmux/plugins/tmux-which-key/config.yaml".text = toYAML {} {
+        command_alias_start_index = 200;
+      };
     };
 
     # Enable tmux-navigator in vim too

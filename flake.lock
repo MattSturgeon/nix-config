@@ -295,7 +295,8 @@
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "nur": "nur"
+        "nur": "nur",
+        "tmux-which-key": "tmux-which-key"
       }
     },
     "systems": {
@@ -310,6 +311,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tmux-which-key": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706233670,
+        "narHash": "sha256-w3Mzh6yEai0fxVwx/x7QN3NgJ1VscBaiTDLY7FBYke4=",
+        "owner": "alexwforsythe",
+        "repo": "tmux-which-key",
+        "rev": "545831eb95e402658b2899174cebcefeac0e922a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexwforsythe",
+        "repo": "tmux-which-key",
         "type": "github"
       }
     }
