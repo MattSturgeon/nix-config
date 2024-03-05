@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) types mkIf mkOption mkBefore;
+  inherit (lib) types mkIf mkOption mkBefore getExe;
 
   cfg = config.custom.terminal.kitty;
 in {
@@ -37,8 +37,12 @@ in {
       };
 
       settings = {
-        # Force fish even when login shell is different
-        shell = "fish";
+        # Use tmux if enabled, otherwise fish
+        shell = getExe (
+          if config.programs.tmux.enable
+          then config.programs.tmux.package
+          else config.programs.fish.package
+        );
         # system, background, #hex, or color name
         wayland_titlebar_color = "background";
       };
