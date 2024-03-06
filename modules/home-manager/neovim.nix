@@ -164,42 +164,16 @@ in {
 
           nvim-cmp = {
             enable = true;
-            mapping = {
-              "<CR>" = /* lua */ "cmp.mapping.confirm({ select = true })";
-              "C-y" = /* lua */ "cmp.mapping.confirm({ select = true })";
-              "<Tab>" = {
-                modes = ["i" "s"];
-                action = /* lua */ ''
-                  function(fallback)
-                    if cmp.visible() then
-                      cmp.select_next_item()
-                    elseif luasnip.expandable() then
-                      luasnip.expand()
-                    elseif luasnip.expand_or_jumpable() then
-                      luasnip.expand_or_jump()
-                    elseif has_words_before() then
-                      fallback()
-                    else
-                      fallback()
-                    end
-                  end
-                '';
-              };
-              "<S-Tab>" = {
-                modes = ["i" "s"];
-                action = /* lua */ ''
-                  function(fallback)
-                    if cmp.visible() then
-                      cmp.select_prev_item()
-                    elseif luasnip.jumpable(-1) then
-                      luasnip.jump(-1)
-                    else
-                      fallback()
-                    end
-                  end
-                '';
-              };
+
+            mapping = let
+              map = /* lua */ ''require("cmp").mapping'';
+            in {
+              "<C-y>" = /* lua */ ''${map}.confirm({ select = true })''; # Use first if none selected
+              "<C-CR>" = /* lua */ ''${map}.confirm({ select = true })''; # C-y alias
+              "<C-Space>" = /* lua */ ''${map}.complete()''; # Open list without typing
             };
+
+            mappingPresets = [ "insert" "cmdline" ];
 
             # Setting this means we don't need to explicitly enable
             # each completion source, so long as the plugin is listed
@@ -286,19 +260,6 @@ in {
           vim-be-good # vim motions minigames
           vim-sleuth # tpope's indent fixes
         ];
-
-        extraConfigLuaPre = /* lua */ ''
-          -- Define some variables used in nvim-cmp keybinds
-          -- as per the example on nvim-cmp's wiki
-          local has_words_before = function()
-            unpack = unpack or table.unpack
-            local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-            return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-          end
-
-          local luasnip = require("luasnip")
-          local cmp = require("cmp")
-        '';
       };
     };
   };
