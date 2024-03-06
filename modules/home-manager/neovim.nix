@@ -98,6 +98,47 @@ in {
             options.silent = true;
             options.desc = "Go to previous buffer";
           }
+
+          # Refactoring
+          {
+            mode = "n";
+            key = "<leader>rr";
+            action = /* lua */ ''
+              function() require("telescope").extensions.refactoring.refactors() end
+            '';
+            lua = true;
+            options.desc = "Select refactor";
+          }
+          {
+            mode = "n";
+            key = "<leader>re";
+            action = "<cmd>Refactor extract_var ";
+            options.desc = "Extract to variable";
+          }
+          {
+            mode = "n";
+            key = "<leader>rE";
+            action = "<cmd>Refactor extract ";
+            options.desc = "Extract to function";
+          }
+          {
+            mode = "n";
+            key = "<leader>rb";
+            action = "<cmd>Refactor extract_block ";
+            options.desc = "Extract to block";
+          }
+          {
+            mode = "n";
+            key = "<leader>ri";
+            action = "<cmd>Refactor inline_var ";
+            options.desc = "Inline variable";
+          }
+          {
+            mode = "n";
+            key = "<leader>rI";
+            action = "<cmd>Refactor inline_func ";
+            options.desc = "Inline function";
+          }
         ];
 
         plugins = {
@@ -105,12 +146,14 @@ in {
           lualine.enable = true;
           comment-nvim.enable = true;
           todo-comments.enable = true;
+          refactoring.enable = true;
 
           which-key = {
             enable = true;
             registrations = {
               # Group names
               "<leader>b" = "+buffers";
+              "<leader>r" = "+refactoring";
             };
           };
 
@@ -229,6 +272,7 @@ in {
               gd = "definition";
               gi = "implementation";
               gt = "type_definition";
+              "<leader>rn" = "rename";
             };
 
             servers = {
@@ -260,6 +304,11 @@ in {
           vim-be-good # vim motions minigames
           vim-sleuth # tpope's indent fixes
         ];
+
+        extraConfigLuaPre = /* lua */ ''
+          -- load refactoring.nvim Telescope extension
+          require("telescope").load_extension("refactoring")
+        '';
       };
     };
   };
