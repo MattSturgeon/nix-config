@@ -75,14 +75,14 @@ in {
           {
             mode = "n";
             key = "<leader>bn";
-            action = ":bn<CR>";
+            action = "<cmd>bn<CR>";
             options.silent = true;
             options.desc = "Go to next buffer";
           }
           {
             mode = "n";
             key = "<leader>bp";
-            action = ":bp<CR>";
+            action = "<cmd>bp<CR>";
             options.silent = true;
             options.desc = "Go to previous buffer";
           }
