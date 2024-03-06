@@ -66,7 +66,7 @@ in {
           # Show which-key
           {
             mode = ["n" "v"];
-            key = "<C- >";
+            key = "<C-Space>";
             action = "<cmd>WhichKey<CR>";
             options.silent = true;
             options.desc = "Which Key";
