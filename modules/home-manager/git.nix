@@ -11,7 +11,10 @@
       };
       extraConfig = {
         init.defaultBranch = "main";
+        pull.ff = true;
+        pull.rebase = true;
         rebase.autosquash = true;
+        help.autoCorrect = "prompt";
       };
       delta.enable = true;
     };
