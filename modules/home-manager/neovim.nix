@@ -67,7 +67,10 @@ in {
           {
             mode = "n";
             key = "<leader>w";
-            action = "<C-w>";
+            # Workaround which-key.nvim issue #583
+            # Call :WhichKey manually, delegating <C-w>
+            action = "<cmd>WhichKey <C-w><CR>";
+            options.silent = true;
             options.desc = "+windows";
           }
 
