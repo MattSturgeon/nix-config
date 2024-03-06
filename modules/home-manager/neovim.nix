@@ -63,6 +63,15 @@ in {
             options.silent = true;
           }
 
+          # Show which-key
+          {
+            mode = ["n" "v"];
+            key = "<C- >";
+            action = "<cmd>WhichKey<CR>";
+            options.silent = true;
+            options.desc = "Which Key";
+          }
+
           # Window motions
           {
             mode = "n";
