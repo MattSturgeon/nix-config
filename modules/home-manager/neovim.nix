@@ -3,6 +3,7 @@
   lib,
   pkgs,
   nixvim,
+  helpers,
   ...
 }: let
   inherit (lib) types mkOption mkIf;
@@ -24,7 +25,7 @@ in {
 
     programs = {
       nixvim = {
-        enable = true;
+        enable = builtins.trace "nixvim helpers: ${builtins.toString helpers}" true;
         viAlias = true;
         vimAlias = true;
 
