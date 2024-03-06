@@ -267,12 +267,34 @@ in {
 
             # Bind keys to `vim.lsp.buf.*` functions:
             keymaps.lspBuf = {
-              K = "hover";
-              gD = "references";
-              gd = "definition";
-              gi = "implementation";
-              gt = "type_definition";
-              "<leader>rn" = "rename";
+              K = {
+                action = "hover";
+                desc = "Show documentation";
+              };
+              gd = {
+                action = "definition";
+                desc = "Goto definition";
+              };
+              gi = {
+                action = "implementation";
+                desc = "Goto implementation";
+              };
+              gr = {
+                action = "references";
+                desc = "Show references";
+              };
+              gt = {
+                action = "type_definition";
+                desc = "Goto type definition";
+              };
+              ga = {
+                action = "code_action";
+                desc = "Show code actions";
+              };
+              "<leader>rn" = {
+                action = "rename";
+                desc = "Rename symbol";
+              };
             };
 
             servers = {
