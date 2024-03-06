@@ -13,9 +13,13 @@
   # Make a tmux plugin, with optional extraConfig
   mkPlugin = attrs: let
     plugin = pkgs.tmuxPlugins.mkTmuxPlugin attrs;
-  in if (lib.hasAttr "extraConfig" attrs)
-  then { inherit plugin; inherit (attrs) extraConfig; }
-  else plugin;
+  in
+    if (lib.hasAttr "extraConfig" attrs)
+    then {
+      inherit plugin;
+      inherit (attrs) extraConfig;
+    }
+    else plugin;
 
   extraPlugins = map mkPlugin [
     {
