@@ -23,5 +23,10 @@
       enable = true;
       settings.git_protocol = "ssh";
     };
+
+    programs.lazygit = {
+      enable = true;
+      settings = {};
+    };
   };
 }
