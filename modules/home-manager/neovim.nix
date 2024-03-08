@@ -142,6 +142,16 @@ in
           }
         ];
 
+        autoCmd = [
+          {
+            desc = "Highlight on yank";
+            event = "TextYankPost";
+            callback.__raw = /* lua */ ''
+              function() vim.highlight.on_yank({ higroup="IncSearch", timeout=250 }) end
+            '';
+          }
+        ];
+
         plugins = {
           fugitive.enable = true;
           lualine.enable = true;
