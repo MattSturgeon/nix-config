@@ -1,10 +1,10 @@
-{
-  util,
-  lib,
-  inputs,
-  outputs,
-  ...
-}: let
+{ util
+, lib
+, inputs
+, outputs
+, ...
+}:
+let
   inherit (builtins) length;
   inherit (lib) nixosSystem;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
@@ -15,22 +15,19 @@
 
   # Include all inputs in specialArgs;
   # now we don't have to overlay stuff into nixpkgs
-  specialArgs =
-    inputs
-    // {
-      inherit inputs outputs util;
-    };
+  specialArgs = inputs // {
+    inherit inputs outputs util;
+  };
 
   # Build a NixOS config, including Home Manager configs for any hmUsers specified
-  mkNixOSConfig = {
-    hostname,
-    system ? defaultSystem,
-    users ? [],
-    hmUsers ? [],
-    nixosModules ? [],
-    homeManagerModules ? [],
-  }:
-    nixosSystem {
+  mkNixOSConfig =
+    { hostname
+    , system ? defaultSystem
+    , users ? [ ]
+    , hmUsers ? [ ]
+    , nixosModules ? [ ]
+    , homeManagerModules ? [ ]
+    }: nixosSystem {
       inherit system specialArgs;
       modules =
         [
@@ -44,8 +41,7 @@
         ]
         ++ nixosModules
         ++ (
-          if (length hmUsers) == 0
-          then []
+          if (length hmUsers) == 0 then [ ]
           else [
             inputs.home-manager.nixosModules.home-manager
             (mkNixOSHMModule ../hosts/${hostname} hmUsers)
@@ -55,35 +51,31 @@
               home-manager.extraSpecialArgs = specialArgs;
               home-manager.sharedModules =
                 homeManagerModules
-                ++ [inputs.nur.hmModules.nur];
+                ++ [ inputs.nur.hmModules.nur ];
             }
           ]
         );
     };
 
   # Builds a standalone Home Manager config, independent of NixOS
-  mkHMConfig = {
-    hostname,
-    user,
-    system ? defaultSystem,
-    modules ? [],
-  }:
-    homeManagerConfiguration {
+  mkHMConfig =
+    { hostname
+    , user
+    , system ? defaultSystem
+    , modules ? [ ]
+    }: homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       extraSpecialArgs = specialArgs;
-      modules =
-        modules
-        ++ [
-          (mkHMUserModule user)
-          (getHomeConfig ../hosts/${hostname} user.name)
-          inputs.nur.hmModules.nur
-        ];
+      modules = modules ++ [
+        (mkHMUserModule user)
+        (getHomeConfig ../hosts/${hostname} user.name)
+        inputs.nur.hmModules.nur
+      ];
     };
-in {
+in
+{
   # Global aliases
   inherit mkNixOSConfig mkHMConfig;
 
-  system = {
-    inherit mkNixOSConfig mkHMConfig defaultSystem;
-  };
+  system = { inherit mkNixOSConfig mkHMConfig defaultSystem; };
 }

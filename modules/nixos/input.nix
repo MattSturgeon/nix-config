@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   # TODO gate behind server/desktop/laptop "feature" group?
   config = {
     services.xserver.libinput = {

@@ -1,13 +1,14 @@
-{
-  pkgs,
-  lib,
-  config,
-  options,
-  ...
-}: let
+{ pkgs
+, lib
+, config
+, options
+, ...
+}:
+let
   inherit (lib) types mkIf mkOption;
   cfg = config.custom.sync;
-in {
+in
+{
   options.custom.sync = {
     enable = mkOption {
       type = types.bool;
@@ -18,7 +19,7 @@ in {
   config = mkIf cfg.enable {
     services.syncthing = {
       enable = true;
-      extraOptions = ["--no-default-folder"];
+      extraOptions = [ "--no-default-folder" ];
     };
   };
 }

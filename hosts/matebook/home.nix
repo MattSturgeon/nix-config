@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   custom = {
     editors.vscode = true;
     editors.idea = true;

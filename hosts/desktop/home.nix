@@ -1,5 +1,5 @@
 # TODO move most (all) of this to a common config module
-{lib, ...}: {
+{ lib, ... }: {
   custom = {
     otherHost = {
       enable = true;
@@ -8,7 +8,7 @@
         "jetbrains.idea-community"
       ];
     };
-    gnome.favorites = lib.mkAfter ["com.heroicgameslauncher.hgl.desktop" "jetbrains-idea-ce.desktop"];
+    gnome.favorites = lib.mkAfter [ "com.heroicgameslauncher.hgl.desktop" "jetbrains-idea-ce.desktop" ];
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

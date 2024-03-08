@@ -1,20 +1,21 @@
-{
-  lib,
-  util,
-  ...
-}: let
+{ lib
+, util
+, ...
+}:
+let
   inherit (lib) genAttrs;
   inherit (util.util) importAll nixChildren;
-in {
+in
+{
   util = {
     /*
-    Generates an attribute set by mapping a function over each system listed.
+      Generates an attribute set by mapping a function over each system listed.
 
-    Example:
+      Example:
       forAllSystems (system: "Uses " + system)
       => { x86_64-linux = "Uses x86_64-linux"; aarch64-darwin = "Uses aarch64-darwin"; ... }
 
-    Type:
+      Type:
       forAllSystems :: (String -> Any) -> AttrSet
     */
     forAllSystems = genAttrs [

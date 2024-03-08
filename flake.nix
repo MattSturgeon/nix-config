@@ -21,61 +21,59 @@
     tmux-which-key.flake = false;
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
+  outputs =
+    { self
+    , nixpkgs
+    , ...
+    } @ inputs:
+    let
+      inherit (self) outputs;
 
-    # Inherit some functions from ./lib
-    inherit (outputs.lib) mkNixOSConfig mkHMConfig;
-    inherit (outputs.lib.util) forAllSystems importChildren;
+      # Inherit some functions from ./lib
+      inherit (outputs.lib) mkNixOSConfig mkHMConfig;
+      inherit (outputs.lib.util) forAllSystems importChildren;
 
-    # Define module lists, used in mkNixOSConfig & mkHMConfig
-    commonModules = importChildren ./modules/common;
-    nixosModules = commonModules ++ (importChildren ./modules/nixos);
-    homeManagerModules = importChildren ./modules/home-manager;
+      # Define module lists, used in mkNixOSConfig & mkHMConfig
+      commonModules = importChildren ./modules/common;
+      nixosModules = commonModules ++ (importChildren ./modules/nixos);
+      homeManagerModules = importChildren ./modules/home-manager;
 
-    # Define my user, used by most configurations
-    # see initUser in lib/user.nix
-    userMatt = {
-      name = "matt";
-      description = "Matt Sturgeon";
-      initialPassword = "init";
-      isAdmin = true;
-    };
-  in {
-    # Make nix fmt use alejandra
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+      # Define my user, used by most configurations
+      # see initUser in lib/user.nix
+      userMatt = {
+        name = "matt";
+        description = "Matt Sturgeon";
+        initialPassword = "init";
+        isAdmin = true;
+      };
+    in
+    {
+      # Use the beta nixpkgs-fmt
+      # Alejandra is too strict...
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
 
-    # Define a bootstrapping shell, used by `nix develop`
-    devShells = forAllSystems (
-      system:
-        import ./shell.nix {
-          pkgs = nixpkgs.legacyPackages.${system};
-        }
-    );
+      # Define a bootstrapping shell, used by `nix develop`
+      devShells = forAllSystems (system: import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; });
 
-    # Custom library functions
-    lib = import ./lib {inherit inputs outputs;};
+      # Custom library functions
+      lib = import ./lib { inherit inputs outputs; };
 
-    # NixOS configurations
-    nixosConfigurations = {
-      matebook = mkNixOSConfig {
-        inherit nixosModules homeManagerModules;
-        hostname = "matebook";
-        hmUsers = [userMatt];
+      # NixOS configurations
+      nixosConfigurations = {
+        matebook = mkNixOSConfig {
+          inherit nixosModules homeManagerModules;
+          hostname = "matebook";
+          hmUsers = [ userMatt ];
+        };
+      };
+
+      # Standalone home-manager configuration entrypoint
+      homeConfigurations = {
+        "matt@desktop" = mkHMConfig {
+          modules = commonModules ++ homeManagerModules;
+          hostname = "desktop";
+          user = userMatt;
+        };
       };
     };
-
-    # Standalone home-manager configuration entrypoint
-    homeConfigurations = {
-      "matt@desktop" = mkHMConfig {
-        modules = commonModules ++ homeManagerModules;
-        hostname = "desktop";
-        user = userMatt;
-      };
-    };
-  };
 }

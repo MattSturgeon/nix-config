@@ -1,12 +1,13 @@
-{
-  lib,
-  config,
-  ...
-}: let
+{ lib
+, config
+, ...
+}:
+let
   inherit (lib) types mkIf mkOption mkBefore getExe;
 
   cfg = config.custom.terminal.kitty;
-in {
+in
+{
   options.custom.terminal.kitty = {
     enable = mkOption {
       type = types.bool;
@@ -18,7 +19,7 @@ in {
   config = mkIf cfg.enable {
     custom.gnome = {
       # Add desktop entry to gnome favorites
-      favorites = mkBefore ["kitty.desktop"];
+      favorites = mkBefore [ "kitty.desktop" ];
     };
 
     programs.kitty = {

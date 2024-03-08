@@ -1,9 +1,9 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   inherit (lib) mkIf mkEnableOption;
 
   idea-plugins = [
@@ -11,7 +11,8 @@
   ];
 
   cfg = config.custom.editors;
-in {
+in
+{
   options.custom.editors = {
     idea = mkEnableOption "Enable Intellij IDEA";
   };

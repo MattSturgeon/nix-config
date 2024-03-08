@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   # TODO get name, email, & key from config or user
   config = {
     programs.git = {
@@ -26,7 +26,7 @@
 
     programs.lazygit = {
       enable = true;
-      settings = {};
+      settings = { };
     };
   };
 }

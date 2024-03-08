@@ -1,19 +1,20 @@
-{
-  config,
-  lib,
-  pkgs,
-  tmux-which-key,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, tmux-which-key
+, ...
+}:
+let
   inherit (lib) types mkOption mkIf getExe;
   inherit (lib.generators) toYAML;
   cfg = config.custom.tmux;
   nvim = config.custom.editors.nvim;
 
   # Make a tmux plugin, with optional extraConfig
-  mkPlugin = attrs: let
-    plugin = pkgs.tmuxPlugins.mkTmuxPlugin attrs;
-  in
+  mkPlugin = attrs:
+    let
+      plugin = pkgs.tmuxPlugins.mkTmuxPlugin attrs;
+    in
     if (lib.hasAttr "extraConfig" attrs)
     then {
       inherit plugin;
@@ -33,7 +34,8 @@
       '';
     }
   ];
-in {
+in
+{
   options.custom.tmux = {
     enable = mkOption {
       type = types.bool;
@@ -63,8 +65,8 @@ in {
         ++ (
           # Enable tmux-navigator if using vim
           if nvim
-          then [vim-tmux-navigator]
-          else []
+          then [ vim-tmux-navigator ]
+          else [ ]
         );
 
       extraConfig = ''
@@ -73,7 +75,7 @@ in {
     };
 
     xdg.configFile = {
-      "tmux/plugins/tmux-which-key/config.yaml".text = toYAML {} {
+      "tmux/plugins/tmux-which-key/config.yaml".text = toYAML { } {
         command_alias_start_index = 200;
       };
     };

@@ -1,11 +1,12 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   inherit (lib) mkEnableOption;
   cfg = config.custom.sound;
-in {
+in
+{
   options.custom.sound = {
     jack = mkEnableOption "Enable Jack";
   };
@@ -25,7 +26,7 @@ in {
       jack.enable = cfg.jack;
     };
 
-    environment.etc."wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+    environment.etc."wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = /* lua */ ''
       bluez_monitor.properties = {
           ["bluez5.enable-sbc-xq"] = true,
           ["bluez5.enable-msbc"] = true,

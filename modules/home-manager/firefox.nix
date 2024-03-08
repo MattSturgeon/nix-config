@@ -1,15 +1,16 @@
-{
-  config,
-  lib,
-  util,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, util
+, pkgs
+, ...
+}:
+let
   inherit (lib) types mkIf mkOption;
   inherit (util.modules) mkFirst;
   cfg = config.custom.browsers.firefox;
   otherHost = config.custom.otherHost.enable;
-in {
+in
+{
   options.custom.browsers.firefox = {
     enable = mkOption {
       type = types.bool;
@@ -39,7 +40,7 @@ in {
   config = mkIf cfg.enable {
     custom.gnome = {
       # Add desktop entry to gnome favorites
-      favorites = mkIf (cfg.desktopName != null) (mkFirst [cfg.desktopName]);
+      favorites = mkIf (cfg.desktopName != null) (mkFirst [ cfg.desktopName ]);
     };
 
     programs = {

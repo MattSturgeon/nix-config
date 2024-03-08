@@ -1,11 +1,12 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   enabled = config.custom.desktop.hyprland;
-in {
+in
+{
   options.custom.desktop.hyprland = mkEnableOption "Hyprland desktop";
 
   config = mkIf enabled {

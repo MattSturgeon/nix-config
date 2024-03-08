@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   config = {
     # home-manager needs to manage bash in order for sessionVariables
     # to be added to ~/.profile
@@ -7,7 +7,7 @@
     # Enable fish shell
     programs.fish = {
       enable = true;
-      interactiveShellInit = ''
+      interactiveShellInit = /* fish */ ''
         set fish_greeting # Disable the greeting
       '';
     };
@@ -30,7 +30,7 @@
 
     # Define the transient prompt
     programs.fish.functions = {
-      starship_transient_prompt_func = ''
+      starship_transient_prompt_func = /* fish */ ''
         if fish_is_root_user
             echo '# '
         else

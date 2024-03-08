@@ -1,13 +1,14 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   inherit (lib) mapAttrsToList mkIf mkOption types;
   cfg = config.custom.obsidian;
   nvim = config.custom.editors.nvim;
-in {
+in
+{
   options.custom.obsidian = {
     enable = mkOption {
       type = types.bool;
@@ -25,7 +26,7 @@ in {
 
   config = mkIf cfg.enable {
     # TODO enable this seperately from obsidian.nvim?
-    home.packages = with pkgs; [obsidian];
+    home.packages = with pkgs; [ obsidian ];
 
     home.sessionVariables = {
       # Enable wayland in electron
@@ -37,7 +38,7 @@ in {
     # Setup obsidian.nvim if neovim is enabled
     programs.nixvim.plugins.obsidian = mkIf nvim {
       enable = true;
-      workspaces = mapAttrsToList (name: path: {inherit name path;}) cfg.vaults;
+      workspaces = mapAttrsToList (name: path: { inherit name path; }) cfg.vaults;
     };
 
     # TODO configure syncthing to sync obsidian vault

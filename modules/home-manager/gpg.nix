@@ -1,10 +1,12 @@
-{...}: let
+{ ... }:
+let
   # Time units
   m = 60;
   h = 60 * m;
   d = 24 * h;
   y = 365 * d;
-in {
+in
+{
   config = {
     programs.gpg = {
       enable = true;

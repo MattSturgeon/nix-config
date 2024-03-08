@@ -1,16 +1,14 @@
-{
-  inputs,
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ inputs
+, config
+, lib
+, pkgs
+, ...
+}:
+let
   # nixos uses "dates", home-manager uses "frequency"
-  frequency =
-    if config.nix.gc ? "dates"
-    then "dates"
-    else "frequency";
-in {
+  frequency = if config.nix.gc ? "dates" then "dates" else "frequency";
+in
+{
   config = {
     nixpkgs.config = {
       allowUnfree = true;
@@ -22,7 +20,7 @@ in {
 
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
-      registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
       settings = {
         # Set nix-path in nix.settings because nix.nixPath isn't supported on home-manager

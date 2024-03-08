@@ -1,19 +1,20 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, ...
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   enabled = config.custom.desktop.gnome;
-in {
+in
+{
   options.custom.desktop.gnome = mkEnableOption "Gnome desktop";
 
   config = mkIf enabled {
     services.xserver = {
       enable = true;
       desktopManager.gnome.enable = true;
-      excludePackages = [pkgs.xterm];
+      excludePackages = [ pkgs.xterm ];
     };
 
     # Enable dconf so it can be configured by home-manager
@@ -28,8 +29,7 @@ in {
     environment.systemPackages =
       (with pkgs; [
         nautilus-open-any-terminal
-      ])
-      ++ (with pkgs.gnome; [
+      ]) ++ (with pkgs.gnome; [
         file-roller
       ]);
 
@@ -40,8 +40,7 @@ in {
         gnome-console
         gnome-photos
         # gnome-text-editor
-      ])
-      ++ (with pkgs.gnome; [
+      ]) ++ (with pkgs.gnome; [
         baobab
         cheese
         eog

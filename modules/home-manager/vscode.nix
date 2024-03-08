@@ -1,12 +1,13 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: let
+{ pkgs
+, lib
+, config
+, ...
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.custom.editors;
-in {
+in
+{
   options.custom.editors = {
     vscode = mkEnableOption "Use VSCode";
   };
@@ -57,20 +58,20 @@ in {
         "vim.insertModeKeyBindings" = [
           {
             # jj to quickly exit insert mode
-            before = ["j" "j"];
-            after = ["<Esc>"];
+            before = [ "j" "j" ];
+            after = [ "<Esc>" ];
           }
         ];
 
         "vim.normalModeKeyBindings" = [
           {
             # Shift-K to show "hover" documentation
-            before = ["K"];
-            after = ["g" "h"];
+            before = [ "K" ];
+            after = [ "g" "h" ];
           }
           {
-            before = ["g" "i"];
-            commands = ["editor.action.goToImplementation"];
+            before = [ "g" "i" ];
+            commands = [ "editor.action.goToImplementation" ];
           }
         ];
       };

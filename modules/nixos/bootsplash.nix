@@ -1,11 +1,12 @@
-{
-  lib,
-  config,
-  ...
-}: let
+{ lib
+, config
+, ...
+}:
+let
   inherit (lib) mkEnableOption mkIf;
   cfg = config.custom.boot;
-in {
+in
+{
   options.custom.boot = {
     splash = mkEnableOption "Boot splash";
   };
@@ -16,7 +17,7 @@ in {
         enable = true;
         theme = "breeze";
       };
-      kernelParams = ["quiet"];
+      kernelParams = [ "quiet" ];
       initrd.systemd.enable = true;
     };
   };

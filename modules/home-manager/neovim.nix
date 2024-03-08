@@ -1,14 +1,15 @@
-{
-  config,
-  lib,
-  pkgs,
-  nixvim,
-  ...
-}: let
+{ config
+, lib
+, pkgs
+, nixvim
+, ...
+}:
+let
   inherit (lib) types mkOption mkIf;
   cfg = config.custom.editors;
-in {
-  imports = [nixvim.homeManagerModules.nixvim];
+in
+{
+  imports = [ nixvim.homeManagerModules.nixvim ];
 
   options.custom.editors.nvim = mkOption {
     type = types.bool;
@@ -65,7 +66,7 @@ in {
 
           # Show which-key
           {
-            mode = ["n" "v"];
+            mode = [ "n" "v" ];
             key = "<C-Space>";
             action = "<cmd>WhichKey<CR>";
             options.silent = true;
@@ -173,8 +174,8 @@ in {
           mini = {
             enable = true;
             modules = {
-              surround = {}; # ~ surround
-              trailspace = {}; # Highlight/remove trailing whitespace
+              surround = { }; # ~ surround
+              trailspace = { }; # Highlight/remove trailing whitespace
             };
           };
 
@@ -208,15 +209,17 @@ in {
           nvim-cmp = {
             enable = true;
 
-            mapping = let
-              map = /* lua */ ''require("cmp").mapping'';
-            in {
-              "<C-y>" = /* lua */ ''${map}.confirm({ select = true })''; # Use first if none selected
-              "<C-CR>" = /* lua */ ''${map}.confirm({ select = true })''; # C-y alias
-              "<C-Space>" = /* lua */ ''${map}.complete()''; # Open list without typing
-            };
+            mapping =
+              let
+                map = /* lua */ ''require("cmp").mapping'';
+              in
+              {
+                "<C-y>" = /* lua */ ''${map}.confirm({ select = true })''; # Use first if none selected
+                "<C-CR>" = /* lua */ ''${map}.confirm({ select = true })''; # C-y alias
+                "<C-Space>" = /* lua */ ''${map}.complete()''; # Open list without typing
+              };
 
-            mappingPresets = ["insert" "cmdline"];
+            mappingPresets = [ "insert" "cmdline" ];
 
             # Setting this means we don't need to explicitly enable
             # each completion source, so long as the plugin is listed

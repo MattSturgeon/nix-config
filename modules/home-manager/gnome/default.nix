@@ -1,15 +1,16 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
+{ lib
+, config
+, pkgs
+, ...
+}:
+let
   inherit (builtins) map;
   inherit (lib) mkOption mkDefault;
 
   cfg = config.custom.gnome;
-in {
-  imports = [./keybinds.nix];
+in
+{
+  imports = [ ./keybinds.nix ];
 
   options.custom.gnome = {
     extensions = mkOption {
@@ -27,7 +28,7 @@ in {
     favorites = mkOption {
       type = with lib.types; listOf str;
       description = "Favorite apps. A list of .desktop files";
-      default = [];
+      default = [ ];
     };
   };
 
@@ -47,13 +48,13 @@ in {
       settings = {
         "org/gnome/shell" = {
           disable-user-extensions = false;
-          dissabled-extensions = [];
+          dissabled-extensions = [ ];
           enabled-extensions = map (pkg: pkg.extensionUuid) cfg.extensions;
           favorite-apps = cfg.favorites;
         };
         "org/gnome/mutter" = {
           edge-tiling = true;
-          experimental-features = ["scale-monitor-framebuffer"];
+          experimental-features = [ "scale-monitor-framebuffer" ];
         };
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";

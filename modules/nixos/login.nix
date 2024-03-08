@@ -1,14 +1,15 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   inherit (lib) types mkOption mkIf;
   cfg = config.custom.login;
-in {
+in
+{
   options.custom.login = {
     manager = mkOption {
-      type = types.enum ["none" "gdm"];
+      type = types.enum [ "none" "gdm" ];
       default = "gdm";
     };
   };

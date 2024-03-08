@@ -1,16 +1,17 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   inherit (lib) mkOption;
   cfg = config.custom.boot;
-in {
+in
+{
   options.custom.boot = {
     manager = mkOption {
       description = "The boot manager to use";
       default = "systemd-boot";
-      type = with lib.types; enum ["systemd-boot"];
+      type = lib.types.enum [ "systemd-boot" ];
     };
   };
 

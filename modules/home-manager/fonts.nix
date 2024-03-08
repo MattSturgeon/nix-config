@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   config = {
     fonts.fontconfig.enable = true;
 
@@ -11,7 +11,7 @@
       # Nerd Font Symbols (Powerline, FontAwesome, MaterialIcons, etc)
       # https://www.nerdfonts.com/#features
       #  
-      (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
 
       # Emoji font 😀🙋🌟🎉
       noto-fonts-emoji
