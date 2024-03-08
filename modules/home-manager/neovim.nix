@@ -216,61 +216,81 @@ in
             minWindowHeight = 40;
           };
 
-          nvim-cmp = {
+          cmp = {
             enable = true;
-
-            mapping =
-              let
-                map = /* lua */ ''require("cmp").mapping'';
-              in
-              {
-                "<C-y>" = /* lua */ ''${map}.confirm({ select = true })''; # Use first if none selected
-                "<C-CR>" = /* lua */ ''${map}.confirm({ select = true })''; # C-y alias
-                "<C-Space>" = /* lua */ ''${map}.complete()''; # Open list without typing
-              };
-
-            mappingPresets = [ "insert" "cmdline" ];
 
             # Setting this means we don't need to explicitly enable
             # each completion source, so long as the plugin is listed
-            # in https://github.com/pta2002/nixvim/blob/794356625c19e881b4eae3bbbb078f3299f5c81d/plugins/completion/nvim-cmp/cmp-helpers.nix#L22
+            # in https://github.com/nix-community/nixvim/blob/cd32dcd50fa98cd03e2916b6fd47e31deffbca24/plugins/completion/cmp/cmp-helpers.nix#L23
             autoEnableSources = true;
-            sources = [
+
+            settings = {
+              mapping.__raw = /* lua */ ''
+                cmp.mapping.preset.insert({
+                  ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Use first if none selected
+                  ["<C-CR>"] = cmp.mapping.confirm({ select = true }), -- C-y alias
+                  ["<CR>"] = cmp.mapping.confirm(), -- Return can confirm if selected
+                  ["<C-Space>"] = cmp.mapping.complete(), -- Open list without typing
+                })
+              '';
+
+              sources = [
+                {
+                  name = "emoji";
+                  groupIndex = 1;
+                }
+                {
+                  name = "nvim_lsp";
+                  groupIndex = 2;
+                }
+                {
+                  name = "treesitter";
+                  groupIndex = 2;
+                }
+                {
+                  name = "spell";
+                  groupIndex = 2;
+                }
+                {
+                  name = "luasnip";
+                  groupIndex = 3;
+                }
+              ];
+            };
+
+            filetype = {
+              gitcommit = {
+                sources = [
+                  { name = "conventionalcommits"; }
+                  { name = "git"; }
+                  { name = "emoji"; }
+                  { name = "path"; }
+                ];
+              };
+            };
+
+            cmdline =
+              let
+                common = {
+                  mapping.__raw = /* lua */ ''
+                    cmp.mapping.preset.cmdline({
+                      ["<C-Space>"] = cmp.mapping.complete(), -- Open list without typing
+                    })
+                  '';
+                  sources = [{ name = "buffer"; }];
+                };
+              in
               {
-                name = "buffer";
-                groupIndex = 4;
-              }
-              {
-                name = "nvim_lsp";
-                groupIndex = 2;
-              }
-              {
-                name = "luasnip";
-                groupIndex = 3;
-              }
-              {
-                name = "treesitter";
-                groupIndex = 2;
-              }
-              # { name = "dap"; groupIndex = 1; }
-              # { name = "copilot"; groupIndex = 1; }
-              {
-                name = "git";
-                groupIndex = 1;
-              }
-              {
-                name = "conventionalcommits";
-                groupIndex = 1;
-              }
-              {
-                name = "spell";
-                groupIndex = 2;
-              }
-              {
-                name = "emoji";
-                groupIndex = 1;
-              }
-            ];
+                "/" = common;
+                "?" = common;
+                ":" = {
+                  inherit (common) mapping;
+                  sources = [
+                    { name = "path"; }
+                    { name = "cmdline"; }
+                  ];
+                };
+              };
           };
 
           luasnip.enable = true; # TODO install snippets
