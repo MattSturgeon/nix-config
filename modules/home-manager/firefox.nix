@@ -129,6 +129,9 @@ in
             # Disable autoplay
             "media.autoplay.default" = 5;
 
+            # Prefer dark theme
+            "layout.css.prefers-color-scheme.content-override" = 0; # 0: Dark, 1: Light, 2: Auto
+
             # HTTPS only
             "dom.security.https_only_mode" = true;
 
