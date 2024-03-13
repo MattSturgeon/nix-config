@@ -3,10 +3,10 @@
     # Set time zone.
     time.timeZone = "Europe/London";
 
-    # Configure keymap in X11
-    services.xserver = {
+    # Configure graphical keymap
+    services.xserver.xkb = {
       layout = "gb";
-      xkbVariant = "";
+      variant = "";
     };
 
     # Configure console keymap
