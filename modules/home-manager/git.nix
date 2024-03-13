@@ -1,10 +1,16 @@
-{ ... }: {
+{ config
+, ...
+}:
+let
+  user = config.custom.user;
+in
+{
   # TODO get name, email, & key from config or user
   config = {
     programs.git = {
       enable = true;
-      userName = "Matt Sturgeon";
-      userEmail = "matt@sturgeon.me.uk";
+      userName = user.description;
+      userEmail = user.email;
       signing = {
         key = "ED1A8299";
         signByDefault = true;
