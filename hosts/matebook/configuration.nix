@@ -1,14 +1,9 @@
-{ lib
-, hardware
+{ hardware
 , ...
 }: {
   custom = {
     boot.splash = true;
     desktop.gnome = true;
-  };
-
-  nixpkgs = {
-    config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "vscode" "vscode-extension-github-codespaces" "vscode-extension-ms-vscode-cpptools" ];
   };
 
   imports = with hardware.nixosModules; [
