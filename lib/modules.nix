@@ -1,8 +1,5 @@
 { lib, ... }:
-let
-  inherit (lib) mkOrder;
-in
-{
+with lib; {
   modules = {
     /*
       Like `mkBefore`, but higher priority.
@@ -13,5 +10,10 @@ in
       Like `mkAfter`, but lower priority.
     */
     mkLast = mkOrder 2000;
+
+    /*
+      Wrap `mkIf`, predicated on the value not being null.
+    */
+    nullableMkIf = attrs: mkIf (attrs != null) attrs;
   };
 }

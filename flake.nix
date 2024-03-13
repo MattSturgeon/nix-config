@@ -31,22 +31,13 @@
       inherit (self) outputs;
 
       # Inherit some functions from ./lib
-      inherit (outputs.lib) mkNixOSConfig mkHMConfig;
+      inherit (outputs.lib.system) mkSystemConfig mkHomeConfig;
       inherit (outputs.lib.util) forAllSystems importChildren;
 
       # Define module lists, used in mkNixOSConfig & mkHMConfig
       commonModules = importChildren ./modules/common;
       nixosModules = commonModules ++ (importChildren ./modules/nixos);
       homeManagerModules = importChildren ./modules/home-manager;
-
-      # Define my user, used by most configurations
-      # see initUser in lib/user.nix
-      userMatt = {
-        name = "matt";
-        description = "Matt Sturgeon";
-        initialPassword = "init";
-        isAdmin = true;
-      };
     in
     {
       # Use the beta nixpkgs-fmt
@@ -60,20 +51,21 @@
       lib = import ./lib { inherit inputs outputs; };
 
       # NixOS configurations
+      # TODO could mapAttrs these...
       nixosConfigurations = {
-        matebook = mkNixOSConfig {
+        matebook = mkSystemConfig {
           inherit nixosModules homeManagerModules;
           hostname = "matebook";
-          hmUsers = [ userMatt ];
         };
       };
 
       # Standalone home-manager configuration entrypoint
+      # TODO could mapAttrs these...
       homeConfigurations = {
-        "matt@desktop" = mkHMConfig {
+        "matt@desktop" = mkHomeConfig {
           modules = commonModules ++ homeManagerModules;
+          username = "matt";
           hostname = "desktop";
-          user = userMatt;
         };
       };
     };

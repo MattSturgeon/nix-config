@@ -1,0 +1,4 @@
+description = "Matt Sturgeon"
+email = "matt@sturgeon.me.uk"
+initialPassword = "init"
+admin = true

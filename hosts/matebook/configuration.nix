@@ -4,6 +4,10 @@
   custom = {
     boot.splash = true;
     desktop.gnome = true;
+
+    # Enable user "matt"
+    users.matt.enable = true;
+    users.matt.home-manager-config = ./home.nix; # TODO compute this dynamically
   };
 
   imports = with hardware.nixosModules; [
