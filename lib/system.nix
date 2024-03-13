@@ -37,7 +37,6 @@ let
           {
             networking.hostName = hostname;
           }
-          inputs.nur.nixosModules.nur
         ]
         ++ nixosModules
         ++ (
@@ -49,9 +48,7 @@ let
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
-              home-manager.sharedModules =
-                homeManagerModules
-                ++ [ inputs.nur.hmModules.nur ];
+              home-manager.sharedModules = homeManagerModules;
             }
           ]
         );
@@ -69,7 +66,6 @@ let
       modules = modules ++ [
         (mkHMUserModule user)
         (getHomeConfig ../hosts/${hostname} user.name)
-        inputs.nur.hmModules.nur
       ];
     };
 in

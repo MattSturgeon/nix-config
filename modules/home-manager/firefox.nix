@@ -2,6 +2,7 @@
 , lib
 , util
 , pkgs
+, inputs
 , ...
 }:
 let
@@ -9,6 +10,9 @@ let
   inherit (util.modules) mkFirst;
   cfg = config.custom.browsers.firefox;
   otherHost = config.custom.otherHost.enable;
+
+  # Rycee firefox-addons packages
+  firefox-addons = inputs.firefox-addons.packages.${pkgs.system};
 in
 {
   options.custom.browsers.firefox = {
@@ -55,7 +59,7 @@ in
           name = "Matt Sturgeon";
           isDefault = true;
 
-          extensions = with config.nur.repos.rycee.firefox-addons; [
+          extensions = with firefox-addons; [
             darkreader
             refined-github
             violentmonkey
