@@ -26,8 +26,6 @@ with builtins; let
     }: nixosSystem {
       inherit system specialArgs;
       modules = nixosModules ++ [
-        ../hosts/${hostname}/configuration.nix
-        ../hosts/${hostname}/hardware-configuration.nix
         {
           # Configure hostname
           networking.hostName = hostname;
@@ -36,6 +34,7 @@ with builtins; let
           home-manager.sharedModules = homeManagerModules;
         }
         inputs.home-manager.nixosModules.home-manager
+        (getSystemConfig hostname)
       ];
     };
 
@@ -57,27 +56,14 @@ with builtins; let
           home.username = username;
           home.homeDirectory = home;
         }
-        # TODO get config from ../home
-        (getHomeConfig ../hosts/${hostname} username)
+        (getHomeConfig hostname username)
       ];
     };
 
-  # Return the path to either 'home.nix' or '<username>.nix' in 'dir'.
-  # If neither or both exist, the function will abort.
-  # TODO refactor to use /users/name/home.nix
-  #   or maybe have the user config specify path to home-manager config?
-  getHomeConfig = dir: username:
-    let
-      count = length matches;
-      chilren = nixChildren dir;
-      matches = filter (file: elem (baseNameOf file) [ "home.nix" (username + ".nix") ]) chilren;
-    in
-    # Return the path to the (only) match.
-    if count == 1 then head matches
-    else if count > 1 # Abort if there isn't exactly one match.
-    then abort "Multiple home files (${toString count}) found for ${username} in ${dir}"
-    else abort "No valid home file found for ${username} in ${dir}";
+  getSystemConfig = username: ../system/${username}/default.nix;
+
+  getHomeConfig = hostname: username: ../home + "/${username}@${hostname}/default.nix";
 in
 {
-  system = { inherit mkSystemConfig mkHomeConfig defaultSystem; };
+  system = { inherit mkSystemConfig mkHomeConfig getSystemConfig getHomeConfig defaultSystem; };
 }

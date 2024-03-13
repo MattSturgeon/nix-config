@@ -7,7 +7,6 @@
 
     # Enable user "matt"
     users.matt.enable = true;
-    users.matt.home-manager-config = ./home.nix; # TODO compute this dynamically
   };
 
   imports = with hardware.nixosModules; [
@@ -18,6 +17,7 @@
     common-gpu-nvidia-disable # Disable MX150 for better battery
     common-pc-laptop-ssd
     common-hidpi
+    ./hardware-configuration.nix
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
