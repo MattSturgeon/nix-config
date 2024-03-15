@@ -51,10 +51,10 @@
     {
       # Use the beta nixpkgs-fmt
       # Alejandra is too strict...
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixpkgs-fmt);
+      formatter = forAllSystems (system: pkgs: pkgs.nixpkgs-fmt);
 
       # Define a bootstrapping shell, used by `nix develop`
-      devShells = forAllSystems (system: import ./shell.nix { pkgs = nixpkgs.legacyPackages.${system}; });
+      devShells = forAllSystems (system: pkgs: import ./shell.nix { inherit pkgs; });
 
       # Custom library functions
       lib = import ./lib { inherit inputs outputs; };
