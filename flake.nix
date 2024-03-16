@@ -61,12 +61,19 @@
 
       # Standalone home-manager configuration entrypoint
       # TODO could mapAttrs these...
-      homeConfigurations = {
-        "matt@desktop" = mkHomeConfig {
-          modules = commonModules ++ homeManagerModules;
-          username = "matt";
-          hostname = "desktop";
-        };
-      };
+      homeConfigurations = with builtins; mapAttrs
+        (name: ftype:
+          let
+            lib = nixpkgs.lib;
+            parts = lib.splitString "@" name;
+          in
+          mkHomeConfig
+            {
+              modules = commonModules ++ homeManagerModules;
+              username = head parts;
+            } // (lib.optionalAttrs (length parts == 2) {
+            hostname = elemAt parts 1;
+          }))
+        (readDir ./home);
     };
 }
