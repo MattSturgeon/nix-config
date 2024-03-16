@@ -52,6 +52,9 @@ let
     };
   };
 
+  # Wrap util's `getHomeConfig`, using the system hostname
+  getHomeConfig = util.system.getHomeConfig config.networking.hostName;
+
   # Enabled users
   users = lib.filterAttrs (_: user: user.enable) config.custom.users;
 in
@@ -65,7 +68,7 @@ in
 
   config = {
     # Load user definitions
-    custom.users = util.users;
+    custom.users = lib.mapAttrs (name: user: { home-manager-config = lib.mkDefault (getHomeConfig name); } // user) util.users;
 
     # Map user definitions to NixOS user configs
     users.users = builtins.mapAttrs

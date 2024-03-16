@@ -7,6 +7,7 @@
 with builtins; let
   inherit (lib) nixosSystem;
   inherit (inputs.home-manager.lib) homeManagerConfiguration;
+  inherit (util.util) nullableAttrs;
   inherit (util.util) nixChildren;
 
   # Platform to use when system is not provided
@@ -46,7 +47,11 @@ with builtins; let
     , system ? defaultSystem
     , modules ? [ ]
     , ...
-    }: homeManagerConfiguration {
+    }:
+    let
+      config = getHomeConfig hostname username;
+    in
+    homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       extraSpecialArgs = specialArgs;
       modules = modules ++ [
@@ -56,13 +61,18 @@ with builtins; let
           home.username = username;
           home.homeDirectory = home;
         }
-        (getHomeConfig hostname username)
+        (nullableAttrs config)
       ];
     };
 
   getSystemConfig = username: ../system/${username}/default.nix;
 
-  getHomeConfig = hostname: username: ../home + "/${username}@${hostname}/default.nix";
+  getHomeConfig = hostname: username:
+    let
+      names = [ "${username}@${hostname}" username ];
+      files = map (name: ../home/${name}/default.nix) names;
+    in
+    lib.findFirst pathExists null files;
 in
 {
   system = { inherit mkSystemConfig mkHomeConfig getSystemConfig getHomeConfig defaultSystem; };

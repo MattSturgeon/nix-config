@@ -23,5 +23,15 @@ in
     # Import all children of the directory, including default.nix files in child directories.
     # Note: not actually recursive; grandchildren (etc) are not imported.
     importChildren = dir: importAll (nixChildren dir);
+
+    /*
+      Return the value, or an empty set if the value is null.
+    */
+    nullableAttrs = attrs: optionalAttrs (attrs != null) attrs;
+
+    /*
+      Return the value, or an empty list if the value is null.
+    */
+    nullableList = list: if list == null then [ ] else list;
   };
 }
