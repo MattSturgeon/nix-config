@@ -49,6 +49,7 @@ in
       enable = true;
       keyMode = "vi";
       mouse = true;
+      escapeTime = 0; # Prevent Esc delay
       baseIndex = 1; # Count sessions from 1
       newSession = true; # Spawn when failing to attach
       historyLimit = 10000;
