@@ -23,4 +23,4 @@ jobs:
           pr-labels: dependencies
           pr-assignees: MattSturgeon
       - name: Print PR number
-        run: echo "Pull request #${{ steps.update.outputs.pull-request-number }}."
+        run: echo "Pull request \#${{ steps.update.outputs.pull-request-number }}."
