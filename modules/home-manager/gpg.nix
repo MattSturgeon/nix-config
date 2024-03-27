@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, pkgs, ... }:
 let
   # Time units
   m = 60;
@@ -22,7 +22,7 @@ in
       defaultCacheTtlSsh = 8 * h;
       maxCacheTtl = 128 * y;
       maxCacheTtlSsh = 128 * y;
-      pinentryFlavor = "gnome3"; # TODO select based on config
+      pinentryPackage = if config.gtk.enable then pkgs.gcr_4 else pkgs.pinentry-curses;
       grabKeyboardAndMouse = true;
     };
   };

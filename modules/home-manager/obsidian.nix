@@ -38,7 +38,7 @@ in
     # Setup obsidian.nvim if neovim is enabled
     programs.nixvim.plugins.obsidian = mkIf nvim {
       enable = true;
-      workspaces = mapAttrsToList (name: path: { inherit name path; }) cfg.vaults;
+      settings.workspaces = mapAttrsToList (name: path: { inherit name path; }) cfg.vaults;
     };
 
     # TODO configure syncthing to sync obsidian vault
