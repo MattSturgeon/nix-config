@@ -2,6 +2,8 @@
   description = "My nix config";
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hardware.url = "github:nixos/nixos-hardware";
@@ -22,59 +24,23 @@
     tmux-which-key.flake = false;
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , ...
-    } @ inputs:
-    let
-      inherit (self) outputs;
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
 
-      # Inherit some functions from ./lib
-      inherit (outputs.lib) mkNixOSConfig mkHMConfig;
-      inherit (outputs.lib.util) forAllSystems importChildren;
+      imports = [
+        ./lib/flake-module.nix
+        ./modules/flake-module.nix
+        ./hosts/flake-module.nix
+      ];
 
-      # Define module lists, used in mkNixOSConfig & mkHMConfig
-      commonModules = importChildren ./modules/common;
-      nixosModules = commonModules ++ (importChildren ./modules/nixos);
-      homeManagerModules = importChildren ./modules/home-manager;
+      perSystem = { config, self', inputs', pkgs, ... }: {
+        # Define a bootstrapping shell, used by `nix develop`
+        devShells = import ./shell.nix { inherit pkgs; };
 
-      # Define my user, used by most configurations
-      # see initUser in lib/user.nix
-      userMatt = {
-        name = "matt";
-        description = "Matt Sturgeon";
-        initialPassword = "init";
-        isAdmin = true;
-      };
-    in
-    {
-      # Use the beta nixpkgs-fmt
-      # Alejandra is too strict...
-      formatter = forAllSystems (system: pkgs: pkgs.nixpkgs-fmt);
-
-      # Define a bootstrapping shell, used by `nix develop`
-      devShells = forAllSystems (system: pkgs: import ./shell.nix { inherit pkgs; });
-
-      # Custom library functions
-      lib = import ./lib { inherit inputs outputs; };
-
-      # NixOS configurations
-      nixosConfigurations = {
-        matebook = mkNixOSConfig {
-          inherit nixosModules homeManagerModules;
-          hostname = "matebook";
-          hmUsers = [ userMatt ];
-        };
-      };
-
-      # Standalone home-manager configuration entrypoint
-      homeConfigurations = {
-        "matt@desktop" = mkHMConfig {
-          modules = commonModules ++ homeManagerModules;
-          hostname = "desktop";
-          user = userMatt;
-        };
+        # Use the beta nixpkgs-fmt
+        # Alejandra is too strict...
+        formatter = pkgs.nixpkgs-fmt;
       };
     };
 }

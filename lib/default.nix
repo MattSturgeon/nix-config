@@ -1,5 +1,5 @@
-{ inputs
-, outputs
+{ self
+, inputs
 , ...
 } @ attrs:
 let
@@ -45,7 +45,7 @@ let
   # Arguments to pass to each imported sibling
   args = {
     inherit lib;
-    util = outputs.lib;
+    util = self.lib;
   } // attrs;
 in
 # Merge everything in lib/, including functions defined above

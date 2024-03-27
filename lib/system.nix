@@ -1,7 +1,7 @@
 { util
 , lib
 , inputs
-, outputs
+, self
 , ...
 }:
 let
@@ -16,7 +16,7 @@ let
   # Include all inputs in specialArgs;
   # now we don't have to overlay stuff into nixpkgs
   specialArgs = inputs // {
-    inherit inputs outputs util;
+    inherit inputs self util;
   };
 
   # Build a NixOS config, including Home Manager configs for any hmUsers specified
