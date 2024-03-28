@@ -115,31 +115,31 @@ in
           {
             mode = "n";
             key = "<leader>re";
-            action = "<cmd>Refactor extract_var ";
+            action = ":Refactor extract_var ";
             options.desc = "Extract to variable";
           }
           {
             mode = "n";
             key = "<leader>rE";
-            action = "<cmd>Refactor extract ";
+            action = ":Refactor extract ";
             options.desc = "Extract to function";
           }
           {
             mode = "n";
             key = "<leader>rb";
-            action = "<cmd>Refactor extract_block ";
+            action = ":Refactor extract_block ";
             options.desc = "Extract to block";
           }
           {
             mode = "n";
             key = "<leader>ri";
-            action = "<cmd>Refactor inline_var ";
+            action = ":Refactor inline_var ";
             options.desc = "Inline variable";
           }
           {
             mode = "n";
             key = "<leader>rI";
-            action = "<cmd>Refactor inline_func ";
+            action = ":Refactor inline_func ";
             options.desc = "Inline function";
           }
         ];
