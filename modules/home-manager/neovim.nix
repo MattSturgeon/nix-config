@@ -69,7 +69,6 @@ in
             mode = [ "n" "v" ];
             key = "<C-Space>";
             action = "<cmd>WhichKey<CR>";
-            options.silent = true;
             options.desc = "Which Key";
           }
 
@@ -80,7 +79,6 @@ in
             # Workaround which-key.nvim issue #583
             # Call :WhichKey manually, delegating <C-w>
             action = "<cmd>WhichKey <C-w><CR>";
-            options.silent = true;
             options.desc = "+windows";
           }
 
@@ -89,14 +87,12 @@ in
             mode = "n";
             key = "<leader>bn";
             action = "<cmd>bn<CR>";
-            options.silent = true;
             options.desc = "Go to next buffer";
           }
           {
             mode = "n";
             key = "<leader>bp";
             action = "<cmd>bp<CR>";
-            options.silent = true;
             options.desc = "Go to previous buffer";
           }
 
