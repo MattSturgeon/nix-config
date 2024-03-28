@@ -82,7 +82,7 @@ in
             options.desc = "+windows";
           }
 
-          # Buffer motions
+          # Buffers
           {
             mode = "n";
             key = "<leader>bn";
@@ -94,6 +94,12 @@ in
             key = "<leader>bp";
             action = "<cmd>bp<CR>";
             options.desc = "Go to previous buffer";
+          }
+          {
+            mode = "n";
+            key = "<leader>bd";
+            action = "<cmd>bd<CR>";
+            options.desc = "Delete the current buffer";
           }
 
           # Refactoring
