@@ -43,7 +43,7 @@ in
           mapleader = " ";
         };
 
-        options = {
+        opts = {
           number = true; # Line numbers
           relativenumber = true; # ^Relative
           shiftwidth = 4; # Tab width
@@ -157,7 +157,7 @@ in
         plugins = {
           fugitive.enable = true;
           lualine.enable = true;
-          comment-nvim.enable = true;
+          comment.enable = true;
           todo-comments.enable = true;
           refactoring.enable = true;
 
@@ -172,15 +172,12 @@ in
 
           gitsigns = {
             enable = true;
-            # The right alighed virtext was getting annoying; when the window is small it can clobber actual text!
-            # Disable git blame for now
-            currentLineBlame = false;
-            # currentLineBlameOpts.virtTextPos = "right_align";
+            settings.current_line_blame = false;
           };
 
           indent-blankline = {
             enable = true;
-            indent.char = "¦";
+            settings.indent.char = "¦";
           };
 
           mini = {
