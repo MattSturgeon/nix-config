@@ -4,6 +4,9 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hardware.url = "github:nixos/nixos-hardware";
@@ -32,6 +35,7 @@
         ./lib/flake-module.nix
         ./modules/flake-module.nix
         ./hosts/flake-module.nix
+        ./isos/flake-module.nix
       ];
 
       perSystem = { config, self', inputs', pkgs, ... }: {

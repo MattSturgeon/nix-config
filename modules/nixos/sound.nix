@@ -3,8 +3,8 @@
 , pkgs
 , ...
 }:
+with lib;
 let
-  inherit (lib) mkEnableOption;
   cfg = config.custom.sound;
 in
 {
@@ -14,7 +14,7 @@ in
 
   config = {
     # pipewire and pulseaudio conflict
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio.enable = mkForce false;
 
     # nixos.wiki recomends using rtkit with pipewire
     security.rtkit.enable = true;
