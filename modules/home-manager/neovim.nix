@@ -1,7 +1,7 @@
 { config
 , lib
 , pkgs
-, nixvim
+, inputs
 , ...
 }:
 let
@@ -9,7 +9,7 @@ let
   cfg = config.custom.editors;
 in
 {
-  imports = [ nixvim.homeManagerModules.nixvim ];
+  imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
   options.custom.editors.nvim = mkOption {
     type = types.bool;

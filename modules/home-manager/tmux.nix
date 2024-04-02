@@ -1,7 +1,7 @@
 { config
 , lib
 , pkgs
-, tmux-which-key
+, inputs
 , ...
 }:
 let
@@ -25,8 +25,8 @@ let
   extraPlugins = map mkPlugin [
     {
       pluginName = "tmux-which-key";
-      version = tmux-which-key.shortRev;
-      src = tmux-which-key;
+      version = inputs.tmux-which-key.shortRev;
+      src = inputs.tmux-which-key;
       rtpFilePath = "plugin.sh.tmux";
       extraConfig = ''
         # Use XDG config file for which-key plugin

@@ -1,4 +1,4 @@
-{ hardware
+{ inputs
 , ...
 }: {
   custom = {
@@ -6,7 +6,7 @@
     desktop.gnome = true;
   };
 
-  imports = with hardware.nixosModules; [
+  imports = with inputs.hardware.nixosModules; [
     # Hardware
     # intelBusId = "PCI:0:2:0"; nvidiaBusId = "PCI:1:0:0";
     common-cpu-intel
@@ -14,6 +14,7 @@
     common-gpu-nvidia-disable # Disable MX150 for better battery
     common-pc-laptop-ssd
     common-hidpi
+    ./hardware-configuration.nix
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

@@ -1,7 +1,7 @@
 { config
 , lib
 , pkgs
-, nixgl
+, inputs
 , ...
 }:
 let
@@ -86,6 +86,6 @@ in
       else [ ];
 
     # Overlay configured packages with wrapped versions
-    nixpkgs.overlays = with cfg; [ nixgl.overlay ] ++ (mkOverlays glWrapper glPackages) ++ (mkOverlays vkWrapper vkPackages);
+    nixpkgs.overlays = with cfg; [ inputs.nixgl.overlay ] ++ (mkOverlays glWrapper glPackages) ++ (mkOverlays vkWrapper vkPackages);
   };
 }

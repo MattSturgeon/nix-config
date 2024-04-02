@@ -1,13 +1,13 @@
 { config
 , lib
-, util
 , pkgs
+, self
 , inputs
 , ...
 }:
 let
   inherit (lib) types mkIf mkOption;
-  inherit (util.modules) mkFirst;
+  inherit (self.lib.modules) mkFirst;
   cfg = config.custom.browsers.firefox;
   otherHost = config.custom.otherHost.enable;
 
