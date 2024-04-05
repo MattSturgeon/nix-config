@@ -29,6 +29,7 @@
       systems = [ "x86_64-linux" "aarch64-darwin" ];
 
       imports = [
+        ./home-manager.nix # Until merged upstream
         ./lib/flake-module.nix
         ./nvim/flake-module.nix
         ./modules/flake-module.nix
