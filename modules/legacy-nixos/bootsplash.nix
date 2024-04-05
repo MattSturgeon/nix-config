@@ -18,6 +18,8 @@ in
         theme = "breeze";
       };
       kernelParams = [ "quiet" ];
+
+      # Enabling systemd init allows plymouth to start earlier
       initrd.systemd.enable = true;
     };
   };
