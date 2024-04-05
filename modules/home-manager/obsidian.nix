@@ -35,11 +35,12 @@ in
 
     # TODO obsidian vimrc
 
+    # TODO move to standalone nixvim OR use nvim.nixvimExtend
     # Setup obsidian.nvim if neovim is enabled
-    programs.nixvim.plugins.obsidian = mkIf nvim {
-      enable = true;
-      settings.workspaces = mapAttrsToList (name: path: { inherit name path; }) cfg.vaults;
-    };
+    # programs.nixvim.plugins.obsidian = mkIf nvim {
+    #   enable = true;
+    #   settings.workspaces = mapAttrsToList (name: path: { inherit name path; }) cfg.vaults;
+    # };
 
     # TODO configure syncthing to sync obsidian vault
   };
