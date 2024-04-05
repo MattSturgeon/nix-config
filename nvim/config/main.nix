@@ -166,7 +166,6 @@
     telescope = {
       enable = true;
       extensions = {
-        frecency.enable = true;
         fzf-native.enable = true;
         media_files.enable = true;
       };
