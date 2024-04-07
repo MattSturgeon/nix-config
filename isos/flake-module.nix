@@ -11,14 +11,9 @@ in
           inherit system specialArgs;
           modules = [
             self.nixosModules.common
-            self.nixosModules.nixos
             inputs.home-manager.nixosModules.home-manager
             {
               # TODO move to a separate configuration file
-              custom = {
-                boot.splash = true;
-                desktop.gnome = true;
-              };
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
