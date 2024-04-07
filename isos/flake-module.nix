@@ -32,6 +32,9 @@ in
               (modulesPath + "/installer/cd-dvd/installation-cd-graphical-gnome.nix")
             ];
 
+            # Use a faster compression algorithm to speed up build times
+            isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+
             formatAttr = "isoImage";
             fileExtension = ".iso";
           };
