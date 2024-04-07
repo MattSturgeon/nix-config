@@ -30,6 +30,7 @@ let
         self.nixosModules.nixos
         inputs.home-manager.nixosModules.home-manager
         {
+          networking.hostName = lib.mkDefault name;
           users.users.${username} = {
             description = fullname;
             extraGroups = [ "wheel" "networkmanager" ];

@@ -80,8 +80,5 @@ in
         command_alias_start_index = 200;
       };
     };
-
-    # Enable tmux-navigator in vim too
-    programs.nixvim.plugins.tmux-navigator.enable = true;
   };
 }
