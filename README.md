@@ -15,6 +15,13 @@ The `.#config` part is optional if your system hostname matches the name of the 
 If the host is not running NixOS (or is configured seperately from home-manager) use `home-manager` instead of `nixos-rebuild`
 to build the standalone config: E.g. `home-manager switch --flake .#matt@desktop`.
 
+## Live USB
+
+A custom bootable ISO can be generated using `nix build .#installer` and then flashed using `dd`, `gnome-disks` or similar.
+
+The bootable ISO contains much of my normal configuration for convenience. As time goes on I plan to ensure that useful tools
+and scripts are also included.
+
 ## Updating
 
 Update the flake loak file by using `nix flake update`, optionally with `--commit-lock-file`.
