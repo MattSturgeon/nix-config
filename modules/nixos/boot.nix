@@ -18,6 +18,5 @@ in
   config = {
     boot.loader.systemd-boot.enable = cfg.manager == "systemd-boot";
     boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.efi.efiSysMountPoint = "/boot/efi"; # FIXME define with hardware config or disko? Or use default (/boot)?
   };
 }

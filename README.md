@@ -15,6 +15,20 @@ The `.#config` part is optional if your system hostname matches the name of the 
 If the host is not running NixOS (or is configured seperately from home-manager) use `home-manager` instead of `nixos-rebuild`
 to build the standalone config: E.g. `home-manager switch --flake .#matt@desktop`.
 
+## Fresh install
+
+To install for the first time, from a live USB, first run `disko` to create the partition layout, then run `nixos-install`.
+
+```shell
+sudo disko --flake github:MattSturgeon/nix-config#matebook --mode disko
+sudo nixos-install --flake github:MattSturgeon/nix-config#matebook --no-root-password
+```
+
+`disko` will wipe the disk specified in `matebook`'s disko config, create the partitions, and mount them at `/mnt`.
+
+`nixos-install` will install the `matebook` nixos configuration into `/mnt`.
+
+
 ## Live USB
 
 A custom bootable ISO can be generated using `nix build .#installer` and then flashed using `dd`, `gnome-disks` or similar.

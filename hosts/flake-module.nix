@@ -28,6 +28,8 @@ let
         ./${name}/configuration.nix
         self.nixosModules.common
         self.nixosModules.nixos
+        inputs.disko.nixosModules.default
+        inputs.impermanence.nixosModules.impermanence
         inputs.home-manager.nixosModules.home-manager
         {
           networking.hostName = lib.mkDefault name;
