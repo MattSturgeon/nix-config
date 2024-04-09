@@ -24,6 +24,7 @@ in
                   home.stateVersion = "23.11";
                 };
               };
+              boot.kernelParams = [ "copytoram" ];
               nix.settings.experimental-features = "nix-command flakes";
             }
           ];
