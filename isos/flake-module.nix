@@ -24,6 +24,7 @@ in
                   home.stateVersion = "23.11";
                 };
               };
+              nix.settings.experimental-features = "nix-command flakes";
             }
           ];
           format = "gnome-installer-iso";
