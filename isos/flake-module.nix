@@ -12,7 +12,7 @@ in
           modules = [
             self.nixosModules.common
             inputs.home-manager.nixosModules.home-manager
-            {
+            ({ pkgs, ... }: {
               # TODO move to a separate configuration file
               home-manager = {
                 useGlobalPkgs = true;
@@ -26,7 +26,10 @@ in
               };
               boot.kernelParams = [ "copytoram" ];
               nix.settings.experimental-features = "nix-command flakes";
-            }
+              environment.systemPackages = with pkgs; [
+                disko
+              ];
+            })
           ];
           format = "gnome-installer-iso";
           customFormats.gnome-installer-iso = { modulesPath, ... }: {
