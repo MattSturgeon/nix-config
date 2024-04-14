@@ -22,8 +22,24 @@ in
       defaultCacheTtlSsh = 8 * h;
       maxCacheTtl = 128 * y;
       maxCacheTtlSsh = 128 * y;
-      pinentryPackage = if config.gtk.enable then pkgs.gcr_4 else pkgs.pinentry-curses;
+      # TODO make this platform-dependant
+      # TODO use gcr_4
+      pinentryPackage = pkgs.pinentry-gnome3;
       grabKeyboardAndMouse = true;
+      sshKeys = [
+        "EC516C4E1E481414EBDE388868B6F9F70B6727FD"
+      ];
+    };
+
+    xdg = {
+      enable = true;
+      # Disable gnome-keyring's ssh-agent
+      # TODO make this platform-dependant
+      configFile."autostart/gnome-keyring-ssh.desktop".text = ''
+        [Desktop Entry]
+        Type=Application
+        Hidden=true
+      '';
     };
   };
 
