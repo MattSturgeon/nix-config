@@ -4,8 +4,10 @@
 
   colorschemes.catppuccin = {
     enable = true;
-    background.light = "macchiato";
-    background.dark = "mocha";
+    settings = {
+      background.light = "macchiato";
+      background.dark = "mocha";
+    };
   };
 
   luaLoader.enable = true;
@@ -167,12 +169,12 @@
       enable = true;
       extensions = {
         fzf-native.enable = true;
-        media_files.enable = true;
+        media-files.enable = true;
       };
       keymaps = {
         "<leader>bb" = {
           action = "buffers";
-          desc = "List buffers";
+          options.desc = "List buffers";
         };
       };
     };
