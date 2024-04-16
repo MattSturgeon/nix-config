@@ -63,7 +63,7 @@ in
       hideMounts = true;
       directories = [
         "/etc" # Persist all of /etc because /etc/shadow can't be symlinked
-        "/etc/NetworkManager"
+        # "/etc/NetworkManager"
         "/var/log"
         "/var/lib/bluetooth"
         "/var/lib/nixos"
@@ -71,7 +71,7 @@ in
         { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "0755"; }
       ];
       files = [
-        "/etc/machine-id"
+        # "/etc/machine-id"
       ];
     };
   };
