@@ -12,7 +12,7 @@ If the experimental feature `nix-command` and `flakes` not enabled, run `nix-she
 Run `nixos-rebuild switch --flake .#config` to install the NixOS system, replacing `config` with the name of the configuration.
 The `.#config` part is optional if your system hostname matches the name of the configuration.
 
-If the host is not running NixOS (or is configured seperately from home-manager) use `home-manager` instead of `nixos-rebuild`
+If the host is not running NixOS (or is configured separately from home-manager) use `home-manager` instead of `nixos-rebuild`
 to build the standalone config: E.g. `home-manager switch --flake .#matt@desktop`.
 
 ## Fresh install
@@ -38,11 +38,11 @@ and scripts are also included.
 
 ## Updating
 
-Update the flake loak file by using `nix flake update`, optionally with `--commit-lock-file`.
+Update the flake lock file by using `nix flake update`, optionally with `--commit-lock-file`.
 
 Once the lock file is updated you'll still need to install using `nixos-rebuild` or `home-manager`.
 See the [installing](#installing) section above.
 
-On a non-NixOS system, the nix package manager will also need to be managed seperately.
+On a non-NixOS system, the nix package manager will also need to be managed separately.
 It can be updated using `nix upgrade-nix`.
 
