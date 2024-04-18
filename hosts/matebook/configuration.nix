@@ -5,6 +5,7 @@
     boot.splash = true;
     desktop.gnome = true;
     impermanence.enable = true;
+    battery.optimise = true;
   };
 
   imports = with inputs.hardware.nixosModules; [
