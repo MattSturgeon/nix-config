@@ -29,16 +29,12 @@
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
+                    "/home" = {
+                      mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "/nix" = {
                       mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    "/home" = {
-                      mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
                     "/persist" = {
@@ -60,5 +56,10 @@
   };
   fileSystems = {
     "/persist".neededForBoot = true;
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=4G" "mode=755" ];
+    };
   };
 }
