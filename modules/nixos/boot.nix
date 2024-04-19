@@ -18,5 +18,10 @@ in
   config = {
     boot.loader.systemd-boot.enable = cfg.manager == "systemd-boot";
     boot.loader.efi.canTouchEfiVariables = true;
+
+    # Disable boot timeout.
+    # Spam "almost any key" to show the menu (<space> work well).
+    # Or run: systemctl reboot --boot-loader-menu=0
+    boot.loader.timeout = 0;
   };
 }
