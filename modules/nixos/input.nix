@@ -1,7 +1,7 @@
 { ... }: {
   # TODO gate behind server/desktop/laptop "feature" group?
   config = {
-    services.xserver.libinput = {
+    services.libinput = {
       enable = true;
       mouse = {
         accelProfile = "adaptive";
