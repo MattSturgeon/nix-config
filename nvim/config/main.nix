@@ -185,8 +185,10 @@
     };
     treesitter-context = {
       enable = true;
-      maxLines = 4;
-      minWindowHeight = 40;
+      settings = {
+        max_lines = 4;
+        min_window_height = 40;
+      };
     };
 
     cmp = {
