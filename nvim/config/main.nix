@@ -81,10 +81,9 @@
     {
       mode = "n";
       key = "<leader>rr";
-      action = /* lua */ ''
-        function() require("telescope").extensions.refactoring.refactors() end
+      action.__raw = /* lua */ ''
+        require("telescope").extensions.refactoring.refactors
       '';
-      lua = true;
       options.desc = "Select refactor";
     }
     {
@@ -134,7 +133,12 @@
     lualine.enable = true;
     comment.enable = true;
     todo-comments.enable = true;
-    refactoring.enable = true;
+    sleuth.enable = true; # tpope's indent fixes
+
+    refactoring = {
+      enable = true;
+      enableTelescope = true;
+    };
 
     which-key = {
       enable = true;
@@ -344,11 +348,5 @@
 
   extraPlugins = with pkgs.vimPlugins; [
     vim-be-good # vim motions minigames
-    vim-sleuth # tpope's indent fixes
   ];
-
-  extraConfigLuaPre = /* lua */ ''
-    -- load refactoring.nvim Telescope extension
-    require("telescope").load_extension("refactoring")
-  '';
 }
