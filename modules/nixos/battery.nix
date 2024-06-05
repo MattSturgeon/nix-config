@@ -1,6 +1,8 @@
-{ config, lib, ... }: let
+{ config, lib, ... }:
+let
   cfg = config.custom.battery;
-in {
+in
+{
   options.custom.battery = {
     optimise = lib.mkEnableOption "battery optimizations";
   };
