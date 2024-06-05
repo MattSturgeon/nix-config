@@ -323,7 +323,21 @@
         html.enable = true;
         java-language-server.enable = true;
         lua-ls.enable = true;
-        nil_ls.enable = true; # Nix LS
+        nixd = {
+          # Nix LS
+          enable = true;
+          settings = {
+            # TODO: we can define these if this flake is installed to
+            # a consistent location.
+            #
+            # nixpkgs.expr = null;
+            # options = {
+            #   flake-parts.expr = null;
+            #   home-manager.expr = null;
+            #   nixvim.expr = null;
+            # };
+          };
+        };
         hls.enable = true; # Haskell LS
         ccls.enable = true; # C/C++/ObjC LS
         #cangd.enable = true; # LLVM C/C++ LS
