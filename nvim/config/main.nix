@@ -323,6 +323,15 @@
         html.enable = true;
         java-language-server.enable = true;
         lua-ls.enable = true;
+        ruff-lsp.enable = true; # Python linter
+        pyright = { # Python type-checker
+          enable = true;
+          settings = {
+            # Disable ruff conflicts:
+            pyright.disableOrganizeImports = true;
+            python.analysis.ignore = [ "*" ];
+          };
+        };
         nixd = {
           # Nix LS
           enable = true;
