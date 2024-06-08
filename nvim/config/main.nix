@@ -324,7 +324,8 @@
         java-language-server.enable = true;
         lua-ls.enable = true;
         ruff-lsp.enable = true; # Python linter
-        pyright = { # Python type-checker
+        # Python type-checker
+        pyright = {
           enable = true;
           settings = {
             # Disable ruff conflicts:
