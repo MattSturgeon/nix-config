@@ -19,6 +19,7 @@ in
     boot.loader = {
       ${cfg.manager} = {
         enable = true;
+        configurationLimit = 8;
       };
 
       # Disable boot timeout.
