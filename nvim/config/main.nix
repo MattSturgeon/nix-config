@@ -346,6 +346,13 @@
             #   home-manager.expr = null;
             #   nixvim.expr = null;
             # };
+            diagnostic = {
+              # Suppress noisy warnings
+              suppress = [
+                "sema-escaping-with"
+                "var-bind-to-this"
+              ];
+            };
           };
         };
         hls.enable = true; # Haskell LS
