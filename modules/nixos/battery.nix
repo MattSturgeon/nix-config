@@ -24,5 +24,8 @@ in
         };
       };
     };
+
+    # Conflicts with auto-cpufreq
+    services.power-profiles-daemon.enable = lib.mkForce false;
   };
 }
