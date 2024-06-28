@@ -30,6 +30,9 @@
     conceallevel = 2; # Enable syn-cchar replacements (for Obsidian)
   };
 
+  # Only show lsp-lines on the current line
+  diagnostics.virtual_lines.only_current_line = true;
+
   keymaps = [
     {
       # Quick exit insert mode using `jj`
@@ -369,10 +372,7 @@
       };
     };
 
-    lsp-lines = {
-      enable = true;
-      currentLine = true;
-    };
+    lsp-lines.enable = true;
 
     # Enable tmux-navigator
     tmux-navigator.enable = true;
