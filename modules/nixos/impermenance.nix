@@ -29,7 +29,6 @@ in
       ];
     };
 
-    # TODO offer btrfs/zfs & init script with/without systemd
     boot.initrd.systemd = mkIf cfg.wipeOnBoot {
       enable = true;
       services.reset-root = {
