@@ -26,41 +26,29 @@ in
       gnome-settings-daemon
     ];
 
-    environment.systemPackages =
-      (with pkgs; [
-        nautilus-open-any-terminal
-      ]) ++ (with pkgs.gnome; [
-        file-roller
-      ]);
+    environment.systemPackages = with pkgs; [
+      file-roller
+      nautilus-open-any-terminal
+    ];
 
     # Exclude some default gnome packages
     environment.gnome.excludePackages =
       (with pkgs; [
-        gnome-connections
-        gnome-console
-        gnome-photos
-        # gnome-text-editor
-      ]) ++ (with pkgs.gnome; [
         baobab
         cheese
         eog
         epiphany
-        # gnome-calculator
-        # gnome-calendar
-        # gnome-characters
-        # gnome-clocks
+        gnome-connections
+        gnome-console
+        gnome-photos
+        gnome-terminal
+        simple-scan
+        yelp
+      ]) ++ (with pkgs.gnome; [
         gnome-contacts
-        # gnome-font-viewer
-        # gnome-logs
         gnome-maps
         gnome-music
-        # gnome-system-monitor
-        gnome-terminal
         gnome-weather
-        # nautilus
-        simple-scan
-        # totem
-        yelp
       ]);
   };
 }
