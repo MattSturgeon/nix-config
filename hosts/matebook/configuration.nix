@@ -14,7 +14,7 @@
     # Hardware
     # intelBusId = "PCI:0:2:0"; nvidiaBusId = "PCI:1:0:0";
     common-cpu-intel
-    common-cpu-intel-kaby-lake
+    common-gpu-intel-kaby-lake
     common-gpu-nvidia-disable # Disable MX150 for better battery
     common-pc-laptop-ssd
     common-hidpi
