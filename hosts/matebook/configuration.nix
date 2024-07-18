@@ -7,6 +7,7 @@
     impermanence.enable = true;
     impermanence.wipeOnBoot = true;
     battery.optimise = true;
+    flatpak.enable = true;
   };
 
   imports = with inputs.hardware.nixosModules; [
