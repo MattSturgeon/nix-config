@@ -188,7 +188,7 @@
 
     treesitter = {
       enable = true;
-      indent = true;
+      settings.indent.enable = true;
     };
     treesitter-context = {
       enable = true;
