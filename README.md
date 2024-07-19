@@ -28,6 +28,17 @@ sudo nixos-install --flake github:MattSturgeon/nix-config#matebook --no-root-pas
 
 `nixos-install` will install the `matebook` nixos configuration into `/mnt`.
 
+### TPM2 unlock
+If the disk partitions are encrypted, you may wish to enroll TPM2 to automatically unlock them during boot.
+
+This should be done while booted into the installed system:
+
+```shell
+# E.g.
+disk=/dev/nvme0n1p2
+pcrs="1+3+5+7+11+12+14"
+sudo systemd-cryptenroll --wipe-slot tpm2 --tpm2-device auto --tpm2-pcrs $pcrs $disk
+```
 
 ## Live USB
 
