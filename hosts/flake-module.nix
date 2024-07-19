@@ -76,11 +76,10 @@ in
     # NixOS configurations
     nixosConfigurations = builtins.mapAttrs mkSystem {
       matebook = { system = "x86_64-linux"; };
+      desktop = { system = "x86_64-linux"; };
     };
 
     # Standalone home-manager configurations
-    homeConfigurations = builtins.mapAttrs mkHome {
-      "matt@desktop" = { system = "x86_64-linux"; };
-    };
+    homeConfigurations = builtins.mapAttrs mkHome { };
   };
 }
