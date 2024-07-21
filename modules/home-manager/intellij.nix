@@ -21,5 +21,13 @@ in
     home.packages = with pkgs.jetbrains; [
       (plugins.addPlugins idea-community idea-plugins)
     ];
+
+    home.sessionVariables = {
+      # Needed to launch Minecraft in Intellij
+      LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [
+        libglvnd
+        pulseaudio
+      ]);
+    };
   };
 }
