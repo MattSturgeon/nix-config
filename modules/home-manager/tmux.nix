@@ -76,6 +76,9 @@ in
 
         # Same, for now windows
         # bind c new-window -c "#{pane_current_path}"
+
+        # Move status bar to the top
+        set-option -g status-position top
       '';
     };
 
