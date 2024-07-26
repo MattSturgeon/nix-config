@@ -6,7 +6,6 @@
 }:
 let
   inherit (lib) types mkOption mkIf getExe;
-  inherit (lib.generators) toYAML;
   cfg = config.custom.tmux;
   nvim = config.custom.editors.nvim;
 
@@ -81,7 +80,7 @@ in
     };
 
     xdg.configFile = {
-      "tmux/plugins/tmux-which-key/config.yaml".text = toYAML { } {
+      "tmux/plugins/tmux-which-key/config.yaml".source = pkgs.writers.writeYAML "tmux-which-key-config" {
         command_alias_start_index = 200;
       };
     };
