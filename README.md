@@ -40,6 +40,9 @@ pcrs="1+3+5+7+11+12+14"
 sudo systemd-cryptenroll --wipe-slot tpm2 --tpm2-device auto --tpm2-pcrs $pcrs $disk
 ```
 
+See [TPM2 PCRs and policies](https://www.freedesktop.org/software/systemd/man/latest/systemd-cryptenroll.html#TPM2%20PCRs%20and%20policies)
+on `systemd-cryptenroll`'s man page.
+
 ## Live USB
 
 A custom bootable ISO can be generated using `nix build .#installer` and then flashed using `dd`, `gnome-disks` or similar.
