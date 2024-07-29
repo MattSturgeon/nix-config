@@ -2,14 +2,6 @@
   viAlias = true;
   vimAlias = true;
 
-  colorschemes.catppuccin = {
-    enable = true;
-    settings = {
-      background.light = "macchiato";
-      background.dark = "mocha";
-    };
-  };
-
   luaLoader.enable = true;
   editorconfig.enable = true;
 
