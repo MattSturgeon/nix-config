@@ -6,7 +6,6 @@
   editorconfig.enable = true;
 
   plugins = {
-    fugitive.enable = true;
     lualine.enable = true;
     comment.enable = true;
     todo-comments.enable = true;
@@ -14,11 +13,6 @@
     refactoring = {
       enable = true;
       enableTelescope = true;
-    };
-
-    gitsigns = {
-      enable = true;
-      settings.current_line_blame = false;
     };
 
     indent-blankline = {
