@@ -60,7 +60,7 @@ in
     {
       mode = "n";
       key = "<leader>bd";
-      action = "<cmd>bd<CR>";
+      action = "<cmd>Bdelete<CR>";
       options.desc = "Delete the current buffer";
     }
 
@@ -205,6 +205,9 @@ in
       };
     };
   };
+
+  # Provides a `:bd` alternative that doesn't change window layout
+  plugins.bufdelete.enable = true;
 
   # TODO: use the upcoming `plugins.which-key.settings` options
   extraConfigLua = /* lua */ ''
