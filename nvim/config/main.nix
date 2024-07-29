@@ -30,14 +30,6 @@
 
     nvim-autopairs.enable = true;
 
-    telescope = {
-      enable = true;
-      extensions = {
-        fzf-native.enable = true;
-        media-files.enable = true;
-      };
-    };
-
     luasnip.enable = true; # TODO install snippets
 
     # Enable tmux-navigator

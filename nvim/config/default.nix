@@ -7,6 +7,7 @@
     ./keymaps.nix
     ./lsp.nix
     ./opts.nix
+    ./telescope.nix
     ./treesitter.nix
   ];
 }
