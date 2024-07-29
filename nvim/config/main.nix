@@ -12,36 +12,9 @@
 
   luaLoader.enable = true;
   editorconfig.enable = true;
-  clipboard.providers.wl-copy.enable = true;
-
-  globals = {
-    mapleader = " ";
-  };
-
-  opts = {
-    number = true; # Line numbers
-    relativenumber = true; # ^Relative
-    shiftwidth = 4; # Tab width
-    smartindent = true;
-    cursorline = true; # Highlight the current line
-    scrolloff = 8; # Ensure there's at least 8 lines around the cursor
-    title = true; # Let vim set the window title
-    spell = true; # Enable spellcheck
-    conceallevel = 2; # Enable syn-cchar replacements (for Obsidian)
-  };
 
   # Only show lsp-lines on the current line
   diagnostics.virtual_lines.only_current_line = true;
-
-  autoCmd = [
-    {
-      desc = "Highlight on yank";
-      event = "TextYankPost";
-      callback.__raw = /* lua */ ''
-        function() vim.highlight.on_yank({ higroup="IncSearch", timeout=250 }) end
-      '';
-    }
-  ];
 
   plugins = {
     fugitive.enable = true;
