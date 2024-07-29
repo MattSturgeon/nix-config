@@ -1,12 +1,30 @@
+{ helpers, ... }:
+let
+  # TODO: use the upcoming `plugins.which-key.settings` options
+  registrations = [
+    {
+      __unkeyed-1 = "<leader>w";
+      proxy = "<C-w>";
+      group = "windows";
+    }
+    {
+      __unkeyed-1 = "<leader>b";
+      group = "buffers";
+    }
+    {
+      __unkeyed-1 = "<leader>r";
+      group = "refactoring";
+    }
+    {
+      __unkeyed-1 = "<leader>f";
+      group = "files";
+    }
+  ];
+in
 {
   plugins.which-key = {
     enable = true;
-    registrations = {
-      # Group names
-      "<leader>b" = "+buffers";
-      "<leader>r" = "+refactoring";
-      "<leader>f" = "+files";
-    };
+    # registrations added manually in extraConfigLua
   };
 
   keymaps = [
@@ -24,16 +42,6 @@
       key = "<C-Space>";
       action = "<cmd>WhichKey<CR>";
       options.desc = "Which Key";
-    }
-
-    # Window motions
-    {
-      mode = "n";
-      key = "<leader>w";
-      # Workaround which-key.nvim issue #583
-      # Call :WhichKey manually, delegating <C-w>
-      action = "<cmd>WhichKey <C-w><CR>";
-      options.desc = "+windows";
     }
 
     # Buffers
@@ -155,6 +163,12 @@
       };
     };
   };
+
+  # TODO: use the upcoming `plugins.which-key.settings` options
+  extraConfigLua = /* lua */ ''
+    -- Register which-key groups
+    require('which-key').add(${helpers.toLuaObject registrations})
+  '';
 
   extraConfigLuaPre = /* lua */ ''
     -- Helper for telescope (<leader>ff)
