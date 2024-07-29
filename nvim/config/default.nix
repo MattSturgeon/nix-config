@@ -4,6 +4,7 @@
     ./colorscheme.nix
     ./completion.nix
     ./keymaps.nix
+    ./lsp.nix
     ./opts.nix
   ];
 }
