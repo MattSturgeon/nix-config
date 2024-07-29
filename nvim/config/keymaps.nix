@@ -103,11 +103,25 @@ in
       action = ":Refactor inline_func ";
       options.desc = "Inline function";
     }
+
     {
       mode = "n";
       key = "<leader>ff";
       action.__raw = "telescope_project_files()";
       options.desc = "Find files";
+    }
+
+    {
+      mode = "n";
+      key = "<leader>s";
+      action.__raw = ''
+        function()
+          require('telescope.builtin').spell_suggest(
+            require('telescope.themes').get_cursor({ })
+          )
+        end
+      '';
+      options.desc = "Spelling suggestions";
     }
   ];
 
@@ -115,8 +129,40 @@ in
     enable = true;
     keymaps = {
       "<leader>bb" = {
-        action = "buffers";
+        action = "buffers ignore_current_buffer=true sort_mru=true";
         options.desc = "List buffers";
+      };
+      "<leader>h" = {
+        action = "help_tags";
+        options.desc = "Browse help";
+      };
+      "<leader>fg" = {
+        action = "live_grep";
+        options.desc = "Grep files";
+      };
+      "<leader>`" = {
+        action = "marks";
+        options.desc = "Browse marks";
+      };
+      "<leader>\"" = {
+        action = "registers";
+        options.desc = "Browse registers";
+      };
+      "<leader>gs" = {
+        action = "git_status";
+        options.desc = "Git status";
+      };
+      "gr" = {
+        action = "lsp_references";
+        options.desc = "Browse references";
+      };
+      "gA" = {
+        action = "diagnostics";
+        options.desc = "Browse diagnostics";
+      };
+      "gs" = {
+        action = "treesitter";
+        options.desc = "Browse symbols";
       };
     };
   };
@@ -139,10 +185,6 @@ in
       gi = {
         action = "implementation";
         desc = "Goto implementation";
-      };
-      gr = {
-        action = "references";
-        desc = "Show references";
       };
       gt = {
         # FIXME conflicts with "next tab page" :h gt
