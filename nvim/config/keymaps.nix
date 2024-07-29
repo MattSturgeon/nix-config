@@ -5,6 +5,7 @@
       # Group names
       "<leader>b" = "+buffers";
       "<leader>r" = "+refactoring";
+      "<leader>f" = "+files";
     };
   };
 
@@ -94,6 +95,12 @@
       action = ":Refactor inline_func ";
       options.desc = "Inline function";
     }
+    {
+      mode = "n";
+      key = "<leader>ff";
+      action.__raw = "telescope_project_files()";
+      options.desc = "Find files";
+    }
   ];
 
   plugins.telescope = {
@@ -148,4 +155,29 @@
       };
     };
   };
+
+  extraConfigLuaPre = /* lua */ ''
+    -- Helper for telescope (<leader>ff)
+    function telescope_project_files()
+      -- We cache the results of "git rev-parse"
+      -- Process creation is expensive in Windows, so this reduces latency
+      local is_inside_work_tree = {}
+
+      local opts = {}
+
+      return function()
+        local cwd = vim.fn.getcwd()
+        if is_inside_work_tree[cwd] == nil then
+          vim.fn.system("git rev-parse --is-inside-work-tree")
+          is_inside_work_tree[cwd] = vim.v.shell_error == 0
+        end
+
+        if is_inside_work_tree[cwd] then
+          require("telescope.builtin").git_files(opts)
+        else
+          require("telescope.builtin").find_files(opts)
+        end
+      end
+    end
+  '';
 }
