@@ -10,7 +10,6 @@
     lualine.enable = true;
     comment.enable = true;
     todo-comments.enable = true;
-    sleuth.enable = true; # tpope's indent fixes
 
     refactoring = {
       enable = true;
@@ -42,18 +41,6 @@
       extensions = {
         fzf-native.enable = true;
         media-files.enable = true;
-      };
-    };
-
-    treesitter = {
-      enable = true;
-      settings.indent.enable = true;
-    };
-    treesitter-context = {
-      enable = true;
-      settings = {
-        max_lines = 4;
-        min_window_height = 40;
       };
     };
 

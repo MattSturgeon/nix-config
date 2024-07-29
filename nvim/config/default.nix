@@ -6,5 +6,6 @@
     ./keymaps.nix
     ./lsp.nix
     ./opts.nix
+    ./treesitter.nix
   ];
 }
