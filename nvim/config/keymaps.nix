@@ -21,6 +21,8 @@
           group = "files";
         }
       ];
+      # Using telescope for spelling
+      plugins.spelling.enabled = false;
     };
   };
 
@@ -110,7 +112,7 @@
 
     {
       mode = "n";
-      key = "<leader>s";
+      key = "z=";
       action.__raw = ''
         function()
           require('telescope.builtin').spell_suggest(
