@@ -38,8 +38,9 @@ in
 
       # See https://kb.mozillazine.org/Mail_and_news_settings
       settings = {
-        # Disable the donations page popup
+        # Disable the donations page popup and privacy rights
         "app.donation.eoy.url" = "";
+        "mail.rights.version" = 1;
 
         # Start page
         "mailnews.start_page.enabled" = false;
