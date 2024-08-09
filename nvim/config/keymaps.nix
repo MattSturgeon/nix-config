@@ -1,30 +1,27 @@
-{ helpers, ... }:
-let
-  # TODO: use the upcoming `plugins.which-key.settings` options
-  registrations = [
-    {
-      __unkeyed-1 = "<leader>w";
-      proxy = "<C-w>";
-      group = "windows";
-    }
-    {
-      __unkeyed-1 = "<leader>b";
-      group = "buffers";
-    }
-    {
-      __unkeyed-1 = "<leader>r";
-      group = "refactoring";
-    }
-    {
-      __unkeyed-1 = "<leader>f";
-      group = "files";
-    }
-  ];
-in
 {
   plugins.which-key = {
     enable = true;
-    # registrations added manually in extraConfigLua
+    settings = {
+      spec = [
+        {
+          __unkeyed-1 = "<leader>w";
+          proxy = "<C-w>";
+          group = "windows";
+        }
+        {
+          __unkeyed-1 = "<leader>b";
+          group = "buffers";
+        }
+        {
+          __unkeyed-1 = "<leader>r";
+          group = "refactoring";
+        }
+        {
+          __unkeyed-1 = "<leader>f";
+          group = "files";
+        }
+      ];
+    };
   };
 
   keymaps = [
@@ -208,12 +205,6 @@ in
 
   # Provides a `:bd` alternative that doesn't change window layout
   plugins.bufdelete.enable = true;
-
-  # TODO: use the upcoming `plugins.which-key.settings` options
-  extraConfigLua = /* lua */ ''
-    -- Register which-key groups
-    require('which-key').add(${helpers.toLuaObject registrations})
-  '';
 
   extraConfigLuaPre = /* lua */ ''
     -- Helper for telescope (<leader>ff)
