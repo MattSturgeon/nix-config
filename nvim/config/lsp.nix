@@ -8,7 +8,6 @@
 
     servers = {
       bashls.enable = true;
-      html.enable = true;
       java-language-server.enable = true;
       lua-ls.enable = true;
       ruff-lsp.enable = true; # Python linter
