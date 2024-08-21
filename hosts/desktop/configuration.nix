@@ -7,6 +7,7 @@
     impermanence.enable = true;
     impermanence.wipeOnBoot = true;
     flatpak.enable = true;
+    gaming.enable = true;
   };
 
   imports = with inputs.hardware.nixosModules; [

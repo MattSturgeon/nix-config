@@ -1,6 +1,5 @@
 { ... }: {
   custom = {
-    gaming = true;
     editors.vscode = true;
     editors.idea = true;
   };
