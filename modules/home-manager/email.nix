@@ -30,6 +30,8 @@ in
       };
     };
 
+    custom.gnome.favorites = lib.mkOrder 2000 [ "thunderbird.desktop" ];
+
     # TODO: Add custom options for choosing email client
     programs.thunderbird = {
       enable = true;
