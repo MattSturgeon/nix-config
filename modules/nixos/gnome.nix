@@ -32,23 +32,21 @@ in
     ];
 
     # Exclude some default gnome packages
-    environment.gnome.excludePackages =
-      (with pkgs; [
-        baobab
-        cheese
-        eog
-        epiphany
-        gnome-connections
-        gnome-console
-        gnome-photos
-        gnome-terminal
-        simple-scan
-        yelp
-      ]) ++ (with pkgs.gnome; [
-        gnome-contacts
-        gnome-maps
-        gnome-music
-        gnome-weather
-      ]);
+    environment.gnome.excludePackages = with pkgs; [
+      baobab
+      cheese
+      eog
+      epiphany
+      gnome-connections
+      gnome-console
+      gnome-contacts
+      gnome-maps
+      gnome-music
+      gnome-photos
+      gnome-terminal
+      gnome-weather
+      simple-scan
+      yelp
+    ];
   };
 }
