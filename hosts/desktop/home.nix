@@ -4,7 +4,7 @@
     editors.idea = true;
     gnome.favorites = lib.mkAfter [
       "com.heroicgameslauncher.hgl.desktop"
-      "jetbrains-idea-ce.desktop"
+      "idea-community.desktop"
     ];
   };
 

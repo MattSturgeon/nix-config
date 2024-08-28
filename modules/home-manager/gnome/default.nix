@@ -45,6 +45,9 @@ in
 
     dconf = {
       enable = true;
+      # Useful commands:
+      # dconf dump /
+      # dconf watch /
       settings = {
         "org/gnome/shell" = {
           disable-user-extensions = false;
