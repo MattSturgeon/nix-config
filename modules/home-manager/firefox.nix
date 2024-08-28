@@ -37,7 +37,9 @@ in
         then "firefox.desktop"
         else "org.mozilla.firefox.desktop";
       description = ''The firefox desktop file to add to "favorites", or null'';
-      defaultText = ''"firefox.desktop" when `install` is true, otherwise "org.mozilla.firefox.desktop"'';
+      defaultText = lib.literalMD ''
+        "firefox.desktop" when `install` is true, otherwise "org.mozilla.firefox.desktop"
+      '';
     };
   };
 
