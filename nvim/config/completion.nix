@@ -69,7 +69,10 @@
         ":" = {
           inherit (common) mapping;
           sources = [
-            { name = "path"; }
+            {
+              name = "path";
+              option.trailing_slash = true;
+            }
             { name = "cmdline"; }
           ];
         };
