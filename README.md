@@ -36,7 +36,7 @@ This should be done while booted into the installed system:
 ```shell
 # E.g.
 disk=/dev/nvme0n1p2
-pcrs="1+3+5+7+11+12+14"
+pcrs="1+5+7+12+14"
 sudo systemd-cryptenroll --wipe-slot tpm2 --tpm2-device auto --tpm2-pcrs $pcrs $disk
 ```
 
