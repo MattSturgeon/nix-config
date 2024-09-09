@@ -22,7 +22,7 @@ in
 
     xdg.portal.enable = true;
 
-    services.udev.packages = with pkgs.gnome; [
+    services.udev.packages = with pkgs; [
       gnome-settings-daemon
     ];
 
