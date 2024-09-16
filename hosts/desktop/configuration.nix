@@ -4,6 +4,7 @@
   custom = {
     boot.splash = true;
     desktop.gnome = true;
+    docker.enable = true;
     impermanence.enable = true;
     impermanence.wipeOnBoot = true;
     flatpak.enable = true;
