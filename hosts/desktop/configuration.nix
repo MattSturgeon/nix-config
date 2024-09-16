@@ -1,4 +1,5 @@
 { inputs
+, pkgs
 , ...
 }: {
   custom = {
@@ -21,6 +22,10 @@
     common-hidpi
     ./hardware-configuration.nix
     ./disks.nix
+  ];
+
+  environment.systemPackages = with pkgs; [
+    act # Allows running github actions locally
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
