@@ -30,7 +30,7 @@ in
       shellIntegration.enableFishIntegration = true;
 
       # TODO define theme somewhere in config
-      theme = "Catppuccin-Mocha";
+      themeFile = "Catppuccin-Mocha";
 
       keybindings = {
         "ctrl+c" = "copy_and_clear_or_interrupt";

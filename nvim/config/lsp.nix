@@ -46,7 +46,7 @@
       ccls.enable = true; # C/C++/ObjC LS
       #cangd.enable = true; # LLVM C/C++ LS
       gopls.enable = true; # Golang LS
-      tsserver.enable = true; # TypeScript & JavaScript
+      ts-ls.enable = true; # TypeScript & JavaScript
       zls.enable = true; # Zig
       rust-analyzer = {
         enable = true;

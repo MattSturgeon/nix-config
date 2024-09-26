@@ -9,6 +9,7 @@
     lualine.enable = true;
     comment.enable = true;
     todo-comments.enable = true;
+    web-devicons.enable = true;
 
     refactoring = {
       enable = true;
