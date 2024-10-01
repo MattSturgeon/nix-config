@@ -8,7 +8,7 @@
 
     servers = {
       bashls.enable = true;
-      java-language-server.enable = true;
+      jdt-language-server.enable = true; # Java LSP from Eclipse
       lua-ls.enable = true;
       ruff-lsp.enable = true; # Python linter
       # Python type-checker
