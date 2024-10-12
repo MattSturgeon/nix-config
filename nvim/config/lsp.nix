@@ -8,9 +8,9 @@
 
     servers = {
       bashls.enable = true;
-      jdt-language-server.enable = true; # Java LSP from Eclipse
-      lua-ls.enable = true;
-      ruff-lsp.enable = true; # Python linter
+      jdtls.enable = true; # Java LSP from Eclipse
+      lua_ls.enable = true;
+      ruff_lsp.enable = true; # Python linter
       # Python type-checker
       pyright = {
         enable = true;
@@ -46,9 +46,9 @@
       ccls.enable = true; # C/C++/ObjC LS
       #cangd.enable = true; # LLVM C/C++ LS
       gopls.enable = true; # Golang LS
-      ts-ls.enable = true; # TypeScript & JavaScript
+      ts_ls.enable = true; # TypeScript & JavaScript
       zls.enable = true; # Zig
-      rust-analyzer = {
+      rust_analyzer = {
         enable = true;
         installCargo = true;
         installRustc = true;
