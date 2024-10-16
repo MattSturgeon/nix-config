@@ -14,6 +14,7 @@
       packages.nvim = makeNixvimWithModule {
         inherit pkgs;
         module = self.nixvimModules.default;
+        extraSpecialArgs = { inherit self inputs; };
       };
 
       # `nix flake check` will also validate config

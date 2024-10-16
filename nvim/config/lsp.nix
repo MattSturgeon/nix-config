@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   # lsp-lines, but only for the current line
   plugins.lsp-lines.enable = true;
@@ -23,16 +24,18 @@
       nixd = {
         # Nix LS
         enable = true;
-        settings = {
-          # TODO: we can define these if this flake is installed to
-          # a consistent location.
-          #
-          # nixpkgs.expr = null;
-          # options = {
-          #   flake-parts.expr = null;
-          #   home-manager.expr = null;
-          #   nixvim.expr = null;
-          # };
+        settings =
+        let
+            flake = ''(builtins.getFlake "${self}")'';
+            system = ''''${builtins.currentSystem}'';
+        in
+        {
+          nixpkgs.expr = "import ${flake}.inputs.nixpkgs { }";
+          options = rec {
+            nixos.expr = "${flake}.nixosConfigurations.desktop.options";
+            home-manager.expr = "${nixos.expr}.home-manager.users.type.getSubOptions [ ]";
+            nixvim.expr = "${flake}.packages.${system}.nvim.options";
+          };
           diagnostic = {
             # Suppress noisy warnings
             suppress = [
