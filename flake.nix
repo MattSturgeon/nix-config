@@ -51,5 +51,9 @@
         # Alejandra is too strict...
         formatter = pkgs.nixpkgs-fmt;
       };
+
+      # Allow inspecting flake-parts config in the repl
+      # Adds the outputs debug.options, debug.config, etc
+      debug = true;
     };
 }
