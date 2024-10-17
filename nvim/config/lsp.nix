@@ -47,6 +47,7 @@
         };
       };
       hls.enable = true; # Haskell LS
+      hls.installGhc = true;
       ccls.enable = true; # C/C++/ObjC LS
       #cangd.enable = true; # LLVM C/C++ LS
       gopls.enable = true; # Golang LS
