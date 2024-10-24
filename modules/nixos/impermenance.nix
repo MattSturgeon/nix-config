@@ -20,6 +20,7 @@ in
         # "/etc/NetworkManager"
         "/var/log"
         "/var/lib/bluetooth"
+        "/var/lib/flatpak"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
         { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "0755"; }
