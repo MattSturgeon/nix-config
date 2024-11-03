@@ -126,6 +126,20 @@
       options.desc = "Inline function";
     }
 
+    # Errors/diagnostics
+    {
+      mode = "n";
+      key = "ge";
+      action.__raw = "vim.diagnostic.goto_next";
+      options.desc = "Goto next diagnostic";
+    }
+    {
+      mode = "n";
+      key = "gE";
+      action.__raw = "vim.diagnostic.goto_prev";
+      options.desc = "Goto previous diagnostic";
+    }
+
     {
       mode = "n";
       key = "<leader>ff";
