@@ -35,6 +35,14 @@ in
 
         # Increase download buffer to 256MiB (default 64MiB)
         download-buffer-size = 256 * 1024 * 1024;
+
+        trusted-substituters = [
+          "https://nix-community.cachix.org"
+        ];
+
+        trusted-public-keys = [
+          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        ];
       };
 
       # Enable garbage collection
