@@ -32,6 +32,9 @@ in
 
         # Deduplicate and optimize nix store
         auto-optimise-store = true;
+
+        # Increase download buffer to 256MiB (default 64MiB)
+        download-buffer-size = 256 * 1024 * 1024;
       };
 
       # Enable garbage collection
