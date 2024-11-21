@@ -11,7 +11,7 @@
       bashls.enable = true;
       jdtls.enable = true; # Java LSP from Eclipse
       lua_ls.enable = true;
-      ruff_lsp.enable = true; # Python linter
+      ruff.enable = true; # Python linter
       # Python type-checker
       pyright = {
         enable = true;
