@@ -11,7 +11,7 @@
       # Nerd Font Symbols (Powerline, FontAwesome, MaterialIcons, etc)
       # https://www.nerdfonts.com/#features
       #  
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
 
       # Emoji font 😀🙋🌟🎉
       noto-fonts-emoji
