@@ -1,9 +1,5 @@
 { self, ... }:
 {
-  # lsp-lines, but only for the current line
-  plugins.lsp-lines.enable = true;
-  diagnostics.virtual_lines.only_current_line = true;
-
   plugins.lsp = {
     enable = true;
     inlayHints = true;
