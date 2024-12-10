@@ -19,7 +19,7 @@ in
 
   config = mkIf cfg.idea {
     home.packages = with pkgs.jetbrains; [
-      (plugins.addPlugins idea-community idea-plugins)
+      (plugins.addPlugins idea-community-bin idea-plugins)
     ];
 
     home.sessionVariables = {
