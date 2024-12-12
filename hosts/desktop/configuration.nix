@@ -23,6 +23,7 @@
     common-hidpi
     ./hardware-configuration.nix
     ./disks.nix
+    ./sensors.nix
   ];
 
   environment.systemPackages = with pkgs; [
