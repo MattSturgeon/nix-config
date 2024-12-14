@@ -1,6 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   cfg = config.custom.gaming;
+  inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
   options.custom.gaming.enable = lib.mkEnableOption "gaming";
@@ -20,6 +27,10 @@ in
       heroic # TODO: override extraLibraries ?
       prismlauncher
       steam-run
+      (inputs.umu-launcher.packages.${system}.umu.override {
+        version = inputs.umu-launcher.shortRev;
+        truststore = true;
+      })
     ];
 
     nixpkgs.config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) [

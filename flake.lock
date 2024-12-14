@@ -499,7 +499,8 @@
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
-        "tmux-which-key": "tmux-which-key"
+        "tmux-which-key": "tmux-which-key",
+        "umu-launcher": "umu-launcher"
       }
     },
     "systems": {
@@ -551,6 +552,28 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "umu-launcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1733681789,
+        "narHash": "sha256-AkhWHfn1fu/1/iDCbKeyFH6oi3PUA6+ehGBLqBJk49M=",
+        "owner": "Open-Wine-Components",
+        "repo": "umu-launcher",
+        "rev": "b0c0d44e0e533b42790360d30430a69b330849d6",
+        "type": "github"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "owner": "Open-Wine-Components",
+        "repo": "umu-launcher",
         "type": "github"
       }
     }
