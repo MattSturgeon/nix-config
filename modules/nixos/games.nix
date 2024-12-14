@@ -32,6 +32,8 @@ in
         truststore = true;
       })
       nexusmods-app-unfree
+      mangohud
+      goverlay # mangohud config GUI
     ];
 
     nixpkgs.config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) [
