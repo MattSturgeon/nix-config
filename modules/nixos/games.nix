@@ -35,11 +35,5 @@ in
       mangohud
       goverlay # mangohud config GUI
     ];
-
-    nixpkgs.config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) [
-      "steam"
-      "steam-original"
-      "steam-run"
-    ];
   };
 }
