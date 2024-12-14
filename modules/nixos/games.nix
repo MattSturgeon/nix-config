@@ -31,6 +31,7 @@ in
         version = inputs.umu-launcher.shortRev;
         truststore = true;
       })
+      nexusmods-app-unfree
     ];
 
     nixpkgs.config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) [
