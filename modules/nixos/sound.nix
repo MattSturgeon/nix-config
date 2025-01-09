@@ -12,11 +12,11 @@ in
   };
 
   config = {
-    # pipewire and pulseaudio conflict
-    hardware.pulseaudio.enable = mkForce false;
-
     # nixos.wiki recomends using rtkit with pipewire
     security.rtkit.enable = true;
+
+    # pipewire and pulseaudio conflict
+    services.pulseaudio.enable = mkForce false;
 
     services.pipewire = {
       enable = true;
