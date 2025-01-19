@@ -30,8 +30,7 @@
     tmux-which-key.url = "github:alexwforsythe/tmux-which-key";
     tmux-which-key.flake = false;
 
-    umu-launcher.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
-    umu-launcher.inputs.nixpkgs.follows = "nixpkgs";
+    umu-launcher.url = "github:diniamo/nixpkgs/umu-launcher";
   };
 
   outputs = inputs@{ flake-parts, ... }:

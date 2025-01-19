@@ -552,24 +552,18 @@
       }
     },
     "umu-launcher": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
       "locked": {
-        "dir": "packaging/nix",
-        "lastModified": 1736968940,
-        "narHash": "sha256-fKtL1HidTJGindg0wXD9Zk6s+209ymFSoDAER2txz70=",
-        "owner": "Open-Wine-Components",
-        "repo": "umu-launcher",
-        "rev": "e67216ad47e05bcf4fac37eea580b73b88997dee",
+        "lastModified": 1737293012,
+        "narHash": "sha256-fHdO26IFWph9Gs0bV0uOrSzi5O6UFDW8sGuXBHKCG5c=",
+        "owner": "diniamo",
+        "repo": "nixpkgs",
+        "rev": "4f4441e5cb0438f49addba096bfb839df270b3c5",
         "type": "github"
       },
       "original": {
-        "dir": "packaging/nix",
-        "owner": "Open-Wine-Components",
-        "repo": "umu-launcher",
+        "owner": "diniamo",
+        "ref": "umu-launcher",
+        "repo": "nixpkgs",
         "type": "github"
       }
     }

@@ -27,10 +27,8 @@ in
       heroic # TODO: override extraLibraries ?
       prismlauncher
       steam-run
-      (inputs.umu-launcher.packages.${system}.umu.override {
-        version = inputs.umu-launcher.shortRev;
-        truststore = true;
-      })
+      # PR https://github.com/NixOS/nixpkgs/pull/369259
+      inputs.umu-launcher.legacyPackages.${system}.umu-launcher
       nexusmods-app-unfree
       mangohud
       goverlay # mangohud config GUI
