@@ -16,5 +16,10 @@
 
     # Allow users to mount removable drives
     services.udisks2.enable = true;
+
+    # Mark admins as trusted users
+    nix.settings.trusted-users = [
+      "@wheel"
+    ];
   };
 }
