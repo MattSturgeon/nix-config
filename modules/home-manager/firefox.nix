@@ -61,7 +61,7 @@ in
           name = "Matt Sturgeon";
           isDefault = true;
 
-          extensions = with firefox-addons; [
+          extensions.packages = with firefox-addons; [
             darkreader
             refined-github
             violentmonkey
