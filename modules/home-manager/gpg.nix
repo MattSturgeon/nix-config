@@ -24,7 +24,7 @@ in
       maxCacheTtlSsh = 128 * y;
       # TODO make this platform-dependant
       # TODO use gcr_4
-      pinentryPackage = pkgs.pinentry-gnome3;
+      pinentry.package = pkgs.pinentry-gnome3;
       grabKeyboardAndMouse = true;
       sshKeys = [
         "EC516C4E1E481414EBDE388868B6F9F70B6727FD"
