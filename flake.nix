@@ -34,29 +34,28 @@
     umu-launcher.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-darwin" ];
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [ "x86_64-linux" "aarch64-darwin" ];
 
-      imports = [
-        ./lib/flake-module.nix
-        ./nvim/flake-module.nix
-        ./modules/flake-module.nix
-        ./hosts/flake-module.nix
-        ./isos/flake-module.nix
-      ];
+    imports = [
+      ./lib/flake-module.nix
+      ./nvim/flake-module.nix
+      ./modules/flake-module.nix
+      ./hosts/flake-module.nix
+      ./isos/flake-module.nix
+    ];
 
-      perSystem = { config, self', inputs', pkgs, ... }: {
-        # Define a bootstrapping shell, used by `nix develop`
-        devShells = import ./shell.nix { inherit pkgs; };
+    perSystem = { config, self', inputs', pkgs, ... }: {
+      # Define a bootstrapping shell, used by `nix develop`
+      devShells = import ./shell.nix { inherit pkgs; };
 
-        # Use the beta nixpkgs-fmt
-        # Alejandra is too strict...
-        formatter = pkgs.nixpkgs-fmt;
-      };
-
-      # Allow inspecting flake-parts config in the repl
-      # Adds the outputs debug.options, debug.config, etc
-      debug = true;
+      # Use the beta nixpkgs-fmt
+      # Alejandra is too strict...
+      formatter = pkgs.nixpkgs-fmt;
     };
+
+    # Allow inspecting flake-parts config in the repl
+    # Adds the outputs debug.options, debug.config, etc
+    debug = true;
+  };
 }
