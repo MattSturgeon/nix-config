@@ -9,10 +9,9 @@
           # See https://github.com/numtide/treefmt/pull/571
           tree-root-file = "flake.lock";
 
-          # Use the beta nixpkgs-fmt
-          # Alejandra is too strict...
-          formatter.nixpkgs-fmt = {
-            command = lib.getExe pkgs.nixpkgs-fmt;
+          # Configure nixfmt for .nix files
+          formatter.nixfmt = {
+            command = lib.getExe pkgs.nixfmt-rfc-style;
             includes = [ "*.nix" ];
           };
         };
