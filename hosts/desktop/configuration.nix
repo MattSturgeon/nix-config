@@ -1,7 +1,9 @@
-{ inputs
-, pkgs
-, ...
-}: {
+{
+  inputs,
+  pkgs,
+  ...
+}:
+{
   custom = {
     boot.splash = true;
     desktop.gnome = true;

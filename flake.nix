@@ -34,25 +34,32 @@
     umu-launcher.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-    systems = [ "x86_64-linux" "aarch64-darwin" ];
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
 
-    imports = [
-      ./lib/flake-module.nix
-      ./nvim/flake-module.nix
-      ./modules/flake-module.nix
-      ./hosts/flake-module.nix
-      ./isos/flake-module.nix
-      ./treefmt/flake-module.nix
-    ];
+      imports = [
+        ./lib/flake-module.nix
+        ./nvim/flake-module.nix
+        ./modules/flake-module.nix
+        ./hosts/flake-module.nix
+        ./isos/flake-module.nix
+        ./treefmt/flake-module.nix
+      ];
 
-    perSystem = { config, self', inputs', pkgs, ... }: {
-      # Define a bootstrapping shell, used by `nix develop`
-      devShells = import ./shell.nix { inherit pkgs; };
+      perSystem =
+        { pkgs, ... }:
+        {
+          # Define a bootstrapping shell, used by `nix develop`
+          devShells = import ./shell.nix { inherit pkgs; };
+        };
+
+      # Allow inspecting flake-parts config in the repl
+      # Adds the outputs debug.options, debug.config, etc
+      debug = true;
     };
-
-    # Allow inspecting flake-parts config in the repl
-    # Adds the outputs debug.options, debug.config, etc
-    debug = true;
-  };
 }

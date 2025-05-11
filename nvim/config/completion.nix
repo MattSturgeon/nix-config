@@ -8,14 +8,15 @@
     autoEnableSources = true;
 
     settings = {
-      mapping.__raw = /* lua */ ''
-        cmp.mapping.preset.insert({
-          ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Use first if none selected
-          ["<C-CR>"] = cmp.mapping.confirm({ select = true }), -- C-y alias
-          ["<CR>"] = cmp.mapping.confirm(), -- Return can confirm if selected
-          ["<C-Space>"] = cmp.mapping.complete(), -- Open list without typing
-        })
-      '';
+      mapping.__raw = # lua
+        ''
+          cmp.mapping.preset.insert({
+            ["<C-y>"] = cmp.mapping.confirm({ select = true }), -- Use first if none selected
+            ["<C-CR>"] = cmp.mapping.confirm({ select = true }), -- C-y alias
+            ["<CR>"] = cmp.mapping.confirm(), -- Return can confirm if selected
+            ["<C-Space>"] = cmp.mapping.complete(), -- Open list without typing
+          })
+        '';
 
       sources = [
         {
@@ -55,12 +56,13 @@
     cmdline =
       let
         common = {
-          mapping.__raw = /* lua */ ''
-            cmp.mapping.preset.cmdline({
-              ["<C-Space>"] = cmp.mapping.complete(), -- Open list without typing
-            })
-          '';
-          sources = [{ name = "buffer"; }];
+          mapping.__raw = # lua
+            ''
+              cmp.mapping.preset.cmdline({
+                ["<C-Space>"] = cmp.mapping.complete(), -- Open list without typing
+              })
+            '';
+          sources = [ { name = "buffer"; } ];
         };
       in
       {

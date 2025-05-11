@@ -15,11 +15,14 @@ let
     children :: path -> [path]
     ```
   */
-  children = dir: with builtins; lib.pipe dir [
-    readDir
-    attrNames
-    (map (name: dir + "/${name}"))
-  ];
+  children =
+    dir:
+    with builtins;
+    lib.pipe dir [
+      readDir
+      attrNames
+      (map (name: dir + "/${name}"))
+    ];
 
   /**
     Wrap all files in `dir` as submodule imports.

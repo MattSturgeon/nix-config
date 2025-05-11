@@ -1,9 +1,10 @@
-{ config
-, lib
-, pkgs
-, self
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  self,
+  inputs,
+  ...
 }:
 let
   inherit (lib) types mkIf mkOption;
@@ -33,9 +34,7 @@ in
         # The nix build of firefox uses "firefox.desktop".
         # If we're not installing the actual browser, assume
         # the flatpak version will be used.
-        if cfg.install
-        then "firefox.desktop"
-        else "org.mozilla.firefox.desktop";
+        if cfg.install then "firefox.desktop" else "org.mozilla.firefox.desktop";
       description = ''The firefox desktop file to add to "favorites", or null'';
       defaultText = lib.literalMD ''
         "firefox.desktop" when `install` is true, otherwise "org.mozilla.firefox.desktop"
@@ -52,10 +51,7 @@ in
     programs = {
       firefox = {
         enable = true;
-        package =
-          if cfg.install
-          then pkgs.firefox-wayland
-          else null;
+        package = if cfg.install then pkgs.firefox-wayland else null;
         profiles.matt = {
           id = 0;
           name = "Matt Sturgeon";
@@ -173,7 +169,8 @@ in
             "media.peerconnection.ice.default_address_only" = true;
 
             # Use Mozilla geolocation service instead of Google
-            "geo.provider.network.url" = "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
+            "geo.provider.network.url" =
+              "https://location.services.mozilla.com/v1/geolocate?key=%MOZILLA_API_KEY%";
 
             # Disable password manager   TODO Transition to 1password
             # "signon.rememberSignons" = false;

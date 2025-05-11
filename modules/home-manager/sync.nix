@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, config
-, options
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  options,
+  ...
 }:
 let
   inherit (lib) types mkIf mkOption;

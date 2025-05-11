@@ -1,28 +1,38 @@
-{ self, inputs, lib, ... }:
+{
+  self,
+  inputs,
+  lib,
+  ...
+}:
 let
   specialArgs = { inherit self inputs; };
 
-  guessUsername = name:
+  guessUsername =
+    name:
     let
       parts = lib.splitString "@" name;
       len = builtins.length parts;
     in
     if len == 2 then builtins.head parts else name;
 
-  guessHostname = name:
+  guessHostname =
+    name:
     let
       parts = lib.splitString "@" name;
       len = builtins.length parts;
     in
     lib.optionalString (len == 2) (builtins.elemAt parts 1);
 
-  mkSystem = name:
-    { system
-    , username ? "matt"
-    , fullname ? "Matt Sturgeon"
-    , modules ? [ ]
-    , ...
-    }: inputs.nixpkgs.lib.nixosSystem {
+  mkSystem =
+    name:
+    {
+      system,
+      username ? "matt",
+      fullname ? "Matt Sturgeon",
+      modules ? [ ],
+      ...
+    }:
+    inputs.nixpkgs.lib.nixosSystem {
       inherit system specialArgs;
       modules = modules ++ [
         ./${name}/configuration.nix
@@ -35,7 +45,10 @@ let
           networking.hostName = lib.mkDefault name;
           users.users.${username} = {
             description = fullname;
-            extraGroups = [ "wheel" "networkmanager" ];
+            extraGroups = [
+              "wheel"
+              "networkmanager"
+            ];
             initialPassword = "init";
             isNormalUser = true;
           };
@@ -50,13 +63,16 @@ let
       ];
     };
 
-  mkHome = name:
-    { system
-    , username ? guessUsername name
-    , hostname ? guessHostname name
-    , modules ? [ ]
-    , ...
-    }: inputs.home-manager.lib.homeManagerConfiguration {
+  mkHome =
+    name:
+    {
+      system,
+      username ? guessUsername name,
+      hostname ? guessHostname name,
+      modules ? [ ],
+      ...
+    }:
+    inputs.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = specialArgs;
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules = modules ++ [
@@ -75,8 +91,12 @@ in
   flake = {
     # NixOS configurations
     nixosConfigurations = builtins.mapAttrs mkSystem {
-      matebook = { system = "x86_64-linux"; };
-      desktop = { system = "x86_64-linux"; };
+      matebook = {
+        system = "x86_64-linux";
+      };
+      desktop = {
+        system = "x86_64-linux";
+      };
     };
 
     # Standalone home-manager configurations

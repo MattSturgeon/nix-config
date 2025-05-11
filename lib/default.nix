@@ -1,33 +1,38 @@
-{ self
-, inputs
-, ...
-} @ attrs:
+{
+  self,
+  inputs,
+  ...
+}@attrs:
 let
   lib = inputs.nixpkgs.lib;
-  inherit (builtins) filter pathExists dirOf readDir;
-  inherit (lib) mapAttrsToList filterAttrs hasSuffix foldr recursiveUpdate;
+  inherit (builtins)
+    filter
+    pathExists
+    dirOf
+    readDir
+    ;
+  inherit (lib)
+    mapAttrsToList
+    filterAttrs
+    hasSuffix
+    foldr
+    recursiveUpdate
+    ;
 
   # Map a list of paths to a list of (imported) nix expressions
   importAll = list: map import list;
 
   # Returns a list of nix files that are children of 'dir'
   # including 'default.nix' files found in child directories.
-  nixChildren = dir:
+  nixChildren =
+    dir:
     let
       # Maps a file or directory -> module path
-      toModule = name: type:
-        dir
-        + (
-          if type == "directory"
-          then "/${name}/default.nix"
-          else "/${name}"
-        );
+      toModule = name: type: dir + (if type == "directory" then "/${name}/default.nix" else "/${name}");
 
       # Filter directories and .nix files
-      moduleFilter = name: type:
-        if type == "regular"
-        then (hasSuffix ".nix" name)
-        else type == "directory";
+      moduleFilter =
+        name: type: if type == "regular" then (hasSuffix ".nix" name) else type == "directory";
 
       # A list of child modules
       children = mapAttrsToList toModule (filterAttrs moduleFilter (readDir dir));
@@ -50,6 +55,17 @@ let
 in
 # Merge everything in lib/, including functions defined above
 recursiveMergeAttrsList (
-  [{ util = { inherit nixChildren nixSiblings importAll recursiveMergeAttrsList; }; }]
+  [
+    {
+      util = {
+        inherit
+          nixChildren
+          nixSiblings
+          importAll
+          recursiveMergeAttrsList
+          ;
+      };
+    }
+  ]
   ++ (map (f: f args) (importAll (nixSiblings ./default.nix)))
 )

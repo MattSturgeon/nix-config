@@ -1,7 +1,8 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
@@ -24,10 +25,13 @@ in
 
     home.sessionVariables = {
       # Needed to launch Minecraft in Intellij
-      LD_LIBRARY_PATH = lib.makeLibraryPath (with pkgs; [
-        libglvnd
-        pulseaudio
-      ]);
+      LD_LIBRARY_PATH = lib.makeLibraryPath (
+        with pkgs;
+        [
+          libglvnd
+          pulseaudio
+        ]
+      );
     };
   };
 }

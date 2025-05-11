@@ -1,25 +1,33 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 let
-  inherit (lib) types mkOption mkIf getExe;
+  inherit (lib)
+    types
+    mkOption
+    mkIf
+    getExe
+    ;
   cfg = config.custom.tmux;
   nvim = config.custom.editors.nvim;
 
   # Make a tmux plugin, with optional extraConfig
-  mkPlugin = attrs:
+  mkPlugin =
+    attrs:
     let
       plugin = pkgs.tmuxPlugins.mkTmuxPlugin attrs;
     in
-    if (lib.hasAttr "extraConfig" attrs)
-    then {
-      inherit plugin;
-      inherit (attrs) extraConfig;
-    }
-    else plugin;
+    if (lib.hasAttr "extraConfig" attrs) then
+      {
+        inherit plugin;
+        inherit (attrs) extraConfig;
+      }
+    else
+      plugin;
 
   extraPlugins = map mkPlugin [
     {
@@ -57,16 +65,15 @@ in
       # TODO set leader key using `shortcut` or `prefix`
       terminal = "screen-256color"; # Enable 256bit color
 
-      plugins = with pkgs.tmuxPlugins;
+      plugins =
+        with pkgs.tmuxPlugins;
         [
           catppuccin
         ]
         ++ extraPlugins
         ++ (
           # Enable tmux-navigator if using vim
-          if nvim
-          then [ vim-tmux-navigator ]
-          else [ ]
+          if nvim then [ vim-tmux-navigator ] else [ ]
         );
 
       extraConfig = ''

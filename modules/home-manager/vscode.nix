@@ -1,7 +1,8 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 let
   inherit (lib) mkEnableOption mkIf;
@@ -60,7 +61,10 @@ in
           "vim.insertModeKeyBindings" = [
             {
               # jj to quickly exit insert mode
-              before = [ "j" "j" ];
+              before = [
+                "j"
+                "j"
+              ];
               after = [ "<Esc>" ];
             }
           ];
@@ -69,10 +73,16 @@ in
             {
               # Shift-K to show "hover" documentation
               before = [ "K" ];
-              after = [ "g" "h" ];
+              after = [
+                "g"
+                "h"
+              ];
             }
             {
-              before = [ "g" "i" ];
+              before = [
+                "g"
+                "i"
+              ];
               commands = [ "editor.action.goToImplementation" ];
             }
           ];

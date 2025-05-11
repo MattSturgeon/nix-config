@@ -1,10 +1,16 @@
-{ config
-, lib
-, pkgs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  ...
 }:
 let
-  inherit (lib) mapAttrsToList mkIf mkOption types;
+  inherit (lib)
+    mapAttrsToList
+    mkIf
+    mkOption
+    types
+    ;
   cfg = config.custom.obsidian;
   nvim = config.custom.editors.nvim;
 in

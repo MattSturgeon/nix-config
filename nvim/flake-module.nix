@@ -1,10 +1,17 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+{
   flake = {
     # The nixvim module used to build `packages.<system>.nvim`
     nixvimModules.default = import ./config;
   };
 
-  perSystem = { self', pkgs, system, ... }:
+  perSystem =
+    {
+      self',
+      pkgs,
+      system,
+      ...
+    }:
     let
       inherit (inputs.nixvim.legacyPackages.${system}) makeNixvimWithModule;
       inherit (inputs.nixvim.lib.${system}.check) mkTestDerivationFromNvim;

@@ -1,6 +1,8 @@
-{ inputs
-, ...
-}: {
+{
+  inputs,
+  ...
+}:
+{
   custom = {
     boot.splash = true;
     desktop.gnome = true;
@@ -22,7 +24,10 @@
     ./disks.nix
   ];
 
-  boot.initrd.availableKernelModules = [ "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [
+    "usb_storage"
+    "sd_mod"
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

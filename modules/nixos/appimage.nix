@@ -4,7 +4,9 @@ let
 in
 {
   options.custom.appimage = {
-    enable = lib.mkEnableOption "appimage" // { default = true; };
+    enable = lib.mkEnableOption "appimage" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {

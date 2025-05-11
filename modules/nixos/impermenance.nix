@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
@@ -23,7 +24,12 @@ in
         "/var/lib/flatpak"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
-        { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "0755"; }
+        {
+          directory = "/var/lib/colord";
+          user = "colord";
+          group = "colord";
+          mode = "0755";
+        }
       ];
       files = [
         # "/etc/machine-id"

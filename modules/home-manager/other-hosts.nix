@@ -1,17 +1,28 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 let
   inherit (builtins) baseNameOf;
-  inherit (lib) types getExe splitString getAttrFromPath setAttrByPath mkIf mkEnableOption mkOption;
+  inherit (lib)
+    types
+    getExe
+    splitString
+    getAttrFromPath
+    setAttrByPath
+    mkIf
+    mkEnableOption
+    mkOption
+    ;
 
   cfg = config.custom.otherHost;
 
   # Wraps a package with a nixgl wrapper, using symlinkJoin
-  wrapPkg = wrapper: pkg:
+  wrapPkg =
+    wrapper: pkg:
     let
       exe = getExe pkg;
       wrapped = pkgs.writeShellScriptBin (baseNameOf exe) ''
@@ -20,15 +31,20 @@ let
     in
     pkgs.symlinkJoin {
       name = pkg.pname;
-      paths = [ wrapped pkg ];
+      paths = [
+        wrapped
+        pkg
+      ];
     };
 
   # Maps a list of packages into a list of overlays
-  mkOverlays = wrapper: packages:
+  mkOverlays =
+    wrapper: packages:
     let
       # f maps `pkg` to an overlay function
       # The overlay function returned will wrap the given pkg with wrapper
-      f = pkg: final: prev:
+      f =
+        pkg: final: prev:
         let
           path = splitString "." pkg;
           base = getAttrFromPath path prev;
@@ -80,12 +96,19 @@ in
     targets.genericLinux.enable = true;
 
     # Install nixGL wrapper commands to run things manually
-    home.packages = with cfg;
-      if command
-      then [ glWrapper vkWrapper ]
-      else [ ];
+    home.packages =
+      with cfg;
+      if command then
+        [
+          glWrapper
+          vkWrapper
+        ]
+      else
+        [ ];
 
     # Overlay configured packages with wrapped versions
-    nixpkgs.overlays = with cfg; [ inputs.nixgl.overlay ] ++ (mkOverlays glWrapper glPackages) ++ (mkOverlays vkWrapper vkPackages);
+    nixpkgs.overlays =
+      with cfg;
+      [ inputs.nixgl.overlay ] ++ (mkOverlays glWrapper glPackages) ++ (mkOverlays vkWrapper vkPackages);
   };
 }

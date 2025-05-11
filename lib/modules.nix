@@ -4,14 +4,10 @@ let
 in
 {
   modules = {
-    /*
-      Like `mkBefore`, but higher priority.
-    */
+    # Like `mkBefore`, but higher priority.
     mkFirst = mkOrder 200;
 
-    /*
-      Like `mkAfter`, but lower priority.
-    */
+    # Like `mkAfter`, but lower priority.
     mkLast = mkOrder 2000;
   };
 }

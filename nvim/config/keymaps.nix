@@ -60,7 +60,10 @@
 
     # Show which-key
     {
-      mode = [ "n" "v" ];
+      mode = [
+        "n"
+        "v"
+      ];
       key = "<C-Space>";
       action = "<cmd>WhichKey<CR>";
       options.desc = "Which Key";
@@ -90,9 +93,10 @@
     {
       mode = "n";
       key = "<leader>rr";
-      action.__raw = /* lua */ ''
-        require("telescope").extensions.refactoring.refactors
-      '';
+      action.__raw = # lua
+        ''
+          require("telescope").extensions.refactoring.refactors
+        '';
       options.desc = "Select refactor";
     }
     {
@@ -245,28 +249,29 @@
   # Provides a `:bd` alternative that doesn't change window layout
   plugins.bufdelete.enable = true;
 
-  extraConfigLuaPre = /* lua */ ''
-    -- Helper for telescope (<leader>ff)
-    function telescope_project_files()
-      -- We cache the results of "git rev-parse"
-      -- Process creation is expensive in Windows, so this reduces latency
-      local is_inside_work_tree = {}
+  extraConfigLuaPre = # lua
+    ''
+      -- Helper for telescope (<leader>ff)
+      function telescope_project_files()
+        -- We cache the results of "git rev-parse"
+        -- Process creation is expensive in Windows, so this reduces latency
+        local is_inside_work_tree = {}
 
-      local opts = {}
+        local opts = {}
 
-      return function()
-        local cwd = vim.fn.getcwd()
-        if is_inside_work_tree[cwd] == nil then
-          vim.fn.system("git rev-parse --is-inside-work-tree")
-          is_inside_work_tree[cwd] = vim.v.shell_error == 0
-        end
+        return function()
+          local cwd = vim.fn.getcwd()
+          if is_inside_work_tree[cwd] == nil then
+            vim.fn.system("git rev-parse --is-inside-work-tree")
+            is_inside_work_tree[cwd] = vim.v.shell_error == 0
+          end
 
-        if is_inside_work_tree[cwd] then
-          require("telescope.builtin").git_files(opts)
-        else
-          require("telescope.builtin").find_files(opts)
+          if is_inside_work_tree[cwd] then
+            require("telescope.builtin").git_files(opts)
+          else
+            require("telescope.builtin").find_files(opts)
+          end
         end
       end
-    end
-  '';
+    '';
 }

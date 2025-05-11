@@ -1,6 +1,7 @@
-{ config
-, lib
-, ...
+{
+  config,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkOption;
@@ -11,7 +12,10 @@ in
     manager = mkOption {
       description = "The boot manager to use";
       default = "systemd-boot";
-      type = lib.types.enum [ "systemd-boot" "grub" ];
+      type = lib.types.enum [
+        "systemd-boot"
+        "grub"
+      ];
     };
   };
 

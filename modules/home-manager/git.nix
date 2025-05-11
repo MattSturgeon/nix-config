@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   # TODO get name, email, & key from config or user
   config = {
     programs.git = {

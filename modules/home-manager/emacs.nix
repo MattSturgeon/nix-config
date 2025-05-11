@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   cfg = config.custom.editors;
 in
@@ -14,31 +19,33 @@ in
       enable = true;
       package = pkgs.emacs30-pgtk;
 
-      extraPackages = epkgs: with epkgs; [
-        catppuccin-theme
-        treesit-grammars.with-all-grammars
-      ];
+      extraPackages =
+        epkgs: with epkgs; [
+          catppuccin-theme
+          treesit-grammars.with-all-grammars
+        ];
 
-      extraConfig = /* lisp */ ''
-        ;;; For performance, increase GC threshold during init
-        (setq gc-cons-threshold 100000000)
-        (setq read-process-output-max (* 1024 1024)) ;; 1mb
+      extraConfig = # lisp
+        ''
+          ;;; For performance, increase GC threshold during init
+          (setq gc-cons-threshold 100000000)
+          (setq read-process-output-max (* 1024 1024)) ;; 1mb
 
-        ;;; Restore normal GC after init
-        (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
+          ;;; Restore normal GC after init
+          (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
 
-        ;;; Disable menu-bar, tool-bar, and scroll-bar.
-        (if (fboundp 'menu-bar-mode)
-            (menu-bar-mode -1))
-        (if (fboundp 'tool-bar-mode)
-            (tool-bar-mode -1))
-        (if (fboundp 'scroll-bar-mode)
-            (scroll-bar-mode -1))
+          ;;; Disable menu-bar, tool-bar, and scroll-bar.
+          (if (fboundp 'menu-bar-mode)
+              (menu-bar-mode -1))
+          (if (fboundp 'tool-bar-mode)
+              (tool-bar-mode -1))
+          (if (fboundp 'scroll-bar-mode)
+              (scroll-bar-mode -1))
 
-        ;;; Colorscheme
-        (setq catppuccin-flavor 'mocha)
-        (load-theme 'catppuccin :no-confirm)
-      '';
+          ;;; Colorscheme
+          (setq catppuccin-flavor 'mocha)
+          (load-theme 'catppuccin :no-confirm)
+        '';
     };
 
     services.emacs = {
