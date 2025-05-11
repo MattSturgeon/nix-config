@@ -351,6 +351,7 @@
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
+        "systems": "systems_2",
         "tmux-which-key": "tmux-which-key",
         "umu-launcher": "umu-launcher"
       }
@@ -369,6 +370,18 @@
         "repo": "default",
         "type": "github"
       }
+    },
+    "systems_2": {
+      "flake": false,
+      "locked": {
+        "path": "./systems.nix",
+        "type": "path"
+      },
+      "original": {
+        "path": "./systems.nix",
+        "type": "path"
+      },
+      "parent": []
     },
     "tmux-which-key": {
       "flake": false,

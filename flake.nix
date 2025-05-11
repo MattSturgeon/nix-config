@@ -2,6 +2,9 @@
   description = "My nix config";
 
   inputs = {
+    systems.url = "path:./systems.nix";
+    systems.flake = false;
+
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixos-generators.url = "github:nix-community/nixos-generators";
@@ -37,10 +40,7 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-      ];
+      systems = import inputs.systems;
 
       imports = [
         ./lib/flake-module.nix
