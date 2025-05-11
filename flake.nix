@@ -43,15 +43,12 @@
       ./modules/flake-module.nix
       ./hosts/flake-module.nix
       ./isos/flake-module.nix
+      ./treefmt/flake-module.nix
     ];
 
     perSystem = { config, self', inputs', pkgs, ... }: {
       # Define a bootstrapping shell, used by `nix develop`
       devShells = import ./shell.nix { inherit pkgs; };
-
-      # Use the beta nixpkgs-fmt
-      # Alejandra is too strict...
-      formatter = pkgs.nixpkgs-fmt;
     };
 
     # Allow inspecting flake-parts config in the repl
