@@ -44,19 +44,13 @@
 
       imports = [
         ./lib/flake-module.nix
+        ./devshell/flake-module.nix
         ./nvim/flake-module.nix
         ./modules/flake-module.nix
         ./hosts/flake-module.nix
         ./isos/flake-module.nix
         ./treefmt/flake-module.nix
       ];
-
-      perSystem =
-        { pkgs, ... }:
-        {
-          # Define a bootstrapping shell, used by `nix develop`
-          devShells = import ./shell.nix { inherit pkgs; };
-        };
 
       # Allow inspecting flake-parts config in the repl
       # Adds the outputs debug.options, debug.config, etc
