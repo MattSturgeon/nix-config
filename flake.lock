@@ -391,11 +391,11 @@
     "systems_2": {
       "flake": false,
       "locked": {
-        "path": "./systems.nix",
+        "path": "systems.nix",
         "type": "path"
       },
       "original": {
-        "path": "./systems.nix",
+        "path": "systems.nix",
         "type": "path"
       },
       "parent": []

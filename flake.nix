@@ -2,7 +2,7 @@
   description = "My nix config";
 
   inputs = {
-    systems.url = "path:./systems.nix";
+    systems.url = ./systems.nix;
     systems.flake = false;
 
     # PR adds support for relative path inputs, needed for the `systems` input
