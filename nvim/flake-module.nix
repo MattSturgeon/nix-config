@@ -1,33 +1,47 @@
-{ self, inputs, ... }:
 {
-  flake = {
-    # The nixvim module used to build `packages.<system>.nvim`
-    nixvimModules.default = import ./config;
-  };
+  lib,
+  self,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    inputs.nixvim.flakeModules.default
+  ];
 
-  perSystem =
-    {
-      self',
-      pkgs,
-      system,
-      ...
-    }:
+  nixvim =
     let
-      inherit (inputs.nixvim.legacyPackages.${system}) makeNixvimWithModule;
-      inherit (inputs.nixvim.lib.${system}.check) mkTestDerivationFromNvim;
+      nameFunction = name: "nvim" + lib.optionalString (name != "default") "-${name}";
     in
     {
       # Run using `nix run .#nvim`
-      packages.nvim = makeNixvimWithModule {
-        inherit pkgs;
-        module = self.nixvimModules.default;
-        extraSpecialArgs = { inherit self inputs; };
+      packages = {
+        enable = true;
+        inherit nameFunction;
       };
 
-      # `nix flake check` will also validate config
-      checks.nvim = mkTestDerivationFromNvim {
-        inherit (self'.packages) nvim;
-        name = "My custom neovim";
+      # Test nixvim configurations in `nix flake check`
+      checks = {
+        enable = true;
+        inherit nameFunction;
+      };
+    };
+
+  flake.nixvimModules = {
+    default = ./config;
+  };
+
+  perSystem =
+    { system, ... }:
+    {
+      nixvimConfigurations = {
+        default = inputs.nixvim.lib.evalNixvim {
+          inherit system;
+          extraSpecialArgs = { inherit self inputs; };
+          modules = [
+            self.nixvimModules.default
+          ];
+        };
       };
     };
 }
