@@ -1,4 +1,13 @@
-{ self, ... }:
+{
+  lib,
+  self,
+  inputs,
+  pkgs,
+  ...
+}:
+let
+  inherit (pkgs.stdenv.hostPlatform) system;
+in
 {
   plugins.lsp = {
     enable = true;
@@ -21,6 +30,10 @@
       nixd = {
         # Nix LS
         enable = true;
+        package =
+          lib.warnIf (lib.versionAtLeast pkgs.nixd.version "2.6.4")
+            "nvim lsp: unecessary package override for nixd"
+            inputs.nixd.packages.${system}.default;
         settings =
           let
             flake = ''(builtins.getFlake "${self}")'';

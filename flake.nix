@@ -28,6 +28,10 @@
 
     nixvim.url = "github:nix-community/nixvim";
 
+    nixd.url = "github:nix-community/nixd/2.6.4";
+    nixd.inputs.nixpkgs.follows = "nixpkgs";
+    nixd.inputs.flake-parts.follows = "flake-parts";
+
     nixgl.url = "github:nix-community/nixGL";
     nixgl.inputs.nixpkgs.follows = "nixpkgs";
 
