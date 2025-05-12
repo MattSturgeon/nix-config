@@ -36,16 +36,26 @@ in
             inputs.nixd.packages.${system}.default;
         settings =
           let
-            flake = ''(builtins.getFlake "${self}")'';
-            system = ''''${builtins.currentSystem}'';
+            # The wrapper curries `_nixd-expr.nix` with the `self` and `system` args
+            # This makes `init.lua` a bit DRYer and more readable
+            wrapper = builtins.toFile "expr.nix" ''
+              import ${./_nixd-expr.nix} {
+                self = ${builtins.toJSON self};
+                system = ${builtins.toJSON pkgs.stdenv.hostPlatform.system};
+              }
+            '';
+            # withFlakes brings `local` and `global` flakes into scope, then applies `expr`
+            withFlakes = expr: "with import ${wrapper}; " + expr;
           in
           {
-            nixpkgs.expr = "import ${flake}.inputs.nixpkgs { }";
+            nixpkgs.expr = withFlakes ''
+              import (if local ? lib.version then local else local.inputs.nixpkgs or global.inputs.nixpkgs) { }
+            '';
             options = rec {
-              flake-parts.expr = "${flake}.debug.options";
-              nixos.expr = "${flake}.nixosConfigurations.desktop.options";
+              flake-parts.expr = withFlakes "local.debug.options or global.debug.options";
+              nixos.expr = withFlakes "global.nixosConfigurations.desktop.options";
               home-manager.expr = "${nixos.expr}.home-manager.users.type.getSubOptions [ ]";
-              nixvim.expr = "${flake}.packages.${system}.nvim.options";
+              nixvim.expr = withFlakes "global.nixvimConfigurations.\${system}.default.options";
             };
             diagnostic = {
               # Suppress noisy warnings
