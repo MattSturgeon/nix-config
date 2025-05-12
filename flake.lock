@@ -42,6 +42,22 @@
         "type": "gitlab"
       }
     },
+    "flake-compat": {
+      "locked": {
+        "lastModified": 1747014612,
+        "narHash": "sha256-c3jaghcOBYhwgXNq52w9AZ8+GWbIKR9gIzlcpfNLEEs=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "e4a7cb84959a7e0564d024a7380f319c790723d7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "ref": "pull/71/merge",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -343,6 +359,7 @@
       "inputs": {
         "disko": "disko",
         "firefox-addons": "firefox-addons",
+        "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "hardware": "hardware",
         "home-manager": "home-manager",
