@@ -1,0 +1,14 @@
+# Enable this file using:
+# git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# Reformat using nixpkgs
+2544e5126be716c00400b15229bfd371945e813d
+
+# nvim: fix formatting
+9e55e49e390ab7d11540176050b32983870f0564
+
+# fix: formatting
+cc8b10e50337639243c11b9dfcea18cd258e0a37
+
+# Fix formatting & lockfile
+1dd999814f6aa3972c2de50dcca4ec0ef23f7f79
