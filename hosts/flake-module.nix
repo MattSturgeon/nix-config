@@ -26,14 +26,13 @@ let
   mkSystem =
     name:
     {
-      system,
       username ? "matt",
       fullname ? "Matt Sturgeon",
       modules ? [ ],
       ...
     }:
     inputs.nixpkgs.lib.nixosSystem {
-      inherit system specialArgs;
+      inherit specialArgs;
       modules = modules ++ [
         ./${name}/configuration.nix
         self.nixosModules.common
@@ -66,7 +65,7 @@ let
   mkHome =
     name:
     {
-      system,
+      system ? null,
       username ? guessUsername name,
       hostname ? guessHostname name,
       modules ? [ ],
@@ -74,17 +73,21 @@ let
     }:
     inputs.home-manager.lib.homeManagerConfiguration {
       extraSpecialArgs = specialArgs;
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
-      modules = modules ++ [
-        # FIXME doesn't support username-specific configs
-        ./${hostname}/home.nix
-        self.homeModules.common
-        self.homeModules.home
-        {
-          home.username = username;
-          home.homeDirectory = "/home/${username}";
-        }
-      ];
+      modules =
+        modules
+        ++ [
+          # FIXME doesn't support username-specific configs
+          ./${hostname}/home.nix
+          self.homeModules.common
+          self.homeModules.home
+          {
+            home.username = username;
+            home.homeDirectory = "/home/${username}";
+          }
+        ]
+        ++ lib.optional (system != null) {
+          nixpkgs.hostPlatform = system;
+        };
     };
 
   # Groups a set of configurations by their `pkgs` arg's `system`,
@@ -110,12 +113,8 @@ in
   flake = {
     # NixOS configurations
     nixosConfigurations = builtins.mapAttrs mkSystem {
-      matebook = {
-        system = "x86_64-linux";
-      };
-      desktop = {
-        system = "x86_64-linux";
-      };
+      matebook = { };
+      desktop = { };
     };
 
     # Standalone home-manager configurations
