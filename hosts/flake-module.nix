@@ -86,6 +86,25 @@ let
         }
       ];
     };
+
+  # Groups a set of configurations by their `pkgs` arg's `system`,
+  # applying a `mapAttrs'`-style mapping function to each configuration.
+  mapConfigurationsBySystem' =
+    fn: set:
+    let
+      getSystem = name: set.${name}._module.args.pkgs.stdenv.hostPlatform.system;
+      namesToAttrs =
+        names:
+        lib.pipe names [
+          (builtins.map (name: fn name set.${name}))
+          builtins.listToAttrs
+        ];
+    in
+    lib.pipe set [
+      builtins.attrNames
+      (builtins.groupBy getSystem)
+      (builtins.mapAttrs (_: namesToAttrs))
+    ];
 in
 {
   flake = {
@@ -101,5 +120,20 @@ in
 
     # Standalone home-manager configurations
     homeConfigurations = builtins.mapAttrs mkHome { };
+
+    # Propagate the configuration outputs to the flake's `checks`
+    # This allows checking they all build by running `nix flake check`
+    checks = lib.mkMerge [
+      # NixOS
+      (mapConfigurationsBySystem' (name: configuration: {
+        name = "nixos-${name}";
+        value = configuration.config.system.build.toplevel;
+      }) self.nixosConfigurations)
+      # home-manager
+      (mapConfigurationsBySystem' (name: configuration: {
+        name = "hm-${name}";
+        value = configuration.config.home.activationPackage;
+      }) self.homeConfigurations)
+    ];
   };
 }
