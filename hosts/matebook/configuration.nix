@@ -16,7 +16,9 @@
     # Hardware
     # intelBusId = "PCI:0:2:0"; nvidiaBusId = "PCI:1:0:0";
     common-cpu-intel
-    common-gpu-intel-kaby-lake
+    # NOTE: this module is deprecated, planned to be upstreamed to nixpkgs
+    # See https://github.com/NixOS/nixos-hardware/issues/992
+    "${inputs.hardware}/common/cpu/intel/kaby-lake"
     common-gpu-nvidia-disable # Disable MX150 for better battery
     common-pc-laptop-ssd
     common-hidpi
