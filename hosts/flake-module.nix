@@ -110,6 +110,10 @@ let
     ];
 in
 {
+  imports = [
+    inputs.home-manager.flakeModules.home-manager
+  ];
+
   flake = {
     # NixOS configurations
     nixosConfigurations = builtins.mapAttrs mkSystem {
