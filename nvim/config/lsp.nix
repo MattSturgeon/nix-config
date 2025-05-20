@@ -1,10 +1,4 @@
-{
-  lib,
-  self,
-  inputs,
-  pkgs,
-  ...
-}:
+{ self, pkgs, ... }:
 let
   inherit (pkgs.stdenv.hostPlatform) system;
 in
@@ -30,10 +24,6 @@ in
       nixd = {
         # Nix LS
         enable = true;
-        package =
-          lib.warnIf (lib.versionAtLeast pkgs.nixd.version "2.6.4")
-            "nvim lsp: unecessary package override for nixd"
-            inputs.nixd.packages.${system}.default;
         settings =
           let
             # The wrapper curries `_nixd-expr.nix` with the `self` and `system` args
