@@ -73,7 +73,10 @@ in
             module = "blink-cmp-git";
             score_offset = 100;
             opts = {
-              commit = { };
+              commit = {
+                # Default trigger ":" conflicts with blink-emoji
+                triggers = [ "~" ];
+              };
               git_centers = {
                 git_hub = { };
               };
