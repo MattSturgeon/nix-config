@@ -43,6 +43,7 @@ jobs:
     needs: build-matrix
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix: ${{ fromJSON(needs.build-matrix.outputs.matrix) }}
     steps:
       - name: Free disk space
