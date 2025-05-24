@@ -3,6 +3,7 @@ name: Check
 on:
   workflow_dispatch:  # can be triggered manually
   pull_request:
+    types: [opened, synchronize, reopened]
   push:
     paths-ignore:
       - "LICENSE"
