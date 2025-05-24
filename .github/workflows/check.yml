@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Free disk space
-        uses: jlumbroso/free-disk-space@v1.3.1
+        uses: wimpysworld/nothing-but-nix@main
+        with:
+          # Options: holster, carve, cleave (default), rampage
+          hatchet-protocol: rampage
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install nix
