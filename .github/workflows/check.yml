@@ -63,6 +63,8 @@ jobs:
       - name: Build ${{ matrix.attr }}
         env:
           attr: ${{ matrix.attr }}
-          NIX_ABORT_ON_WARN: true
         run: |
-          nix build --print-build-logs --log-format raw ".#$attr"
+          nix build ".#$attr" \
+              --abort-on-warn \
+              --print-build-logs \
+              --log-format raw
