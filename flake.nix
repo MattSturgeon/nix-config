@@ -41,6 +41,17 @@
     umu-launcher.inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  nixConfig = {
+    extra-substituters = [
+      "https://matt-sturgeon.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "matt-sturgeon.cachix.org-1:wyWywp8URe+OYn3t+xDXoZkmsYzFZ+WpDC6rsAQ+MX4="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
