@@ -28,6 +28,7 @@ jobs:
         uses: cachix/cachix-action@v16
         with:
           name: matt-sturgeon
+          extraPullNames: nix-community
           authToken: ${{ secrets.CACHIX_TOKEN }}
       - name: Run flake checker
         uses: DeterminateSystems/flake-checker-action@main
