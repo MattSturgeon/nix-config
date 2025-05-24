@@ -11,6 +11,9 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    nix-github-actions.url = "github:nix-community/nix-github-actions";
+    nix-github-actions.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -67,6 +70,11 @@
         ./isos/flake-module.nix
         ./treefmt/flake-module.nix
       ];
+
+      # Output a build matrix for CI
+      flake.githubActions = inputs.nix-github-actions.lib.mkGithubMatrix {
+        inherit (inputs.self) checks;
+      };
 
       # Allow inspecting flake-parts config in the repl
       # Adds the outputs debug.options, debug.config, etc

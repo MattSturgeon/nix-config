@@ -12,8 +12,38 @@ on:
       - "**.md"
 
 jobs:
-  check:
+  build-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+      - name: Generate Nix Matrix
+        id: set-matrix
+        run: |
+          set -Eeu
+          matrix="$(nix eval --json .#githubActions.matrix)"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  flake-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install nix
+        uses: cachix/install-nix-action@v31
+      - name: Run flake checker
+        uses: DeterminateSystems/flake-checker-action@main
+
+  build:
+    name: ${{ matrix.name }} (${{ matrix.system }})
+    needs: build-matrix
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: ${{ fromJSON(needs.build-matrix.outputs.matrix) }}
     steps:
       - name: Free disk space
         uses: wimpysworld/nothing-but-nix@main
@@ -30,7 +60,9 @@ jobs:
           name: matt-sturgeon
           extraPullNames: nix-community
           authToken: ${{ secrets.CACHIX_TOKEN }}
-      - name: Run flake checker
-        uses: DeterminateSystems/flake-checker-action@main
-      - name: Check flake
-        run: nix flake check
+      - name: Build ${{ matrix.attr }}
+        env:
+          attr: ${{ matrix.attr }}
+          NIX_ABORT_ON_WARN: true
+        run: |
+          nix build --print-build-logs --log-format raw ".#$attr"
