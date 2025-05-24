@@ -1,26 +1,71 @@
-name: update-flake-lock
+name: Update
 on:
   workflow_dispatch: # allows manual triggering
   schedule:
     - cron: '0 10 * * sat' # every Saturday at 10am
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   lockfile:
     runs-on: ubuntu-latest
     steps:
+      - name: Create GitHub App token
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ vars.MS_APP_ID }}
+          private-key: ${{ secrets.MS_APP_PRIVATE_KEY }}
+
+      - name: Get GitHub App user info
+        id: user
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          slug: ${{ steps.app-token.outputs.app-slug }}
+        run: |
+          name="$slug[bot]"
+          id=$(gh api "/users/$name" --jq .id)
+          (
+            echo "id=$id"
+            echo "name=$name"
+            echo "email=$id+$name@users.noreply.github.com"
+          ) >> "$GITHUB_OUTPUT"
+
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          github_access_token: ${{ steps.app-token.outputs.token }}
+
       - name: Update flake.lock
         id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:
+          token: ${{ steps.app-token.outputs.token }}
+          git-committer-name: ${{ steps.user.outputs.name }}
+          git-committer-email: ${{ steps.user.outputs.email }}
+          git-author-name: ${{ steps.user.outputs.name }}
+          git-author-email: ${{ steps.user.outputs.email }}
+          pr-body: |
+            Automated update by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+            ```
+            {{ env.GIT_COMMIT_MESSAGE }}
+            ```
           pr-labels: dependencies
           pr-assignees: MattSturgeon
-      - name: Print PR number
-        run: echo "Pull request \#${{ steps.update.outputs.pull-request-number }}."
+
+      - name: Summary
+        env:
+          num: '#${{ steps.update.outputs.pull-request-number }}'
+          url: ${{ steps.update.outputs.pull-request-url }}
+          action: ${{ steps.update.outputs.pull-request-operation }}
+        run: |
+          echo "$num was $action."
+
+          (
+            echo "## Pull Request"
+            echo "[$num]($url) was $action."
+          ) >> $GITHUB_STEP_SUMMARY
