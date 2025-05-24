@@ -51,6 +51,8 @@ jobs:
         with:
           # Options: holster, carve, cleave (default), rampage
           hatchet-protocol: rampage
+          # Increase root-safe-haven to 25GB so that build-dir has enough space
+          root-safe-haven: '25600' # Default 2048
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install nix
