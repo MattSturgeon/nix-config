@@ -7,12 +7,6 @@ on:
       - opened
       - synchronize
       - reopened
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - "LICENSE"
-      - "**.md"
 
 jobs:
   build-matrix:
