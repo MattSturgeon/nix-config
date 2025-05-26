@@ -3,10 +3,13 @@ name: Check
 on:
   workflow_dispatch:  # can be triggered manually
   pull_request:
-    types: [opened, synchronize, reopened]
+    types:
+      - opened
+      - synchronize
+      - reopened
   push:
-    branches-ignore:
-      - update/*
+    branches:
+      - main
     paths-ignore:
       - "LICENSE"
       - "**.md"
