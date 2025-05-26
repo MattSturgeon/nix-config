@@ -10,7 +10,14 @@ jobs:
 
     if: contains(github.event.pull_request.labels.*.name, 'dependencies') && (github.event.pull_request.user.login == 'matt-sturgeon-ci[bot]' || github.event.pull_request.user.login == 'dependabot[bot]')
     steps:
-    - uses: alexwilson/enable-github-automerge-action@main
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        merge-method: REBASE
+      - name: Create GitHub App token
+        uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ vars.MS_APP_ID }}
+          private-key: ${{ secrets.MS_APP_PRIVATE_KEY }}
+      - name: Enable Auto Merge (rebase)
+        uses: alexwilson/enable-github-automerge-action@main
+        with:
+          github-token: ${{ steps.app.outputs.token }}
+          merge-method: REBASE
