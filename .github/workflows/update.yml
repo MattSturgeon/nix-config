@@ -68,6 +68,7 @@ jobs:
           branch: update/${{ github.ref_name }}
 
       - name: Summary
+        if: steps.update.outputs.pull-request-number
         env:
           num: '#${{ steps.update.outputs.pull-request-number }}'
           url: ${{ steps.update.outputs.pull-request-url }}
