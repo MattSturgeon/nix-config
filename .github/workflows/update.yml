@@ -50,10 +50,19 @@ jobs:
           git-author-name: ${{ steps.user.outputs.name }}
           git-author-email: ${{ steps.user.outputs.email }}
           pr-body: |
-            Automated update by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+            Automated update by the [update-flake-lock] GitHub Action.
+
             ```
             {{ env.GIT_COMMIT_MESSAGE }}
             ```
+
+            This PR was most recently updated by workflow run [${{ github.run_id }}].
+            You can re-run the update by going to the [workflow's page].
+
+            [update-flake-lock]: https://github.com/DeterminateSystems/update-flake-lock
+            [${{ github.run_id }}]: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            [workflow's page]: ${{ github.server_url }}/${{ github.repository }}/actions/workflows/update.yml
+
           pr-labels: dependencies
           pr-assignees: MattSturgeon
           branch: update/${{ github.ref_name }}
