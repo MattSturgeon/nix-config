@@ -1,0 +1,16 @@
+name: Auto-Merge
+on:
+  pull_request_target:
+    types:
+      - labeled
+
+jobs:
+  enable-auto-merge:
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.pull_request.labels.*.name, 'dependencies') && (github.event.pull_request.user.login == 'matt-sturgeon-ci[bot]' || github.event.pull_request.user.login == 'dependabot[bot]')
+    steps:
+    - uses: alexwilson/enable-github-automerge-action@main
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        merge-method: REBASE
