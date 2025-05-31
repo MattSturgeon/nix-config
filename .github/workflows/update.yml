@@ -6,6 +6,7 @@ on:
 
 jobs:
   lockfile:
+    name: flake.lock
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub App token
