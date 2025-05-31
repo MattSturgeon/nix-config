@@ -49,6 +49,7 @@ jobs:
           git-committer-email: ${{ steps.user.outputs.email }}
           git-author-name: ${{ steps.user.outputs.name }}
           git-author-email: ${{ steps.user.outputs.email }}
+          pr-title: 'chore(flake): update inputs'
           pr-body: |
             Automated update by the [update-flake-lock] GitHub Action.
 
