@@ -14,9 +14,10 @@ in
   config = mkIf enabled {
     services.xserver = {
       enable = true;
-      desktopManager.gnome.enable = true;
       excludePackages = [ pkgs.xterm ];
     };
+
+    services.desktopManager.gnome.enable = true;
 
     # Enable dconf so it can be configured by home-manager
     programs.dconf.enable = true;
