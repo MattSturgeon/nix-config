@@ -69,12 +69,15 @@ jobs:
               --print-build-logs \
               --log-format raw
 
-  # build-success can be referenced by GitHub Rulesets
-  build-success:
+  # A meta-job that can be referenced by GitHub Rulesets.
+  # It is normally skipped, but if there was a failure it will also fail.
+  check-success:
+    name: Success
     runs-on: ubuntu-latest
+    if: failure()
     needs:
       - build
       - flake-checker
     steps:
-      - name: Done
-        run: echo Done!
+      - name: Failed
+        run: exit 1
