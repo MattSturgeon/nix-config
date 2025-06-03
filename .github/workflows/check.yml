@@ -56,6 +56,12 @@ jobs:
       #     name: matt-sturgeon
       #     extraPullNames: nix-community
       #     authToken: ${{ secrets.CACHIX_TOKEN }}
+      - name: Print env
+        run: env
+      - name: Print TMPDIR
+        run: echo "$TMPDIR"
+      - name: Print TEMPDIR
+        run: echo "$TEMPDIR"
       - name: Build ${{ matrix.attr }}
         env:
           attr: ${{ matrix.attr }}
