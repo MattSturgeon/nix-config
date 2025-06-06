@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.custom.docker;
 in
@@ -29,5 +34,9 @@ in
         defaultNetwork.settings.dns_enabled = true;
       };
     };
+
+    environment.systemPackages = [
+      pkgs.podman-compose
+    ];
   };
 }
