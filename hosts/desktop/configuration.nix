@@ -28,6 +28,11 @@
     ./sensors.nix
   ];
 
+  # TODO: switch to `hardware.fancontrol` or `services.pid-fan-controller`,
+  # or maybe come up with rfc42 config for coolercontrol?
+  # See https://docs.coolercontrol.org/wiki/config-files.html
+  programs.coolercontrol.enable = true;
+
   environment.systemPackages = with pkgs; [
     act # Allows running github actions locally
   ];
