@@ -8,6 +8,7 @@
       "steam.desktop"
       "com.heroicgameslauncher.hgl.desktop"
       "org.prismlauncher.PrismLauncher.desktop"
+      "com.nexusmods.app.desktop"
       "idea-community.desktop"
       "android-studio.desktop"
     ];
