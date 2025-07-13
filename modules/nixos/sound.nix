@@ -13,7 +13,7 @@ in
   };
 
   config = {
-    # nixos.wiki recomends using rtkit with pipewire
+    # The nixos wiki recomends using rtkit with pipewire
     security.rtkit.enable = true;
 
     # pipewire and pulseaudio conflict
