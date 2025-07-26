@@ -8,6 +8,7 @@
 let
   # nixos uses "dates", home-manager uses "frequency"
   frequency = if config.nix.gc ? "dates" then "dates" else "frequency";
+  flake = import ../../flake.nix;
 in
 {
   config = {
@@ -22,13 +23,11 @@ in
 
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
-      registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) inputs;
+      # Add flake registries to legacy channels, making legacy nix commands consistent
+      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
       settings = {
-        # Set nix-path in nix.settings because nix.nixPath isn't supported on home-manager
-        # Add flake registries to legacy channels, making legacy nix commands consistent
-        nix-path = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-
         # Enable flakes and new 'nix' command
         experimental-features = "nix-command flakes";
 
@@ -38,13 +37,11 @@ in
         # Increase download buffer to 256MiB (default 64MiB)
         download-buffer-size = 256 * 1024 * 1024;
 
-        trusted-substituters = [
-          "https://nix-community.cachix.org"
-        ];
-
-        trusted-public-keys = [
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
+        # Inherit substituters and keys from the flake config
+        # FIXME: NixOS defines `mkAfter [ "https://cache.nixos.org/" ]` by default,
+        # however Home Manager does not.
+        substituters = flake.nixConfig.extra-substituters;
+        trusted-public-keys = flake.nixConfig.extra-trusted-public-keys;
       };
 
       # Enable garbage collection
