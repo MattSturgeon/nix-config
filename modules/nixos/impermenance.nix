@@ -33,6 +33,10 @@ in
       ];
       files = [
         # "/etc/machine-id"
+
+        # Persist root's trusted flake nixConfig
+        # Used by `sudo nixos-rebuild`
+        "/root/.local/share/nix/trusted-settings.json"
       ];
     };
 
