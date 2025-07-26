@@ -8,6 +8,7 @@
 let
   # nixos uses "dates", home-manager uses "frequency"
   frequency = if config.nix.gc ? "dates" then "dates" else "frequency";
+  flake = import ../../flake.nix;
 in
 {
   config = {
@@ -38,13 +39,11 @@ in
         # Increase download buffer to 256MiB (default 64MiB)
         download-buffer-size = 256 * 1024 * 1024;
 
-        trusted-substituters = [
-          "https://nix-community.cachix.org"
-        ];
-
-        trusted-public-keys = [
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        ];
+        # Inherit substituters and keys from the flake config
+        # FIXME: NixOS defines `mkAfter [ "https://cache.nixos.org/" ]` by default,
+        # however Home Manager does not.
+        substituters = flake.nixConfig.extra-substituters;
+        trusted-public-keys = flake.nixConfig.extra-trusted-public-keys;
       };
 
       # Enable garbage collection
