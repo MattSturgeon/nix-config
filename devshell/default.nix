@@ -10,13 +10,12 @@ mkShell {
   # Enable experimental features without having to specify the argument
   env.NIX_CONFIG = "experimental-features = nix-command flakes";
 
-  nativeBuildInputs =
-    [
-      nix
-      home-manager
-      git
-    ]
-    ++ lib.optionals (formatter != null) [
-      formatter
-    ];
+  nativeBuildInputs = [
+    nix
+    home-manager
+    git
+  ]
+  ++ lib.optionals (formatter != null) [
+    formatter
+  ];
 }
