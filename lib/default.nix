@@ -51,7 +51,8 @@ let
   args = {
     inherit lib;
     util = self.lib;
-  } // attrs;
+  }
+  // attrs;
 in
 # Merge everything in lib/, including functions defined above
 recursiveMergeAttrsList (
