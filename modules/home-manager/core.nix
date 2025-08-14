@@ -3,6 +3,7 @@
   config = {
     home.packages = with pkgs; [
       ripgrep
+      nh
       tree
       jq
       wl-clipboard
