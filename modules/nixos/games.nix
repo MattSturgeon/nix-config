@@ -8,6 +8,15 @@
 let
   cfg = config.custom.gaming;
   inherit (pkgs.stdenv.hostPlatform) system;
+
+  minecraftPorts = {
+    bedrock = 19132;
+    java = 25565;
+    lanJava = {
+      from = 40000;
+      to = 65535;
+    };
+  };
 in
 {
   options.custom.gaming.enable = lib.mkEnableOption "gaming";
@@ -32,5 +41,22 @@ in
       mangohud
       goverlay # mangohud config GUI
     ];
+
+    networking.firewall = {
+      allowedTCPPorts = [
+        minecraftPorts.bedrock
+        minecraftPorts.java
+      ];
+      allowedUDPPorts = [
+        minecraftPorts.bedrock
+        minecraftPorts.java
+      ];
+      allowedTCPPortRanges = [
+        minecraftPorts.lanJava
+      ];
+      allowedUDPPortRanges = [
+        minecraftPorts.lanJava
+      ];
+    };
   };
 }
