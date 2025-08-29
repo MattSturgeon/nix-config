@@ -37,6 +37,7 @@ in
       prismlauncher
       steam-run
       inputs.umu-launcher.packages.${system}.default
+      mcpelauncher-ui-qt
       nexusmods-app-unfree
       mangohud
       goverlay # mangohud config GUI
