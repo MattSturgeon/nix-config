@@ -1,7 +1,9 @@
 {
   config = {
-    # Use suspend-then-hibernate when the lid is closed
-    services.logind.lidSwitch = "suspend-then-hibernate";
+    services.logind.settings = {
+      # Use suspend-then-hibernate when the lid is closed
+      Login.HandleLidSwitch = "suspend-then-hibernate";
+    };
 
     # When using sleep-then-hibernate,
     # sleep for 2h before hibernating
