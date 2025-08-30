@@ -76,6 +76,7 @@ jobs:
 
           pr-labels: dependencies
           pr-assignees: MattSturgeon
+          base: ${{ github.ref_name }}
           branch: update/${{ github.ref_name }}
 
       - name: Summary
