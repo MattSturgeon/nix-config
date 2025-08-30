@@ -71,6 +71,7 @@
   };
 
   nixConfig = {
+    commit-lock-file-summary = "chore(flake): update inputs";
     extra-substituters = [
       "https://matt-sturgeon.cachix.org"
       "https://nix-community.cachix.org"
