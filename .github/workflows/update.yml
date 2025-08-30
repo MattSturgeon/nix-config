@@ -41,6 +41,14 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
           github_access_token: ${{ steps.app-token.outputs.token }}
 
+      - name: Extract commit summary
+        id: nix-config
+        run: |
+          {
+            echo -n "commit-lock-file-summary="
+            nix-instantiate --eval --raw flake.nix --attr nixConfig.commit-lock-file-summary
+          } >>"$GITHUB_OUTPUT"
+
       - name: Update flake.lock
         id: update
         uses: DeterminateSystems/update-flake-lock@main
@@ -50,7 +58,8 @@ jobs:
           git-committer-email: ${{ steps.user.outputs.email }}
           git-author-name: ${{ steps.user.outputs.name }}
           git-author-email: ${{ steps.user.outputs.email }}
-          pr-title: 'chore(flake): update inputs'
+          commit-msg: ${{ steps.nix-config.outputs.commit-lock-file-summary }}
+          pr-title: ${{ steps.nix-config.outputs.commit-lock-file-summary }}
           pr-body: |
             Automated update by the [update-flake-lock] GitHub Action.
 
