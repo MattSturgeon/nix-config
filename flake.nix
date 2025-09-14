@@ -29,7 +29,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:MattSturgeon/nixpkgs/nixos-unstable-398587";
 
     hardware.url = "github:nixos/nixos-hardware";
 
