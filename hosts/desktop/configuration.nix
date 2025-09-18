@@ -7,7 +7,8 @@
   custom = {
     boot.splash = true;
     desktop.gnome = true;
-    docker.enable = true;
+    # FIXME: Disabled for now due to incompatibility with firewalld
+    # docker.enable = true;
     impermanence.enable = true;
     impermanence.wipeOnBoot = true;
     flatpak.enable = true;
