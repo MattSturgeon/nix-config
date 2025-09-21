@@ -42,6 +42,29 @@
         "type": "gitlab"
       }
     },
+    "firewalld-nix": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744515199,
+        "narHash": "sha256-I3Gdp+9IMrtAd7WLRPpVg6C3cvHyDmM2RmKpWKI6/ek=",
+        "owner": "~prince213",
+        "repo": "firewalld-nix",
+        "rev": "1e804086044c71c8bed4b4112a7567a82cc2e8f4",
+        "type": "sourcehut"
+      },
+      "original": {
+        "owner": "~prince213",
+        "repo": "firewalld-nix",
+        "type": "sourcehut"
+      }
+    },
     "flake-compat": {
       "locked": {
         "lastModified": 1747692964,
@@ -284,6 +307,7 @@
       "inputs": {
         "disko": "disko",
         "firefox-addons": "firefox-addons",
+        "firewalld-nix": "firewalld-nix",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "hardware": "hardware",
