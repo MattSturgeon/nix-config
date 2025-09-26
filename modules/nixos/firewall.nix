@@ -13,7 +13,27 @@ in
     # For iptables configs
     extraCommands = lib.mkIf (!nftables.enable) ''
       # Accept all LAN traffic
-      iptables --append INPUT --source 192.168.1.0/24 --jump ACCEPT
+      iptables --append nixos-fw \
+        --protocol tcp \
+        --source 192.168.1.0/24 \
+        --jump nixos-fw-accept
+      iptables --append nixos-fw \
+        --protocol udp \
+        --source 192.168.1.0/24 \
+        --jump nixos-fw-accept ||
+        true
+    '';
+    extraStopCommands = lib.mkIf (!nftables.enable) ''
+      # Accept all LAN traffic
+      iptables --delete nixos-fw \
+        --protocol tcp \
+        --source 192.168.1.0/24 \
+        --jump nixos-fw-accept
+      iptables --delete nixos-fw \
+        --protocol udp \
+        --source 192.168.1.0/24 \
+        --jump nixos-fw-accept ||
+        true
     '';
   };
 }
