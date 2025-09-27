@@ -1,7 +1,4 @@
 { self, pkgs, ... }:
-let
-  inherit (pkgs.stdenv.hostPlatform) system;
-in
 {
   plugins.lsp = {
     enable = true;

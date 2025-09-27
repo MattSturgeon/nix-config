@@ -1,10 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  options,
-  ...
-}:
+{ lib, config, ... }:
 let
   inherit (lib) types mkIf mkOption;
   cfg = config.custom.sync;
