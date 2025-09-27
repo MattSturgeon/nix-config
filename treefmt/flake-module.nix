@@ -14,6 +14,18 @@
             command = lib.getExe pkgs.nixfmt-rfc-style;
             includes = [ "*.nix" ];
           };
+
+          formatter.nixf-diagnose = {
+            command = lib.getExe pkgs.nixf-diagnose;
+            # Specific diagnostics can be ignored using `--ignore`
+            # See https://github.com/nix-community/nixd/blob/main/libnixf/src/Basic/diagnostic.py
+            options = [
+              "--auto-fix"
+            ];
+            includes = [ "*.nix" ];
+            # Make sure nixfmt cleans up after nixf-diagnose.
+            priority = -1;
+          };
         };
       };
     };
