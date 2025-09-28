@@ -20,15 +20,15 @@ in
       iptables --append nixos-fw \
         --protocol udp \
         --source 192.168.1.0/24 \
-        --jump nixos-fw-accept ||
-        true
+        --jump nixos-fw-accept
     '';
     extraStopCommands = lib.mkIf (!nftables.enable) ''
       # Accept all LAN traffic
       iptables --delete nixos-fw \
         --protocol tcp \
         --source 192.168.1.0/24 \
-        --jump nixos-fw-accept
+        --jump nixos-fw-accept ||
+        true
       iptables --delete nixos-fw \
         --protocol udp \
         --source 192.168.1.0/24 \
