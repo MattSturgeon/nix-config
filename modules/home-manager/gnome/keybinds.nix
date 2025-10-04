@@ -31,6 +31,7 @@ let
     );
 
   cfg = config.custom.gnome.keybinds;
+  enabled = config.custom.gnome.enable;
 in
 {
   options.custom.gnome.keybinds = {
@@ -68,7 +69,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf enabled {
     dconf = {
       enable = true;
       settings =
