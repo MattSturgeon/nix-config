@@ -5,7 +5,7 @@
 {
   custom = {
     boot.splash = true;
-    desktop.gnome = true;
+    desktop.cosmic = true;
     impermanence.enable = true;
     impermanence.wipeOnBoot = true;
     battery.optimise = true;
