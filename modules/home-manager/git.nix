@@ -4,20 +4,19 @@
   config = {
     programs.git = {
       enable = true;
-      userName = "Matt Sturgeon";
-      userEmail = "matt@sturgeon.me.uk";
       signing = {
         key = "ED1A8299";
         signByDefault = true;
       };
-      extraConfig = {
+      settings = {
+        user.name = "Matt Sturgeon";
+        user.email = "matt@sturgeon.me.uk";
         init.defaultBranch = "main";
         pull.ff = true;
         pull.rebase = true;
         rebase.autosquash = true;
         help.autoCorrect = "prompt";
       };
-      delta.enable = true;
     };
 
     programs.gh = {
@@ -28,6 +27,11 @@
     programs.lazygit = {
       enable = true;
       settings = { };
+    };
+
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
     };
   };
 }
