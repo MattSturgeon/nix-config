@@ -7,6 +7,7 @@
 }:
 let
   inherit (lib) types mkOption mkIf;
+  inherit (pkgs.stdenv.hostPlatform) system;
   cfg = config.custom.editors;
 in
 {
@@ -17,7 +18,7 @@ in
   };
 
   config = mkIf cfg.nvim {
-    home.packages = [ self.packages.${pkgs.system}.nvim ];
+    home.packages = [ self.packages.${system}.nvim ];
     home.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
