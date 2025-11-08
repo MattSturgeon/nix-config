@@ -15,7 +15,7 @@
       nerd-fonts.symbols-only
 
       # Emoji font 😀🙋🌟🎉
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
   };
 }
