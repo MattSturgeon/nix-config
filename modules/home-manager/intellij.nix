@@ -67,7 +67,7 @@ in
     # Needed to launch Minecraft in Intellij
     custom.editors.extraIdeaLibs = with pkgs; [
       flite
-      glfw-wayland-minecraft
+      glfw3-minecraft
       libGL
       libpulseaudio
       libusb1
