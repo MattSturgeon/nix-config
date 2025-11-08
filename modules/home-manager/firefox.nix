@@ -9,11 +9,12 @@
 let
   inherit (lib) types mkIf mkOption;
   inherit (self.lib.modules) mkFirst;
+  inherit (pkgs.stdenv.hostPlatform) system;
   cfg = config.custom.browsers.firefox;
   otherHost = config.custom.otherHost.enable;
 
   # Rycee firefox-addons packages
-  firefox-addons = inputs.firefox-addons.packages.${pkgs.system};
+  firefox-addons = inputs.firefox-addons.packages.${system};
 in
 {
   options.custom.browsers.firefox = {
