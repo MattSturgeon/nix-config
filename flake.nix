@@ -5,9 +5,7 @@
     systems.url = ./systems.nix;
     systems.flake = false;
 
-    # PR adds support for relative path inputs, needed for the `systems` input
-    # https://github.com/edolstra/flake-compat/pull/71
-    flake-compat.url = "github:edolstra/flake-compat?ref=pull/71/merge";
+    flake-compat.url = "github:NixOS/flake-compat";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
