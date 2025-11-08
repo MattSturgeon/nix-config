@@ -52,7 +52,7 @@ in
     programs = {
       firefox = {
         enable = true;
-        package = if cfg.install then pkgs.firefox-wayland else null;
+        package = if cfg.install then pkgs.firefox else null;
         profiles.matt = {
           id = 0;
           name = "Matt Sturgeon";
