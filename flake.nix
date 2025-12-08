@@ -42,9 +42,6 @@
       url = "github:nix-community/nixvim";
       inputs.systems.follows = "systems";
       inputs.flake-parts.follows = "flake-parts";
-      # I don't evaluate nixvim's docs, so this isn't needed
-      inputs.nuschtosSearch.follows = "";
-      # NOTE: don't make nixvim's nixpkgs follow
     };
 
     nixgl = {
