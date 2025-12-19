@@ -44,7 +44,7 @@ let
               substituteInPlace "$exe" --replace-quiet "$ide" "$out"
             fi
             wrapProgram "$exe" \
-              --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath cfg.extraIdeaLibs}
+              --prefix LD_LIBRARY_PATH : ${pkgs.addDriverRunpath.driverLink}/lib:${lib.makeLibraryPath cfg.extraIdeaLibs}
           done
         )
       '';
@@ -65,13 +65,32 @@ in
     ];
 
     # Needed to launch Minecraft in Intellij
+    # Based on `pkgs.prismlauncher`
     custom.editors.extraIdeaLibs = with pkgs; [
-      flite
+      flite # text to speach
+      libusb1 # controller support
+
+      ## native versions
       glfw3-minecraft
-      libGL
+      openal
+
+      ## openal
+      alsa-lib
+      libjack2
       libpulseaudio
-      libusb1
-      udev
+      pipewire
+
+      ## glfw
+      libGL
+      xorg.libX11
+      xorg.libXcursor
+      xorg.libXext
+      xorg.libXrandr
+      xorg.libXxf86vm
+
+      udev # oshi
+
+      vulkan-loader # VulkanMod's lwjgl
     ];
   };
 }
