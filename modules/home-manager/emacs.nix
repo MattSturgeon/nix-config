@@ -31,7 +31,8 @@ in
       extraPackages =
         epkgs: with epkgs; [
           catppuccin-theme
-          treesit-grammars.with-all-grammars
+          # 2025-12-20: tree-sitter-razor is marked as broken
+          # treesit-grammars.with-all-grammars
         ];
 
       extraConfig = # lisp
