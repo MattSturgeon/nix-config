@@ -13,7 +13,7 @@ let
 
   cfg = config.custom.editors;
 
-  idea = with pkgs.jetbrains; plugins.addPlugins idea-community-bin idea-plugins;
+  idea = pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea idea-plugins;
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   # TODO: make it easier to extend `extraLdPath` and other arguments via overrides,
