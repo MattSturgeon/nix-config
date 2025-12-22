@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -11,6 +12,10 @@
     battery.optimise = true;
     flatpak.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    prismlauncher
+  ];
 
   imports = with inputs.hardware.nixosModules; [
     # Hardware
