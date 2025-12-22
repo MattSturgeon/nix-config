@@ -26,6 +26,8 @@
     ./hardware-configuration.nix
     ./disks.nix
     ./sensors.nix
+
+    ./minecraft.nix
   ];
 
   # TODO: switch to `hardware.fancontrol` or `services.pid-fan-controller`,

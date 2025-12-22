@@ -44,6 +44,13 @@
       inputs.flake-parts.follows = "flake-parts";
     };
 
+    nix-minecraft = {
+      url = "github:infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.flake-utils.inputs.systems.follows = "systems";
+    };
+
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -92,6 +99,15 @@
       flake.githubActions = inputs.nix-github-actions.lib.mkGithubMatrix {
         inherit (inputs.self) checks;
       };
+
+      perSystem =
+        { inputs', ... }:
+        {
+          legacyPackages = {
+            # Include nix-modrinth-prefetch for convenience:
+            modrinth-prefetch = inputs'.nix-minecraft.legacyPackages.nix-modrinth-prefetch;
+          };
+        };
 
       # Allow inspecting flake-parts config in the repl
       # Adds the outputs debug.options, debug.config, etc
