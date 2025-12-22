@@ -11,7 +11,6 @@ let
   inherit (self.lib.modules) mkFirst;
   inherit (pkgs.stdenv.hostPlatform) system;
   cfg = config.custom.browsers.firefox;
-  otherHost = config.custom.otherHost.enable;
 
   # Rycee firefox-addons packages
   firefox-addons = inputs.firefox-addons.packages.${system};
@@ -25,8 +24,7 @@ in
     };
     install = mkOption {
       type = types.bool;
-      # By default, only install the actual browres on NixOS hosts
-      default = !otherHost;
+      default = true;
       description = "Install the actual browser";
     };
     desktopName = mkOption {
