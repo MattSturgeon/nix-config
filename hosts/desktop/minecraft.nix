@@ -16,12 +16,15 @@ in
         package = minecraftServers.fabric-1_21_11;
         jvmOpts = "-Xmx4G -Xms1G";
         serverProperties = {
-          server-port = 43000;
-          difficulty = 3;
-          gamemode = 0;
-          max-players = 5;
           motd = "Matt's Quad world";
+          level-seed = "-3431479793612438569";
+          difficulty = "hard";
+          gamemode = "survival";
+          view-distance = 20;
+          simulation-distance = 10;
+          max-players = 5;
           white-list = false;
+          server-port = 43000;
         };
         # Add or update mods using their modrinth version id:
         # nix run .#modrinth-prefetch -- <version_id>

@@ -19,6 +19,7 @@ in
       directories = [
         "/etc" # Persist all of /etc because /etc/shadow can't be symlinked
         # "/etc/NetworkManager"
+        "/srv"
         "/var/log"
         "/var/lib/bluetooth"
         "/var/lib/flatpak"
