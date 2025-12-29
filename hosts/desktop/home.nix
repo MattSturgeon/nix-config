@@ -9,7 +9,7 @@
       "com.heroicgameslauncher.hgl.desktop"
       "org.prismlauncher.PrismLauncher.desktop"
       "com.nexusmods.app.desktop"
-      "idea-community.desktop"
+      "idea.desktop"
       "android-studio.desktop"
     ];
   };
