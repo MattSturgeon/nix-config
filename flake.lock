@@ -243,6 +243,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-openrgb-pr": {
+      "locked": {
+        "lastModified": 1767631373,
+        "narHash": "sha256-v4p7LELy7WmMnnZPGsk/6TYLZbRn+J9LZPJvmorG97Q=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "aff28565e2a09152aa32eb9f200bed73fc996c9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/477198/merge",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1766471942,
@@ -296,6 +312,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-openrgb-pr": "nixpkgs-openrgb-pr",
         "nixvim": "nixvim",
         "systems": "systems",
         "tmux-which-key": "tmux-which-key",
