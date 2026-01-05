@@ -65,6 +65,8 @@
       url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-openrgb-pr.url = "github:NixOS/nixpkgs?ref=pull/477198/merge";
   };
 
   nixConfig = {
