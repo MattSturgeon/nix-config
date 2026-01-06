@@ -5,7 +5,6 @@
   ...
 }:
 let
-  inherit (builtins) map;
   inherit (lib) mkOption mkDefault;
 
   cfg = config.custom.gnome;
