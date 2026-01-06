@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (builtins) map mapAttrs listToAttrs;
+  inherit (builtins) mapAttrs listToAttrs;
   inherit (lib) mkOption toList filterAttrs;
 
   schema = import ./bind-schema.nix;
@@ -73,7 +73,7 @@ in
       enable = true;
       settings =
         let
-          inherit (builtins) listToAttrs toString;
+          inherit (builtins) listToAttrs;
           inherit (lib) imap0 mapAttrsToList;
 
           # Convert custom keybinds into actual dconf settings

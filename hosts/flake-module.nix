@@ -99,7 +99,7 @@ let
       namesToAttrs =
         names:
         lib.pipe names [
-          (builtins.map (name: fn name set.${name}))
+          (map (name: fn name set.${name}))
           builtins.listToAttrs
         ];
     in

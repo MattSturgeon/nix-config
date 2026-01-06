@@ -8,7 +8,6 @@ let
   inherit (builtins)
     filter
     pathExists
-    dirOf
     readDir
     ;
   inherit (lib)
