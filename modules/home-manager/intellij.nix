@@ -2,18 +2,21 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
+  inherit (pkgs.stdenv.hostPlatform) system;
+  buildIdeWithPlugins = inputs.nix-jetbrains-plugins.lib.${system}.buildIdeWithPlugins pkgs.jetbrains;
 
   idea-plugins = [
-    "ideavim"
+    "IdeaVIM"
   ];
 
   cfg = config.custom.editors;
 
-  idea = pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea idea-plugins;
+  idea = buildIdeWithPlugins "idea" idea-plugins;
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   # TODO: make it easier to extend `extraLdPath` and other arguments via overrides,
