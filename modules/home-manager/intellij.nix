@@ -10,13 +10,9 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
   buildIdeWithPlugins = inputs.nix-jetbrains-plugins.lib.${system}.buildIdeWithPlugins pkgs.jetbrains;
 
-  idea-plugins = [
-    "IdeaVIM"
-  ];
-
   cfg = config.custom.editors;
 
-  idea = buildIdeWithPlugins "idea" idea-plugins;
+  idea = buildIdeWithPlugins "idea" cfg.ideaPlugins;
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   # TODO: make it easier to extend `extraLdPath` and other arguments via overrides,
@@ -55,6 +51,11 @@ in
 {
   options.custom.editors = {
     idea = mkEnableOption "Enable Intellij IDEA";
+    ideaPlugins = lib.mkOption {
+      type = with lib.types; listOf str;
+      default = [ ];
+      description = "Plugins to include with Intellij IDEA.";
+    };
     extraIdeaLibs = lib.mkOption {
       type = with lib.types; listOf package;
       default = [ ];
@@ -65,6 +66,10 @@ in
   config = {
     home.packages = mkIf cfg.idea [
       ideaWrapped
+    ];
+
+    custom.editors.ideaPlugins = [
+      "IdeaVIM"
     ];
 
     # Needed to launch Minecraft in Intellij
