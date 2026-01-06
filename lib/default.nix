@@ -41,7 +41,7 @@ let
 
   # Returns a list of nix files that are siblings of 'file',
   # including 'default.nix' files found in sibling directories.
-  nixSiblings = file: filter (path: path != file) (nixChildren (dirOf file));
+  nixSiblings = file: filter (child: child != file) (nixChildren (dirOf file));
 
   # As per mergeAttrsList, but merge sets recursively
   recursiveMergeAttrsList = foldr (l: r: recursiveUpdate l r) { };
