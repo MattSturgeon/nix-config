@@ -21,6 +21,9 @@
             # See https://github.com/nix-community/nixd/blob/main/libnixf/src/Basic/diagnostic.py
             options = [
               "--auto-fix"
+              # Experimental primop `getFlake` false-positive unknown
+              # https://github.com/nix-community/nixd/issues/762
+              "--ignore=sema-primop-unknown"
             ];
             includes = [ "*.nix" ];
             # Make sure nixfmt cleans up after nixf-diagnose.
