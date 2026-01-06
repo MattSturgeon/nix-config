@@ -68,9 +68,14 @@ in
       ideaWrapped
     ];
 
-    custom.editors.ideaPlugins = [
-      "IdeaVIM"
-    ];
+    custom.editors.ideaPlugins = builtins.attrValues {
+      ideavim = "IdeaVIM";
+      yet-another-emoji-support = "com.github.shiraji.yaemoji";
+      dot-ignore = "mobi.hsz.idea.gitignore";
+      minecraft-dev = "com.demonwav.minecraft-dev";
+      minecraft-architectury = "me.shedaniel.architectury";
+      minecraft-stonecutter = "dev.kikugie.stonecutter";
+    };
 
     # Needed to launch Minecraft in Intellij
     # Based on `pkgs.prismlauncher`
