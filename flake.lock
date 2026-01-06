@@ -167,6 +167,36 @@
         "type": "github"
       }
     },
+    "nix-jetbrains-plugins": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "nix-minecraft",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": [
+          "systems"
+        ]
+      },
+      "locked": {
+        "lastModified": 1767880636,
+        "narHash": "sha256-aUkLLDm3YTFoVCAivnJsjSWzzMaZKtmekmtpSFUO4kE=",
+        "owner": "nix-community",
+        "repo": "nix-jetbrains-plugins",
+        "rev": "42541d98ac498eb142d9a643eef2fa79ae512bb9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-jetbrains-plugins",
+        "type": "github"
+      }
+    },
     "nix-minecraft": {
       "inputs": {
         "flake-compat": [
@@ -293,6 +323,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-github-actions": "nix-github-actions",
+        "nix-jetbrains-plugins": "nix-jetbrains-plugins",
         "nix-minecraft": "nix-minecraft",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs",
