@@ -1,6 +1,9 @@
+{ pkgs, ... }:
 {
   config = {
     users.users.matt.extraGroups = [ "kvm" ];
-    programs.adb.enable = true;
+    environment.systemPackages = [
+      pkgs.android-tools
+    ];
   };
 }
