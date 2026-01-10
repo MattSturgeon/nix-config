@@ -7,8 +7,7 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  inherit (pkgs.stdenv.hostPlatform) system;
-  buildIdeWithPlugins = inputs.nix-jetbrains-plugins.lib.${system}.buildIdeWithPlugins pkgs.jetbrains;
+  buildIdeWithPlugins = inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs;
 
   cfg = config.custom.editors;
 
