@@ -209,11 +209,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768035372,
-        "narHash": "sha256-oua1yXZgjW083SwTcOxosp4RuFjuAbbQ9y+84yAd5sw=",
+        "lastModified": 1768044855,
+        "narHash": "sha256-LwCPV4j++pbD1i7xH/62tUlEo/okeCcBQURspkSs+Go=",
         "owner": "nix-community",
         "repo": "nix-jetbrains-plugins",
-        "rev": "bd3cd68b3679f0aa0618a527841a6a0134381445",
+        "rev": "9280778f3074c714877cf19b5382057da7913c31",
         "type": "github"
       },
       "original": {
