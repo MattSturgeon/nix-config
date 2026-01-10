@@ -14,8 +14,6 @@ let
   idea = buildIdeWithPlugins "idea" cfg.ideaPlugins;
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
-  # TODO: make it easier to extend `extraLdPath` and other arguments via overrides,
-  # e.g. by using a finalAttrs-style derivation.
   ideaWrapped = pkgs.symlinkJoin {
     inherit (idea)
       pname
@@ -29,6 +27,7 @@ let
     paths = [ idea ];
     ide = idea;
     rootDir = idea.meta.mainProgram;
+    libraryPath = lib.makeLibraryPath ([ pkgs.addDriverRunpath.driverLink ] ++ cfg.extraIdeaLibs);
     postBuild = ''
       for exe in "$out/$rootDir"/bin/*
       do
@@ -40,7 +39,7 @@ let
         fi
 
         wrapProgram "$exe" \
-          --prefix LD_LIBRARY_PATH : ${pkgs.addDriverRunpath.driverLink}/lib:${lib.makeLibraryPath cfg.extraIdeaLibs}
+          --prefix LD_LIBRARY_PATH : "$libraryPath"
       done
     '';
   };
