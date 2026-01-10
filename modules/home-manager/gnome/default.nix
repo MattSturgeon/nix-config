@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  specialArgs,
   ...
 }:
 let
@@ -13,6 +14,16 @@ in
   imports = [ ./keybinds.nix ];
 
   options.custom.gnome = {
+    enable = mkOption {
+      type = lib.types.bool;
+      description = "Whether to configure GNOME";
+      default = specialArgs.osConfig.custom.desktop.gnome or true;
+      defaultText = lib.literalMD ''
+        `osConfig.custom.desktop.gnome` if present,
+        otherwise `true`
+      '';
+    };
+
     extensions = mkOption {
       type = with lib.types; listOf package;
       description = "Gnome extension packages to install";
@@ -32,7 +43,7 @@ in
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     custom.gnome = {
       keybinds.media.calculator = mkDefault "<Super>equal";
 
