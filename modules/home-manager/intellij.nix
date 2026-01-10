@@ -27,7 +27,7 @@ let
     paths = [ idea ];
     ide = idea;
     rootDir = idea.meta.mainProgram;
-    libraryPath = lib.makeLibraryPath ([ pkgs.addDriverRunpath.driverLink ] ++ cfg.extraIdeaLibs);
+    libraryPath = lib.makeLibraryPath cfg.extraIdeaLibs;
     postBuild = ''
       for exe in "$out/$rootDir"/bin/*
       do
@@ -53,9 +53,9 @@ in
       description = "Plugins to include with Intellij IDEA.";
     };
     extraIdeaLibs = lib.mkOption {
-      type = with lib.types; listOf package;
+      type = with lib.types; listOf path;
       default = [ ];
-      description = "Extra packages to include on idea's `LD_LIBRARY_PATH`.";
+      description = "Extra paths or packages to include on idea's `LD_LIBRARY_PATH`.";
     };
   };
 
@@ -76,6 +76,8 @@ in
     # Needed to launch Minecraft in Intellij
     # Based on `pkgs.prismlauncher`
     custom.editors.extraIdeaLibs = with pkgs; [
+      addDriverRunpath.driverLink
+
       flite # text to speach
       libusb1 # controller support
 
