@@ -16,36 +16,34 @@ let
   # NOTE: the jetbrains packages already do similar wrapping internally.
   # TODO: make it easier to extend `extraLdPath` and other arguments via overrides,
   # e.g. by using a finalAttrs-style derivation.
-  ideaWrapped =
-    pkgs.runCommand idea.name
-      {
-        env.ide = idea;
-        env.roodDir = idea.meta.mainProgram;
+  ideaWrapped = pkgs.symlinkJoin {
+    inherit (idea)
+      pname
+      version
+      meta
+      passthru
+      ;
+    nativeBuildInputs = with pkgs; [
+      makeBinaryWrapper
+    ];
+    paths = [ idea ];
+    ide = idea;
+    rootDir = idea.meta.mainProgram;
+    postBuild = ''
+      for exe in "$out/$rootDir"/bin/*
+      do
+        [ -x "$exe" ] || continue
 
-        nativeBuildInputs = with pkgs; [
-          makeWrapper
-        ];
+        if ( file "$exe" | grep -q 'text' ); then
+          substitute "$exe" tmp.out --replace-quiet "$ide" "$out"
+          mv --force tmp.out "$exe"
+        fi
 
-        inherit (idea) meta passthru;
-      }
-      ''
-        cp -r "$ide" "$out"
-        chmod +w -R "$out"
-
-        (
-          shopt -s nullglob
-
-          for exe in "$out/$rootDir"/bin/*
-          do
-            if [ -x "$exe" ] && ( file "$exe" | grep -q 'text' )
-            then
-              substituteInPlace "$exe" --replace-quiet "$ide" "$out"
-            fi
-            wrapProgram "$exe" \
-              --prefix LD_LIBRARY_PATH : ${pkgs.addDriverRunpath.driverLink}/lib:${lib.makeLibraryPath cfg.extraIdeaLibs}
-          done
-        )
-      '';
+        wrapProgram "$exe" \
+          --prefix LD_LIBRARY_PATH : ${pkgs.addDriverRunpath.driverLink}/lib:${lib.makeLibraryPath cfg.extraIdeaLibs}
+      done
+    '';
+  };
 in
 {
   options.custom.editors = {
