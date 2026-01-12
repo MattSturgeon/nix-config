@@ -57,7 +57,7 @@ in
             };
           };
         });
-      description = ''A list of custom keybinds.'';
+      description = "A list of custom keybinds.";
       default = [
         {
           name = "Kitty";
