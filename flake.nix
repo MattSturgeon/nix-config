@@ -61,7 +61,6 @@
       inputs.systems.follows = "systems";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-utils.follows = "nix-minecraft/flake-utils";
     };
 
     tmux-which-key = {
