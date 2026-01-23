@@ -62,6 +62,49 @@ in
       default = [ ];
       description = "Extra paths or packages to include on idea's `LD_LIBRARY_PATH`.";
     };
+    vimrc = lib.mkOption {
+      type = lib.types.submodule (
+        { config, options, ... }:
+        {
+          options = {
+            enable = lib.mkOption {
+              type = lib.types.bool;
+              description = "Whether to install ideavimrc.";
+              default = options.source.isDefined;
+              defaultText = lib.literalMD "whether `${options.source}` is defined";
+            };
+            text = lib.mkOption {
+              type = with lib.types; nullOr str;
+              default = null;
+              description = "Text to write to ideavimrc.";
+            };
+            source = lib.mkOption {
+              type = lib.types.path;
+              description = "File to install as ideavimrc.";
+            };
+            mutable = lib.mkOption {
+              type = lib.types.bool;
+              default = false;
+              description = ''
+                When enabled, ideavimrc is installed as a regular (mutable) file instead of a symlink into the Nix store.
+
+                Disabling this option later does not remove the existing file.
+
+                If a different ideavimrc already exists during activation, it is backed up with the activation date.
+              '';
+            };
+          };
+
+          # Write `text` → `source` if non-null
+          config.source = lib.mkIf (config.text != null) (
+            lib.mkDerivedConfig options.text (pkgs.writeText "ideavimrc")
+          );
+        }
+      );
+      visible = "transparent";
+      description = "Options for installing ideavimrc.";
+      default = { };
+    };
   };
 
   config = {
@@ -109,5 +152,55 @@ in
 
       vulkan-loader # VulkanMod's lwjgl
     ];
+
+    home.file.".ideavimrc" = lib.mkIf (cfg.vimrc.enable && !cfg.vimrc.mutable) {
+      inherit (cfg.vimrc) source;
+    };
+
+    home.activation.installIdeavimrc = lib.mkIf (cfg.vimrc.enable && cfg.vimrc.mutable) (
+      lib.hm.dag.entryAfter [ "writeBoundary" "linkGeneration" "cleanUp" ] /* bash */ ''
+        log() {
+          echo "installIdeavimrc: $*" >&2
+        }
+
+        ${lib.toShellVar "source" "${cfg.vimrc.source}"}
+        target="$HOME/.ideavimrc"
+
+        if [ -e "$target" ]; then
+          if cmp -s "$target" "$source"; then
+            # Already up to date, nothing to do
+            log "existing $target has not changed"
+            exit 0
+          fi
+
+          # Find the latest backup
+          latest_backup=
+          for backup in "$target".[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*; do
+            [ -e "$backup" ] || continue
+            latest_backup="$backup"
+          done
+
+          # Create a new backup
+          if [ -n "$latest_backup" ] && cmp -s "$target" "$latest_backup"; then
+            log "existing $target already has a valid backup: $latest_backup"
+            log "view changes using: diff '$latest_backup' '$target'"
+          else
+            n=1
+            date="$(date +%F)"
+            while :; do
+              backup="$target.$date.$n"
+              [ -e "$backup" ] || break
+              n=$((n + 1))
+            done
+
+            log "backing up $target → $backup"
+            log "view changes using: diff '$backup' '$target'"
+            mv "$target" "$backup"
+          fi
+        fi
+
+        install -TDm644 "$source" "$target"
+      ''
+    );
   };
 }
