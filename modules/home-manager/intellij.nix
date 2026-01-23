@@ -11,7 +11,7 @@ let
 
   cfg = config.custom.editors;
 
-  idea = buildIdeWithPlugins "idea" cfg.ideaPlugins;
+  idea = buildIdeWithPlugins "idea" (lib.attrValues cfg.ideaPlugins);
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   ideaWrapped = pkgs.symlinkJoin {
@@ -43,13 +43,18 @@ let
       done
     '';
   };
+
+  jetbrainsPluginIdType = lib.types.str // {
+    description = "Jetbrains plugin ID";
+    descriptionClass = "noun";
+  };
 in
 {
   options.custom.editors = {
     idea = mkEnableOption "Enable Intellij IDEA";
     ideaPlugins = lib.mkOption {
-      type = with lib.types; listOf str;
-      default = [ ];
+      type = lib.types.attrsOf jetbrainsPluginIdType;
+      default = { };
       description = "Plugins to include with Intellij IDEA.";
     };
     extraIdeaLibs = lib.mkOption {
@@ -64,7 +69,7 @@ in
       ideaWrapped
     ];
 
-    custom.editors.ideaPlugins = builtins.attrValues {
+    custom.editors.ideaPlugins = {
       ideavim = "IdeaVIM";
       yet-another-emoji-support = "com.github.shiraji.yaemoji";
       dot-ignore = "mobi.hsz.idea.gitignore";
