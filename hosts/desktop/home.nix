@@ -2,7 +2,7 @@
 {
   custom = {
     editors.vscode = true;
-    editors.idea = true;
+    editors.idea.enable = true;
     editors.android = true;
     gnome.favorites = lib.mkAfter [
       "steam.desktop"

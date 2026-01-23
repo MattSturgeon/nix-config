@@ -2,7 +2,7 @@
 {
   custom = {
     editors.vscode = true;
-    editors.idea = true;
+    editors.idea.enable = true;
     gnome.favorites = lib.mkAfter [
       "org.prismlauncher.PrismLauncher.desktop"
       "idea.desktop"

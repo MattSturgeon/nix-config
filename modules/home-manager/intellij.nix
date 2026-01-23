@@ -9,9 +9,9 @@ let
   inherit (lib) mkIf mkEnableOption;
   buildIdeWithPlugins = inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs;
 
-  cfg = config.custom.editors;
+  cfg = config.custom.editors.idea;
 
-  idea = buildIdeWithPlugins "idea" (lib.attrValues cfg.ideaPlugins);
+  idea = buildIdeWithPlugins "idea" (lib.attrValues cfg.plugins);
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   ideaWrapped = pkgs.symlinkJoin {
@@ -27,7 +27,7 @@ let
     paths = [ idea ];
     ide = idea;
     rootDir = idea.meta.mainProgram;
-    libraryPath = lib.makeLibraryPath cfg.extraIdeaLibs;
+    libraryPath = lib.makeLibraryPath cfg.extraLibs;
     postBuild = ''
       for exe in "$out/$rootDir"/bin/*
       do
@@ -50,14 +50,14 @@ let
   };
 in
 {
-  options.custom.editors = {
-    idea = mkEnableOption "Enable Intellij IDEA";
-    ideaPlugins = lib.mkOption {
+  options.custom.editors.idea = {
+    enable = mkEnableOption "Enable Intellij IDEA";
+    plugins = lib.mkOption {
       type = lib.types.attrsOf jetbrainsPluginIdType;
       default = { };
       description = "Plugins to include with Intellij IDEA.";
     };
-    extraIdeaLibs = lib.mkOption {
+    extraLibs = lib.mkOption {
       type = with lib.types; listOf path;
       default = [ ];
       description = "Extra paths or packages to include on idea's `LD_LIBRARY_PATH`.";
@@ -65,11 +65,11 @@ in
   };
 
   config = {
-    home.packages = mkIf cfg.idea [
+    home.packages = mkIf cfg.enable [
       ideaWrapped
     ];
 
-    custom.editors.ideaPlugins = {
+    custom.editors.idea.plugins = {
       ideavim = "IdeaVIM";
       yet-another-emoji-support = "com.github.shiraji.yaemoji";
       dot-ignore = "mobi.hsz.idea.gitignore";
@@ -80,7 +80,7 @@ in
 
     # Needed to launch Minecraft in Intellij
     # Based on `pkgs.prismlauncher`
-    custom.editors.extraIdeaLibs = with pkgs; [
+    custom.editors.idea.extraLibs = with pkgs; [
       addDriverRunpath.driverLink
 
       flite # text to speach
