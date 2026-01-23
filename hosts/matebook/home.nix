@@ -1,8 +1,12 @@
-{ ... }:
+{ lib, ... }:
 {
   custom = {
     editors.vscode = true;
     editors.idea = true;
+    gnome.favorites = lib.mkAfter [
+      "org.prismlauncher.PrismLauncher.desktop"
+      "idea.desktop"
+    ];
   };
 
   # TODO can state version be centralised?
