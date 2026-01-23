@@ -1,0 +1,100 @@
+" .ideavimrc is a configuration file for IdeaVim plugin.
+" It uses the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+
+"" Options
+
+" Use SPC for leader key
+let mapleader = " "
+
+" Use IDEA's join-line function instead of ideavim's
+set ideajoin
+
+" Show a few lines of context around the cursor.
+" Note that this makes the text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Use incremental search and highlight all.
+set incsearch
+set hlsearch
+
+"" IdeaVim plugins -- https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+"" Editing this file
+nmap \e <cmd>e ~/.ideavimrc<cr>
+nmap \r <Action>(IdeaVim.ReloadVimRc.reload)
+nmap \t <Action>(VimFindActionIdAction)
+
+"" IDE action keymaps -- https://jb.gg/abva4t
+
+" IDE actions search
+map <leader><leader> <Action>(GotoAction)
+
+" Code actions menu
+map ga <Action>(ShowIntentionActions)
+" Spelling alias
+map z= <Action>(ShowIntentionActions)
+
+" Goto declaration
+map gd <Action>(GotoDeclarationOnly)
+map gr <Action>(FindUsages)
+
+" Show documentation
+map K <Action>(QuickJavaDoc)
+
+" Refactoring
+map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+map <leader>rn <Action>(RenameElement)
+
+" Errors
+nmap ge <action>(GotoNextError)
+nmap gE <Action>(GotoPreviousError)
+
+" Search
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>fg <Action>(FindInPath)
+
+" Console
+nmap <leader>tt <Action>(ActivateTerminalToolWindow)
+nmap <leader>tf <Action>(Terminal.OpenInTerminal)
+nmap <leader>tj <Action>(JShell.Console)
+
+" Distraction free mode
+map <leader>zd <Action>(ToggleDistractionFreeMode)
+
+" Zoom
+map <leader>zz <Action>(ChangeIdeScale)
+map <leader>zr <Action>(ResetIdeScaleAction)
+map <leader>zi <Action>(ZoomInIdeAction)
+map <leader>zo <Action>(ZoomOutIdeAction)
+imap <C-e> <Action>(ResetIdeScaleAction)
+imap <C-i> <Action>(ZoomInIdeAction)
+imap <C-o> <Action>(ZoomOutIdeAction)
+
+" don't lose selection when indenting
+vnoremap < <gv
+vnoremap > >gv
+vnoremap = =gv
+
+" Quick exit insert mode using jj
+inoremap <silent> jj <Esc>
+
+" clear search highlighting
+map <leader>/ <cmd>nohls<return>
+
+" Window actions (alias)
+nnoremap <leader>w <C-w>
+
+" Buffer actions
+nmap <leader>bb <Action>(TabList)
+nnoremap <leader>bd <cmd>bd<cr>
+nnoremap <leader>bn <cmd>bn<cr>
+nnoremap <leader>bp <cmd>bp<cr>

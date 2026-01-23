@@ -153,6 +153,10 @@ in
       vulkan-loader # VulkanMod's lwjgl
     ];
 
+    # TODO: construct an ideavimrc influenced by nixvim config
+    custom.editors.idea.vimrc.source = ../../nvim/ideavimrc;
+    custom.editors.idea.vimrc.mutable = true;
+
     home.file.".ideavimrc" = lib.mkIf (cfg.vimrc.enable && !cfg.vimrc.mutable) {
       inherit (cfg.vimrc) source;
     };
