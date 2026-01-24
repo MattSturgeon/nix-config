@@ -95,6 +95,7 @@
       imports = [
         ./lib/flake-module.nix
         ./devshell/flake-module.nix
+        ./packages/flake-module.nix
         ./nvim/flake-module.nix
         ./modules/flake-module.nix
         ./publicModules/flake-module.nix
