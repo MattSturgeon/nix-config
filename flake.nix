@@ -109,15 +109,6 @@
         inherit (inputs.self) checks;
       };
 
-      perSystem =
-        { inputs', ... }:
-        {
-          legacyPackages = {
-            # Include nix-modrinth-prefetch for convenience:
-            modrinth-prefetch = inputs'.nix-minecraft.legacyPackages.nix-modrinth-prefetch;
-          };
-        };
-
       # Allow inspecting flake-parts config in the repl
       # Adds the outputs debug.options, debug.config, etc
       debug = true;
