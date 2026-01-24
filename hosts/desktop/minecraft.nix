@@ -37,7 +37,7 @@ in
         };
 
         # Modrinth mods defined by their version IDs.
-        # To update, lookup the version ID of the mod file and edit `modrinth.lock`.
+        # Add/update version IDs here, then run: nix run .#update-modrinth-lock
         mods = {
           fabric-api.modrinth = "gB6TkYEJ";
           lithium.modrinth = "4DdLmtyz";
