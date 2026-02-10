@@ -97,6 +97,7 @@
         ./devshell/flake-module.nix
         ./nvim/flake-module.nix
         ./modules/flake-module.nix
+        ./publicModules/flake-module.nix
         ./hosts/flake-module.nix
         ./isos/flake-module.nix
         ./treefmt/flake-module.nix
