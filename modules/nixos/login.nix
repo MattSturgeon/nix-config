@@ -1,5 +1,6 @@
 {
   config,
+  options,
   lib,
   ...
 }:
@@ -13,15 +14,22 @@ in
       type = types.enum [
         "none"
         "gdm"
+        "cosmic"
       ];
-      default = "gdm";
+      default = if config.custom.desktop.cosmic then "cosmic" else "gdm";
+      defaultText = lib.literalMD ''
+        `"cosmic"` if `${options.custom.desktop.cosmic}` is enabled,
+        otherwise `"gdm"`
+      '';
     };
   };
   config = mkIf (cfg.manager != "none") {
-    services.xserver.enable = true;
-    services.displayManager.gdm = {
-      enable = cfg.manager == "gdm";
-      wayland = true;
+    services.displayManager = {
+      gdm = {
+        enable = cfg.manager == "gdm";
+        wayland = true;
+      };
+      cosmic-greeter.enable = cfg.manager == "cosmic";
     };
   };
 }
