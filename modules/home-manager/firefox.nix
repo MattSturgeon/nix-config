@@ -22,35 +22,17 @@ in
       default = true;
       description = "Enable Firefox config";
     };
-    install = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Install the actual browser";
-    };
-    desktopName = mkOption {
-      type = with types; nullOr str;
-      default =
-        # The nix build of firefox uses "firefox.desktop".
-        # If we're not installing the actual browser, assume
-        # the flatpak version will be used.
-        if cfg.install then "firefox.desktop" else "org.mozilla.firefox.desktop";
-      description = ''The firefox desktop file to add to "favorites", or null'';
-      defaultText = lib.literalMD ''
-        "firefox.desktop" when `install` is true, otherwise "org.mozilla.firefox.desktop"
-      '';
-    };
   };
 
   config = mkIf cfg.enable {
     custom.gnome = {
       # Add desktop entry to gnome favorites
-      favorites = mkIf (cfg.desktopName != null) (mkFirst [ cfg.desktopName ]);
+      favorites = mkFirst [ "firefox.desktop" ];
     };
 
     programs = {
       firefox = {
         enable = true;
-        package = if cfg.install then pkgs.firefox else null;
         profiles.matt = {
           id = 0;
           name = "Matt Sturgeon";
@@ -145,6 +127,7 @@ in
             "network.dns.http3_echconfig.enabled" = true;
 
             # Tracking
+            # https://support.mozilla.org/en-US/kb/enhanced-tracking-protection-firefox-desktop
             "browser.contentblocking.category" = "strict";
             "privacy.trackingprotection.enabled" = true;
             "privacy.trackingprotection.pbmode.enabled" = true;
@@ -154,11 +137,13 @@ in
             "privacy.trackingprotection.fingerprinting.enabled" = true;
 
             # Fingerprinting
+            # https://support.mozilla.org/en-US/kb/firefox-protection-against-fingerprinting
             "privacy.fingerprintingProtection" = true;
-            "privacy.resistFingerprinting" = true;
+            # https://support.mozilla.org/en-US/kb/resist-fingerprinting
+            # NOTE: `privacy.resistFingerprinting` breaks things like canvas rendering,
+            # and configures weird defaults like window size and timezones.
+            # Therefore, only enable it in private browsing mode.
             "privacy.resistFingerprinting.pbmode" = true;
-
-            "privacy.firstparty.isolate" = true;
 
             # URL query tracking
             "privacy.query_stripping.enabled" = true;
@@ -188,14 +173,6 @@ in
           # userContent = '' ''; # content CSS
         };
       };
-    };
-
-    home.sessionVariables = {
-      # This should be default soon
-      MOZ_ENABLE_WAYLAND = 1;
-
-      # Non-nix firefox crashes without this because profiles.ini is read-only
-      MOZ_LEGACY_PROFILES = 1;
     };
   };
 }
