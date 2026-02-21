@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install nix
-        uses: cachix/install-nix-action@v31
+        uses: DeterminateSystems/nix-installer-action@main
       - name: Generate Nix Matrix
         id: set-matrix
         run: |
@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install nix
-        uses: cachix/install-nix-action@v31
+        uses: DeterminateSystems/nix-installer-action@main
       - name: Run flake checker
         uses: DeterminateSystems/flake-checker-action@main
 
@@ -46,21 +46,22 @@ jobs:
     steps:
       - name: Free disk space
         uses: wimpysworld/nothing-but-nix@main
-        with:
-          # Options: holster, carve, cleave (default), rampage
-          hatchet-protocol: rampage
-          # Increase root-safe-haven to 25GB so that build-dir has enough space
-          root-safe-haven: '25600' # Default 2048
       - name: Checkout
         uses: actions/checkout@v4
       - name: Install nix
-        uses: cachix/install-nix-action@v31
-      - name: Setup nix cache
-        uses: cachix/cachix-action@v16
-        with:
-          name: matt-sturgeon
-          extraPullNames: nix-community
-          authToken: ${{ secrets.CACHIX_TOKEN }}
+        uses: DeterminateSystems/nix-installer-action@main
+      # - name: Setup nix cache
+      #   uses: cachix/cachix-action@v16
+      #   with:
+      #     name: matt-sturgeon
+      #     extraPullNames: nix-community
+      #     authToken: ${{ secrets.CACHIX_TOKEN }}
+      - name: Print env
+        run: env
+      - name: Print TMPDIR
+        run: echo "$TMPDIR"
+      - name: Print TEMPDIR
+        run: echo "$TEMPDIR"
       - name: Build ${{ matrix.attr }}
         env:
           attr: ${{ matrix.attr }}
