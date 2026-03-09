@@ -12,10 +12,12 @@ mc-archive: Archive Minecraft server worlds.
 import argcomplete
 import argparse
 import datetime
+import nbtlib
 import os
 import sys
 import tarfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from io import BytesIO
 from pathlib import Path
 
 TIMESTAMP_FORMAT = "%Y-%m-%d--%H-%M-%S"
@@ -51,11 +53,29 @@ def get_world_name(server_dir: Path) -> str:
     return "world"
 
 
+def patch_level_dat(file: Path, allow_commands: bool) -> BytesIO:
+    """Patch level.dat NBT file in-memory"""
+
+    # Load into memory
+    nbt = nbtlib.load(file)
+
+    # Apply patches
+    nbt["Data"]["allowCommands"] = nbtlib.Byte(1 if allow_commands else 0)
+
+    # Serialize to bytes in memory
+    buffer = BytesIO()
+    nbt.save(buffer)
+    buffer.seek(0)
+
+    return buffer
+
+
 def create_archive(
     servers_dir: Path,
     server: str,
     dest: Path,
     scope: str,
+    enable_commands: bool,
 ) -> Path:
     src = servers_dir / server
 
@@ -68,19 +88,43 @@ def create_archive(
     if archive_path.exists():
         raise FileExistsError(f"{archive_path} already exists")
 
+    world_name = get_world_name(src)
+    world_path = src / world_name
+    level_path = world_path / "level.dat"
+    level_arcname = f"{world_name}/level.dat"
+
+    def tar_filter(tarinfo):
+        """Skip level.dat if we're patching it."""
+        if enable_commands and tarinfo.name == level_arcname:
+            return None
+        return tarinfo
+
     # TODO: show progress while archiving
     with tarfile.open(archive_path, "w:gz") as tar:
         if scope == "server":
-            tar.add(src, arcname="")
+            tar.add(src, arcname="", filter=tar_filter)
 
         elif scope == "world":
-            world_name = get_world_name(src)
-            world_path = src / world_name
             if not world_path.is_dir():
                 raise FileNotFoundError(
                     f"Server '{server}' world directory not found: {world_path}"
                 )
-            tar.add(world_path, arcname=world_name)
+            tar.add(world_path, arcname=world_name, filter=tar_filter)
+
+        else:
+            raise ValueError(f"Unknown scope: {scope}")
+
+        if enable_commands:
+            if not level_path.is_file():
+                raise FileNotFoundError(f"{level_path} not found")
+
+            tar.addfile(
+                tarinfo=tar.gettarinfo(
+                    name=level_path,
+                    arcname=level_arcname,
+                ),
+                fileobj=patch_level_dat(level_path, allow_commands=True),
+            )
 
     return archive_path
 
@@ -90,9 +134,16 @@ def archive_one(
     server: str,
     output: Path,
     scope: str,
+    enable_commands: bool,
 ) -> Path | Exception:
     try:
-        return create_archive(servers_dir, server, output, scope)
+        return create_archive(
+            servers_dir,
+            server,
+            output,
+            scope,
+            enable_commands,
+        )
     except Exception as e:
         return e
 
@@ -156,6 +207,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--op",
+        "--enable-commands",
+        dest="enable_commands",
+        action="store_true",
+        help="Modify level.dat to enable commands in the archive",
+    )
+
+    parser.add_argument(
         "-j",
         "--jobs",
         type=positive_int,
@@ -207,7 +266,14 @@ def main() -> None:
 
     with ThreadPoolExecutor(max_workers=jobs) as pool:
         futures = {
-            pool.submit(archive_one, servers_dir, s, args.output, args.scope): s
+            pool.submit(
+                archive_one,
+                servers_dir,
+                s,
+                args.output,
+                args.scope,
+                args.enable_commands,
+            ): s
             for s in servers
         }
 

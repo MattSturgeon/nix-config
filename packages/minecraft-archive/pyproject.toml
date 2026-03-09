@@ -11,6 +11,7 @@ license = { text="MIT" }
 
 dependencies = [
     "argcomplete>=3.1.0",
+    "nbtlib>=0.83",
 ]
 
 [project.scripts]
