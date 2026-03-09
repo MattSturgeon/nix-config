@@ -9,6 +9,7 @@
           nixosConfigs = lib.attrValues self.nixosConfigurations;
         };
         update-modrinth-lock-unwrapped = pkgs.callPackage ./update-modrinth-lock { };
+        minecraft-archive = pkgs.callPackage ./minecraft-archive { };
       };
     };
 }

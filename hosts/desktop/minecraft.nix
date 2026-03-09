@@ -1,12 +1,17 @@
 {
   self,
   inputs,
+  config,
   pkgs,
   ...
 }:
 let
   inherit (pkgs.stdenv.hostPlatform) system;
   inherit (inputs.nix-minecraft.legacyPackages.${system}) minecraftServers;
+
+  minecraft-archive = self.packages.${system}.minecraft-archive.overrideAttrs {
+    serversDir = config.services.minecraft-servers.dataDir;
+  };
 in
 {
   imports = [
@@ -49,6 +54,8 @@ in
       };
     };
   };
+
+  environment.systemPackages = [ minecraft-archive ];
 
   # Give matt read access to minecraft data
   users.users.matt.extraGroups = [ "minecraft" ];
