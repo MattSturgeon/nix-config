@@ -14,7 +14,7 @@ in
     inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
 
-  config.services.minecraft-servers = {
+  services.minecraft-servers = {
     enable = true;
     eula = true;
     openFirewall = true;
@@ -49,4 +49,7 @@ in
       };
     };
   };
+
+  # Give matt read access to minecraft data
+  users.users.matt.extraGroups = [ "minecraft" ];
 }
