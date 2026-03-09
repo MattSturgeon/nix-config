@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minecraft-archive"
+version = "0.1.0"
+description = "Archive Minecraft server worlds"
+requires-python = ">=3.10"
+license = { text="MIT" }
+
+dependencies = [
+    "argcomplete>=3.1.0",
+]
+
+[project.scripts]
+mc-archive = "main:main"
