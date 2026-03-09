@@ -43,6 +43,7 @@ python3.pkgs.buildPythonApplication {
 
   dependencies = with python3.pkgs; [
     argcomplete
+    nbtlib
   ];
 
   postPatch = ''
