@@ -16,12 +16,15 @@ import nbtlib
 import os
 import sys
 import tarfile
+import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
 from pathlib import Path
 from tqdm import tqdm
 
 TIMESTAMP_FORMAT = "%Y-%m-%d--%H-%M-%S"
+
+stop_flag = threading.Event()
 
 
 class ProgressFile:
@@ -117,12 +120,18 @@ def add_tree_with_progress(
         return tar.gettarinfo(str(path), str(rel))
 
     for dirpath, _, filenames in os.walk(root):
+        if stop_flag.is_set():
+            raise KeyboardInterrupt()
+
         # Write the directory node
         dirpath = Path(dirpath)
         tar.addfile(get_tarinfo(dirpath))
 
         # Write each file
         for fname in filenames:
+            if stop_flag.is_set():
+                raise KeyboardInterrupt()
+
             fpath = dirpath / fname
             tarinfo = get_tarinfo(fpath)
             try:
@@ -297,67 +306,71 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     """Parse arguments and execute archive or server listing."""
-    parser = build_parser()
-    args = parser.parse_args()
+    try:
+        parser = build_parser()
+        args = parser.parse_args()
 
-    servers_dir = args.servers_dir
+        servers_dir = args.servers_dir
 
-    if args.list_servers:
-        for server in list_servers(servers_dir):
-            print(server)
-        return
+        if args.list_servers:
+            for server in list_servers(servers_dir):
+                print(server)
+            return
 
-    if args.all:
-        servers = list_servers(servers_dir)
-    else:
-        servers = args.servers
+        if args.all:
+            servers = list_servers(servers_dir)
+        else:
+            servers = args.servers
 
-    # Remove duplicates
-    servers = list(dict.fromkeys(servers))
+        # Remove duplicates
+        servers = list(dict.fromkeys(servers))
 
-    if not servers:
-        parser.error("no servers specified")
+        if not servers:
+            parser.error("no servers specified")
 
-    jobs = min(args.jobs, len(servers))
+        jobs = min(args.jobs, len(servers))
 
-    args.output.mkdir(parents=True, exist_ok=True)
+        args.output.mkdir(parents=True, exist_ok=True)
 
-    errors = False
+        errors = False
 
-    with ThreadPoolExecutor(max_workers=jobs) as pool:
-        futures = {
-            pool.submit(
-                archive_one,
-                servers_dir,
-                server,
-                args.output,
-                args.scope,
-                args.enable_commands,
-                idx,
-            ): server
-            for idx, server in enumerate(servers)
-        }
+        with ThreadPoolExecutor(max_workers=jobs) as pool:
+            futures = {
+                pool.submit(
+                    archive_one,
+                    servers_dir,
+                    server,
+                    args.output,
+                    args.scope,
+                    args.enable_commands,
+                    idx,
+                ): server
+                for idx, server in enumerate(servers)
+            }
 
-        try:
-            for f in as_completed(futures):
-                result = f.result()
-                server = futures[f]
+            try:
+                for f in as_completed(futures):
+                    result = f.result()
+                    server = futures[f]
 
-                if isinstance(result, Exception):
-                    print(f"error: {server}: {result}", file=sys.stderr)
-                    errors = True
-                else:
-                    print(f"Created archive: {result}")
+                    if isinstance(result, Exception):
+                        print(f"error: {server}: {result}", file=sys.stderr)
+                        errors = True
+                    else:
+                        print(f"Created archive: {result}")
 
-        except KeyboardInterrupt:
-            print("\nCancelling jobs...", file=sys.stderr)
+            except KeyboardInterrupt:
+                print("\nCancelling jobs...", file=sys.stderr)
+                stop_flag.set()
+                for f in futures:
+                    f.cancel()
 
-            for f in futures:
-                f.cancel()
+                raise
 
-            raise
-
-    if errors:
+        if errors:
+            sys.exit(1)
+    except KeyboardInterrupt:
+        print("\nAborted by user", file=sys.stderr)
         sys.exit(1)
 
 
