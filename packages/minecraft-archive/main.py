@@ -19,8 +19,22 @@ import tarfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from io import BytesIO
 from pathlib import Path
+from tqdm import tqdm
 
 TIMESTAMP_FORMAT = "%Y-%m-%d--%H-%M-%S"
+
+
+class ProgressFile:
+    """Wrap a file object to update a progress bar when read"""
+
+    def __init__(self, fileobj, progress: tqdm):
+        self.fileobj = fileobj
+        self.progress = progress
+
+    def read(self, size=-1):
+        data = self.fileobj.read(size)
+        self.progress.update(len(data))
+        return data
 
 
 def list_servers(servers_dir: Path) -> list[str]:
@@ -70,61 +84,84 @@ def patch_level_dat(file: Path, allow_commands: bool) -> BytesIO:
     return buffer
 
 
-def create_archive(
-    servers_dir: Path,
-    server: str,
-    dest: Path,
-    scope: str,
+def compute_total_size(root: Path) -> int:
+    """Compute total size of all files under a directory tree"""
+    total = 0
+    for dirpath, _, filenames in os.walk(root):
+        for fname in filenames:
+            fpath = Path(dirpath) / fname
+            if fpath.is_file():
+                try:
+                    total += fpath.stat().st_size
+                except PermissionError:
+                    print(
+                        f"skipping unreadable file for size: {fpath}", file=sys.stderr
+                    )
+    return total
+
+
+def add_tree_with_progress(
+    tar,
+    root: Path,
+    arc_root: str | None,
+    level_dat: Path | None,
     enable_commands: bool,
+    progress: tqdm,
+) -> None:
+    """Add a directory tree to a tarfile, updating tqdm"""
+
+    def get_tarinfo(path: Path):
+        rel = path.relative_to(root)
+        if arc_root:
+            rel = Path(arc_root) / rel
+        return tar.gettarinfo(str(path), str(rel))
+
+    for dirpath, _, filenames in os.walk(root):
+        # Write the directory node
+        dirpath = Path(dirpath)
+        tar.addfile(get_tarinfo(dirpath))
+
+        # Write each file
+        for fname in filenames:
+            fpath = dirpath / fname
+            tarinfo = get_tarinfo(fpath)
+            try:
+                if enable_commands and level_dat and fpath == level_dat:
+                    with patch_level_dat(fpath, allow_commands=True) as patched:
+                        tarinfo.size = len(patched.getbuffer())
+                        pf = ProgressFile(patched, progress)
+                        tar.addfile(tarinfo, pf)
+                else:
+                    with fpath.open("rb") as f:
+                        pf = ProgressFile(f, progress)
+                        tar.addfile(tarinfo, pf)
+            except PermissionError:
+                tqdm.write(f"skipping unreadable file: {fpath}")
+
+
+def create_archive(
+    dest: Path,
+    root: Path,
+    arc_root: str,
+    level_dat: Path,
+    enable_commands: bool,
+    progress: tqdm,
 ) -> Path:
-    src = servers_dir / server
-
-    if not src.is_dir():
-        raise FileNotFoundError(f"Server '{server}' not found in {servers_dir}")
-
     ts = datetime.datetime.now().strftime(TIMESTAMP_FORMAT)
-    archive_path = dest / f"{server}-{ts}.tar.gz"
+    archive_path = dest / f"{root.name}-{ts}.tar.gz"
 
     if archive_path.exists():
         raise FileExistsError(f"{archive_path} already exists")
 
-    world_name = get_world_name(src)
-    world_path = src / world_name
-    level_path = world_path / "level.dat"
-    level_arcname = f"{world_name}/level.dat"
-
-    def tar_filter(tarinfo):
-        """Skip level.dat if we're patching it."""
-        if enable_commands and tarinfo.name == level_arcname:
-            return None
-        return tarinfo
-
-    # TODO: show progress while archiving
     with tarfile.open(archive_path, "w:gz") as tar:
-        if scope == "server":
-            tar.add(src, arcname="", filter=tar_filter)
-
-        elif scope == "world":
-            if not world_path.is_dir():
-                raise FileNotFoundError(
-                    f"Server '{server}' world directory not found: {world_path}"
-                )
-            tar.add(world_path, arcname=world_name, filter=tar_filter)
-
-        else:
-            raise ValueError(f"Unknown scope: {scope}")
-
-        if enable_commands:
-            if not level_path.is_file():
-                raise FileNotFoundError(f"{level_path} not found")
-
-            tar.addfile(
-                tarinfo=tar.gettarinfo(
-                    name=level_path,
-                    arcname=level_arcname,
-                ),
-                fileobj=patch_level_dat(level_path, allow_commands=True),
-            )
+        add_tree_with_progress(
+            tar,
+            root,
+            arc_root,
+            level_dat,
+            enable_commands,
+            progress,
+        )
 
     return archive_path
 
@@ -135,15 +172,38 @@ def archive_one(
     output: Path,
     scope: str,
     enable_commands: bool,
+    position: int,
 ) -> Path | Exception:
     try:
-        return create_archive(
-            servers_dir,
-            server,
-            output,
-            scope,
-            enable_commands,
-        )
+        server_root = servers_dir / server
+        world_name = get_world_name(server_root)
+        if scope == "server":
+            root = server_root
+            arc_root = ""
+            level_dat_path = server_root / world_name / "level.dat"
+        elif scope == "world":
+            root = server_root / world_name
+            arc_root = world_name
+            level_dat_path = root / "level.dat"
+        else:
+            raise ValueError(f"Unknown scope {scope}")
+
+        with tqdm(
+            total=compute_total_size(root),
+            unit="B",
+            unit_scale=True,
+            desc=server,
+            position=position,
+            leave=True,
+        ) as progress:
+            return create_archive(
+                output,
+                root,
+                arc_root,
+                level_dat_path,
+                enable_commands,
+                progress,
+            )
     except Exception as e:
         return e
 
@@ -269,12 +329,13 @@ def main() -> None:
             pool.submit(
                 archive_one,
                 servers_dir,
-                s,
+                server,
                 args.output,
                 args.scope,
                 args.enable_commands,
-            ): s
-            for s in servers
+                idx,
+            ): server
+            for idx, server in enumerate(servers)
         }
 
         try:
