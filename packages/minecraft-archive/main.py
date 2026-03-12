@@ -151,13 +151,15 @@ def add_tree_with_progress(
 def create_archive(
     dest: Path,
     root: Path,
-    arc_root: str,
+    arc_segments: int,
     level_dat: Path,
     enable_commands: bool,
     progress: tqdm,
 ) -> Path:
+    basename = root.parts[-(arc_segments + 1)]
     ts = datetime.datetime.now().strftime(TIMESTAMP_FORMAT)
-    archive_path = dest / f"{root.name}-{ts}.tar.gz"
+    archive_path = dest / f"{basename}-{ts}.tar.gz"
+    arc_root = "" if arc_segments < 1 else str(root.parents[arc_segments - 1])
 
     if archive_path.exists():
         raise FileExistsError(f"{archive_path} already exists")
@@ -188,11 +190,11 @@ def archive_one(
         world_name = get_world_name(server_root)
         if scope == "server":
             root = server_root
-            arc_root = ""
+            arc_segments = 0
             level_dat_path = server_root / world_name / "level.dat"
         elif scope == "world":
             root = server_root / world_name
-            arc_root = world_name
+            arc_segments = 1
             level_dat_path = root / "level.dat"
         else:
             raise ValueError(f"Unknown scope {scope}")
@@ -208,7 +210,7 @@ def archive_one(
             return create_archive(
                 output,
                 root,
-                arc_root,
+                arc_segments,
                 level_dat_path,
                 enable_commands,
                 progress,
