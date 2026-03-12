@@ -7,7 +7,7 @@
 
     # When using sleep-then-hibernate,
     # sleep for 2h before hibernating
-    systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+    systemd.sleep.settings.Sleep.HibernateDelaySec = "2h";
 
     # s2idle or deep may work better depending on hardware...
     # "deep" is traditional S3 sleep (suspend to RAM)
