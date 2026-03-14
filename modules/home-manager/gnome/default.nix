@@ -18,7 +18,16 @@ in
       description = "Gnome extension packages to install";
       default = with pkgs.gnomeExtensions; [
         appindicator
-        dash-to-dock
+        (dash-to-dock.overrideAttrs (old: {
+          patches = old.patches or [ ] ++ [
+            # https://github.com/micheleg/dash-to-dock/pull/2529
+            (pkgs.fetchpatch {
+              name = "fix-intellihide-not-hiding.patch";
+              url = "https://github.com/micheleg/dash-to-dock/commit/0a60df0e2570738cc63d1df222f48f56fe72cccb.patch";
+              hash = "sha256-Rc0oYCJY6Zn2nUiLUC/bfe6RQ6gYN1MRv6pWfEz3+Jk=";
+            })
+          ];
+        }))
         overview-background
         clipboard-indicator
         pip-on-top
