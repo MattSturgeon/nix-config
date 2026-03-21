@@ -27,19 +27,7 @@ in
       heroic # TODO: override extraLibraries ?
       prismlauncher
       steam-run
-      (inputs.umu-launcher.packages.${system}.default.override (prev: {
-        umu-launcher-unwrapped = prev.umu-launcher-unwrapped.overrideAttrs (
-          finalAttrs: prevAttrs:
-          # Disable versionCheckHook instead of installCheckPhase
-          # Backports https://github.com/Open-Wine-Components/umu-launcher/pull/632
-          lib.throwIf (prevAttrs.doInstallCheck or true || prevAttrs.dontVersionCheck or false)
-            "umu-launcher#632 has landed"
-            {
-              doInstallCheck = true;
-              dontVersionCheck = true;
-            }
-        );
-      }))
+      inputs.umu-launcher.packages.${system}.default
       mcpelauncher-ui-qt
       nexusmods-app-unfree
       mangohud
