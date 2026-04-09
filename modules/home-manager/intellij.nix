@@ -2,12 +2,25 @@
   config,
   lib,
   pkgs,
+  self,
   inputs,
   ...
 }:
 let
   inherit (lib) mkIf mkEnableOption;
   inherit (inputs.nix-jetbrains-plugins.lib) pluginsForIde;
+  inherit (pkgs.stdenv.hostPlatform) system;
+
+  yet-another-emoji-support =
+    let
+      id = "com.github.shiraji.yaemoji";
+      inherit (pkgs.jetbrains) idea;
+      plugins = inputs.nix-jetbrains-plugins.plugins.${system}.${idea.pname}.${idea.version};
+    in
+    if plugins ? id then
+      lib.warn "idea ${idea.version} has a compatible ${id} plugin" id
+    else
+      self.packages.${system}.yaemoji-idea-plugin;
 
   cfg = config.custom.editors.idea;
 
@@ -128,7 +141,7 @@ in
     custom.editors.idea.plugins = {
       ideavim = "IdeaVIM";
       python = "PythonCore";
-      yet-another-emoji-support = "com.github.shiraji.yaemoji";
+      inherit yet-another-emoji-support; # "com.github.shiraji.yaemoji"
       dot-ignore = "mobi.hsz.idea.gitignore";
       archive-browser = "com.github.b3er.idea.plugins.arc.browser";
       minecraft-dev = "com.demonwav.minecraft-dev";
