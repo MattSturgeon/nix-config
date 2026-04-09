@@ -10,6 +10,7 @@
         };
         update-modrinth-lock-unwrapped = pkgs.callPackage ./update-modrinth-lock { };
         minecraft-archive = pkgs.callPackage ./minecraft-archive { };
+        yaemoji-idea-plugin = pkgs.callPackage ./yaemoji-idea-plugin { };
       };
     };
 }
