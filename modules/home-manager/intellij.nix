@@ -7,11 +7,11 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  buildIdeWithPlugins = inputs.nix-jetbrains-plugins.lib.buildIdeWithPlugins pkgs;
+  inherit (inputs.nix-jetbrains-plugins.lib) pluginsForIde;
 
   cfg = config.custom.editors.idea;
 
-  idea = buildIdeWithPlugins "idea" (lib.attrValues cfg.plugins);
+  idea = pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea (lib.attrValues cfg.plugins);
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   ideaWrapped = pkgs.symlinkJoin {
@@ -44,16 +44,29 @@ let
     '';
   };
 
-  jetbrainsPluginIdType = lib.types.str // {
-    description = "Jetbrains plugin ID";
-    descriptionClass = "noun";
-  };
+  jetbrainsPluginType =
+    ide:
+    let
+      name = ide.product or ide.vmoptsIDE or ide.pname or ide.name;
+      pluginIdType = lib.types.str // {
+        description = "plugin ID";
+        descriptionClass = "noun";
+      };
+
+      pluginType = lib.types.path // {
+        description = "${name} plugin";
+        descriptionClass = "noun";
+      };
+
+      coerceFn = id: (pluginsForIde pkgs ide [ id ]).${id};
+    in
+    lib.types.coercedTo pluginIdType coerceFn pluginType;
 in
 {
   options.custom.editors.idea = {
     enable = mkEnableOption "Enable Intellij IDEA";
     plugins = lib.mkOption {
-      type = lib.types.attrsOf jetbrainsPluginIdType;
+      type = lib.types.attrsOf (jetbrainsPluginType pkgs.jetbrains.idea);
       default = { };
       description = "Plugins to include with Intellij IDEA.";
     };
