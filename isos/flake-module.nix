@@ -24,7 +24,7 @@ in
                   sharedModules = [ self.homeModules.home ];
                   users.nixos = {
                     # TODO home config
-                    home.stateVersion = "23.11";
+                    home.stateVersion = "26.05";
                   };
                 };
                 boot.kernelParams = [ "copytoram" ];
