@@ -8,15 +8,14 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "yet-another-emoji-support";
-  version = "1.1.4-beta";
+  version = "1.1.4-unstable-2026-04-27";
 
   src = fetchFromGitHub {
-    owner = "ranma2913";
+    owner = "shiraji";
     repo = "yet-another-emoji-support";
-    # 2026.1 branch
-    # https://github.com/ranma2913/yet-another-emoji-support/pull/1
-    rev = "0c3d74333586a84408394662898367d8def7f8f6";
-    hash = "sha256-6ZlCSc83M6xmBjropkwmmGlKzTPdrba/AMiYTr8tdLA=";
+    # Unreleased 2026.1 support
+    rev = "d151910e486323048cf17bc78b8db02fccff4936";
+    hash = "sha256-If+7fp70lB5cxE1LelqG8G9llBg90Ur2UnfSexyq9ag=";
   };
 
   nativeBuildInputs = [
