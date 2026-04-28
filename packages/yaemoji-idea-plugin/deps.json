@@ -55,8 +55,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260409122755",
-    "release": "261.22158.395"
+    "lastUpdated": "20260428152529",
+    "release": "261.23567.174"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform#core-nio-fs/261.22158.277": {
@@ -90,8 +90,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260409122842",
-    "release": "261.22158.395"
+    "lastUpdated": "20260428152603",
+    "release": "261.23567.174"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/python#python-ast/253.32098.37": {
@@ -116,8 +116,8 @@
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260409165832",
-    "release": "261.23567.35"
+    "lastUpdated": "20260428095830",
+    "release": "261.24374.1"
    }
   },
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform#test-framework/261.22158.277": {
@@ -126,8 +126,8 @@
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260409165913",
-    "release": "261.23567.35"
+    "lastUpdated": "20260428095905",
+    "release": "261.24374.1"
    }
   }
  },
