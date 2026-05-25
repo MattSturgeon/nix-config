@@ -37,8 +37,4 @@
     # Enable tmux-navigator
     tmux-navigator.enable = true;
   };
-
-  extraPlugins = with pkgs.vimPlugins; [
-    vim-be-good # vim motions minigames
-  ];
 }
