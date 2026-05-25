@@ -89,47 +89,6 @@
       options.desc = "Delete the current buffer";
     }
 
-    # Refactoring
-    {
-      mode = "n";
-      key = "<leader>rr";
-      action.__raw = # lua
-        ''
-          require("telescope").extensions.refactoring.refactors
-        '';
-      options.desc = "Select refactor";
-    }
-    {
-      mode = "n";
-      key = "<leader>re";
-      action = ":Refactor extract_var ";
-      options.desc = "Extract to variable";
-    }
-    {
-      mode = "n";
-      key = "<leader>rE";
-      action = ":Refactor extract ";
-      options.desc = "Extract to function";
-    }
-    {
-      mode = "n";
-      key = "<leader>rb";
-      action = ":Refactor extract_block ";
-      options.desc = "Extract to block";
-    }
-    {
-      mode = "n";
-      key = "<leader>ri";
-      action = ":Refactor inline_var ";
-      options.desc = "Inline variable";
-    }
-    {
-      mode = "n";
-      key = "<leader>rI";
-      action = ":Refactor inline_func ";
-      options.desc = "Inline function";
-    }
-
     # Errors/diagnostics
     {
       mode = "n";

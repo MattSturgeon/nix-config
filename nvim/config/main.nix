@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   viAlias = true;
   vimAlias = true;
@@ -11,11 +10,6 @@
     comment.enable = true;
     todo-comments.enable = true;
     web-devicons.enable = true;
-
-    refactoring = {
-      enable = true;
-      enableTelescope = true;
-    };
 
     indent-blankline = {
       enable = true;
