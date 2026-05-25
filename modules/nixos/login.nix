@@ -21,7 +21,6 @@ in
     services.xserver.enable = true;
     services.displayManager.gdm = {
       enable = cfg.manager == "gdm";
-      wayland = true;
     };
   };
 }
