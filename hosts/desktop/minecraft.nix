@@ -1,4 +1,5 @@
 {
+  lib,
   self,
   inputs,
   config,
@@ -27,7 +28,11 @@ in
     servers = {
       "quad" = {
         enable = true;
-        package = minecraftServers.fabric-1_21_11;
+        package = minecraftServers.fabric-26_1_2.override (old: {
+          jre_headless = lib.warnIf (
+            lib.versions.major old.jre_headless.version == "25"
+          ) "nix-minecraft is using Java 25, override is now redundant" pkgs.openjdk25_headless;
+        });
         jvmOpts = "-Xmx4G -Xms1G";
         serverProperties = {
           motd = "Matt's Quad world";
@@ -44,12 +49,12 @@ in
         # Modrinth mods defined by their version IDs.
         # Add/update version IDs here, then run: nix run .#update-modrinth-lock
         mods = {
-          fabric-api.modrinth = "gB6TkYEJ";
-          lithium.modrinth = "4DdLmtyz";
-          ferrite-core.modrinth = "eRLwt73x";
-          simple-voice-chat.modrinth = "T42QJY4i";
-          shulker-box-tooltip.modrinth = "8Z4OG11C";
-          apple-skin.modrinth = "pvcLnrm0";
+          fabric-api.modrinth = "BLz7ETCw";
+          lithium.modrinth = "R7MxYvuW";
+          ferrite-core.modrinth = "d5ddUdiB";
+          simple-voice-chat.modrinth = "gVPjsMto";
+          shulker-box-tooltip.modrinth = "Yn66yzx3";
+          apple-skin.modrinth = "HwaLJe3v";
         };
       };
     };
