@@ -37,16 +37,21 @@ let
             throw "Modrinth mod version '${versionId}' not found in `${opts.locks.modrinth}` (try re-generating your lockfile). Defined in:${locations}"
           );
       in
-      pkgs.fetchurl {
-        inherit (lock) url sha512;
-        passthru = {
-          modrinth = true;
-          inherit versionId;
+      {
+        modrinth = true;
+        inherit versionId;
+        outPath = pkgs.fetchurl {
+          inherit (lock) url sha512;
         };
       };
   };
 
-  modType = lib.types.coercedTo taggedMod coerceTagged lib.types.path;
+  # lib.types.path is too strict; meaning we cannot evaluate unlocked versions and later run the locking script.
+  lazyPath = lib.types.raw // {
+    inherit (lib.types.path) description descriptionClass;
+  };
+
+  modType = lib.types.coercedTo taggedMod coerceTagged lazyPath;
 in
 assert
   (builtins.attrNames taggedMod.nestedTypes)
