@@ -1,6 +1,6 @@
 {
   inputs,
-  pkgs,
+  lib,
   ...
 }:
 {
@@ -11,11 +11,11 @@
     impermanence.wipeOnBoot = true;
     battery.optimise = true;
     flatpak.enable = true;
+    gaming.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    prismlauncher
-  ];
+  # Skip installing Steam for now
+  programs.steam.enable = lib.mkForce false;
 
   imports = with inputs.hardware.nixosModules; [
     # Hardware
