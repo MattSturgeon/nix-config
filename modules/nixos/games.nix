@@ -8,6 +8,18 @@
 let
   cfg = config.custom.gaming;
   inherit (pkgs.stdenv.hostPlatform) system;
+
+  steam = pkgs.steam.override {
+    inherit extraEnv;
+  };
+
+  heroic = pkgs.heroic.override {
+    inherit extraEnv;
+  };
+
+  extraEnv = {
+    PROTON_ENABLE_WAYLAND = true;
+  };
 in
 {
   options.custom.gaming.enable = lib.mkEnableOption "gaming";
@@ -15,6 +27,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.steam = {
       enable = true;
+      package = steam;
       protontricks.enable = true;
       remotePlay.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
@@ -24,7 +37,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
-      heroic # TODO: override extraLibraries ?
+      heroic
       prismlauncher
       steam-run
       inputs.umu-launcher.packages.${system}.default
