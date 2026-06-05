@@ -27,35 +27,6 @@ in
           })
         ];
       });
-
-      extraPackages =
-        epkgs: with epkgs; [
-          catppuccin-theme
-          # 2025-12-20: tree-sitter-razor is marked as broken
-          # treesit-grammars.with-all-grammars
-        ];
-
-      extraConfig = # lisp
-        ''
-          ;;; For performance, increase GC threshold during init
-          (setq gc-cons-threshold 100000000)
-          (setq read-process-output-max (* 1024 1024)) ;; 1mb
-
-          ;;; Restore normal GC after init
-          (add-hook 'after-init-hook #'(lambda () (setq gc-cons-threshold 800000)))
-
-          ;;; Disable menu-bar, tool-bar, and scroll-bar.
-          (if (fboundp 'menu-bar-mode)
-              (menu-bar-mode -1))
-          (if (fboundp 'tool-bar-mode)
-              (tool-bar-mode -1))
-          (if (fboundp 'scroll-bar-mode)
-              (scroll-bar-mode -1))
-
-          ;;; Colorscheme
-          (setq catppuccin-flavor 'mocha)
-          (load-theme 'catppuccin :no-confirm)
-        '';
     };
 
     services.emacs = {
@@ -67,5 +38,55 @@ in
       socketActivation.enable = true;
       # extraOptions = [ ];
     };
+
+    home.packages = with pkgs; [
+      # Doom Emacs dependencies
+      # https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#nixos
+      git
+      ripgrep
+      coreutils
+      fd
+      clang
+    ];
+
+    home.activation.setupDoomEmacs =
+      lib.hm.dag.entryAfter [ "writeBoundary" "linkGeneration" "cleanUp" ]
+        /* bash */ ''
+          setupDoomEmacs() {
+            log() {
+              echo "setupDoomEmacs: $*" >&2
+            }
+            local ${lib.toShellVar "emacs" "${config.xdg.configHome}/emacs"}
+            local ${lib.toShellVar "config" "${config.xdg.configHome}/doom"}
+
+            if [ -d "$emacs" ]; then
+              # Assert Doom Emacs is installed
+              [ -f "$emacs"/bin/doom ] || {
+                log "Skipping Doom Emacs installation, another Emacs config exists at $emacs"
+                return
+              }
+            else
+              # Install Doom Emacs
+              ${lib.getExe pkgs.gitMinimal} clone --depth 1 https://github.com/doomemacs/doomemacs "$emacs"
+              yes | "$emacs"/bin/doom install
+            fi
+
+
+            # TODO: symlink mutable config to ~/.config/doom
+            # Or clone a config repo, managed separately from this repo?
+            if [ ! -d "$config" ]; then
+              log "No Doom Emacs config found"
+            fi
+
+            # Sync
+            "$emacs"/bin/doom sync
+
+          }
+          setupDoomEmacs
+        '';
+
+    home.sessionPath = [
+      "${config.xdg.configHome}/emacs/bin"
+    ];
   };
 }
