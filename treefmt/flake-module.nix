@@ -1,7 +1,7 @@
-{ lib, ... }:
+{ lib, self, ... }:
 {
   perSystem =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       formatter = pkgs.treefmt.withConfig {
         settings = {
@@ -31,5 +31,14 @@
           };
         };
       };
+
+      checks.treefmt =
+        if config.formatter ? check then
+          let
+            file = lib.removePrefix (toString self + "/") (toString __curPos.file);
+          in
+          throw "treefmt.withConfig already has `check`, override at `${file}` is not needed"
+        else
+          pkgs.callPackage ./check.nix { wrapper = config.formatter; } self;
     };
 }
