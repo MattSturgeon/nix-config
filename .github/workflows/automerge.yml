@@ -1,4 +1,4 @@
-name: Auto-Merge
+name: Auto Merge
 on:
   pull_request_target:
     types:
@@ -6,9 +6,13 @@ on:
 
 jobs:
   enable-auto-merge:
-    runs-on: ubuntu-latest
+    name: Enable
+    runs-on: ubuntu-slim
 
-    if: contains(github.event.pull_request.labels.*.name, 'dependencies') && (github.event.pull_request.user.login == 'matt-sturgeon-ci[bot]' || github.event.pull_request.user.login == 'dependabot[bot]')
+    if: >-
+      contains(github.event.pull_request.labels.*.name, 'dependencies') &&
+      contains(fromJSON('["matt-sturgeon-ci[bot]", "dependabot[bot]"]'), github.event.pull_request.user.login)
+
     steps:
       - name: Create GitHub App token
         uses: actions/create-github-app-token@v2
