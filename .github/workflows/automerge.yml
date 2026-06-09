@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Create GitHub App token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         id: app
         with:
           app-id: ${{ vars.MS_APP_ID }}
