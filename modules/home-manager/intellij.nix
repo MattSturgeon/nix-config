@@ -190,47 +190,50 @@ in
 
     home.activation.installIdeavimrc = lib.mkIf (cfg.vimrc.enable && cfg.vimrc.mutable) (
       lib.hm.dag.entryAfter [ "writeBoundary" "linkGeneration" "cleanUp" ] /* bash */ ''
-        log() {
-          echo "installIdeavimrc: $*" >&2
-        }
+        installIdeavimrc() {
+          log() {
+            echo "installIdeavimrc: $*" >&2
+          }
 
-        ${lib.toShellVar "source" "${cfg.vimrc.source}"}
-        target="$HOME/.ideavimrc"
+          ${lib.toShellVar "source" "${cfg.vimrc.source}"}
+          target="$HOME/.ideavimrc"
 
-        if [ -e "$target" ]; then
-          if cmp -s "$target" "$source"; then
-            # Already up to date, nothing to do
-            log "existing $target has not changed"
-            exit 0
-          fi
+          if [ -e "$target" ]; then
+            if cmp -s "$target" "$source"; then
+              # Already up to date, nothing to do
+              log "existing $target has not changed"
+              return
+            fi
 
-          # Find the latest backup
-          latest_backup=
-          for backup in "$target".[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*; do
-            [ -e "$backup" ] || continue
-            latest_backup="$backup"
-          done
-
-          # Create a new backup
-          if [ -n "$latest_backup" ] && cmp -s "$target" "$latest_backup"; then
-            log "existing $target already has a valid backup: $latest_backup"
-            log "view changes using: diff '$latest_backup' '$target'"
-          else
-            n=1
-            date="$(date +%F)"
-            while :; do
-              backup="$target.$date.$n"
-              [ -e "$backup" ] || break
-              n=$((n + 1))
+            # Find the latest backup
+            latest_backup=
+            for backup in "$target".[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*; do
+              [ -e "$backup" ] || continue
+              latest_backup="$backup"
             done
 
-            log "backing up $target → $backup"
-            log "view changes using: diff '$backup' '$target'"
-            mv "$target" "$backup"
-          fi
-        fi
+            # Create a new backup
+            if [ -n "$latest_backup" ] && cmp -s "$target" "$latest_backup"; then
+              log "existing $target already has a valid backup: $latest_backup"
+              log "view changes using: diff '$latest_backup' '$target'"
+            else
+              n=1
+              date="$(date +%F)"
+              while :; do
+                backup="$target.$date.$n"
+                [ -e "$backup" ] || break
+                n=$((n + 1))
+              done
 
-        install -TDm644 "$source" "$target"
+              log "backing up $target → $backup"
+              log "view changes using: diff '$backup' '$target'"
+              mv "$target" "$backup"
+            fi
+          fi
+
+          install -TDm644 "$source" "$target"
+        }
+        installIdeavimrc
       ''
     );
   };
