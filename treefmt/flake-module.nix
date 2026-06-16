@@ -32,13 +32,6 @@
         };
       };
 
-      checks.treefmt =
-        if config.formatter ? check then
-          let
-            file = lib.removePrefix (toString self + "/") (toString __curPos.file);
-          in
-          throw "treefmt.withConfig already has `check`, override at `${file}` is not needed"
-        else
-          pkgs.callPackage ./check.nix { wrapper = config.formatter; } self;
+      checks.treefmt = config.formatter.check self;
     };
 }
