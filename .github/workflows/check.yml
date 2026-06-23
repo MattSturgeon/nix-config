@@ -16,7 +16,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install nix
         uses: cachix/install-nix-action@v31
       - name: Generate Nix Matrix
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install nix
         uses: cachix/install-nix-action@v31
       - name: Run flake checker
@@ -52,7 +52,7 @@ jobs:
           # Increase root-safe-haven to 25GB so that build-dir has enough space
           root-safe-haven: '25600' # Default 2048
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Install nix
         uses: cachix/install-nix-action@v31
       - name: Setup nix cache
