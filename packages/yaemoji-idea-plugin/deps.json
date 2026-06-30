@@ -55,8 +55,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260428152529",
-    "release": "261.23567.174"
+    "lastUpdated": "20260622132625",
+    "release": "261.25134.203"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform#core-nio-fs/261.22158.277": {
@@ -90,8 +90,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260428152603",
-    "release": "261.23567.174"
+    "lastUpdated": "20260622132702",
+    "release": "261.25134.203"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/python#python-ast/253.32098.37": {
@@ -116,8 +116,8 @@
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260428095830",
-    "release": "261.24374.1"
+    "lastUpdated": "20260630103017",
+    "release": "262.8665.15"
    }
   },
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform#test-framework/261.22158.277": {
@@ -126,8 +126,8 @@
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260428095905",
-    "release": "261.24374.1"
+    "lastUpdated": "20260630103046",
+    "release": "262.8665.15"
    }
   }
  },
@@ -756,18 +756,18 @@
    "module": "sha256-OHR/gY+ee1QREccbKLWV7OLYLHrau7ZG6o9d1ZOxDac=",
    "pom": "sha256-yIUJkBnmKLbGggYzVIy23kBm1hgfpsvRrL0kaqk3V04="
   },
-  "org/jetbrains/intellij/plugins#verifier-cli/1.402": {
-   "module": "sha256-nqHegmBYsMsYm0DG2AMhKigIDOk0BKl8gIqpIME2Jgs=",
-   "pom": "sha256-DTA5wUDQ5oclgff6WfFpm7O5YG4AR3kgheyIFPlRDIY="
+  "org/jetbrains/intellij/plugins#verifier-cli/1.407": {
+   "module": "sha256-7Z+g0+dMdxPxIKS8CsyjRWaCY48QKudZ4t7Ikg86Zhc=",
+   "pom": "sha256-aQSksjwZp7Mzc1c5lx716iyiJCQNd2EEt9a18ArjKmc="
   },
-  "org/jetbrains/intellij/plugins#verifier-cli/1.402/all": {
-   "jar": "sha256-tEY1A97wJ3lUURRTvMpjvHlTJe5bnJF6RwxdisuNCTM="
+  "org/jetbrains/intellij/plugins#verifier-cli/1.407/all": {
+   "jar": "sha256-EzKW9tmpxIB9zd7kLyaiKpSfDn/LShwt/NMH87gcS5o="
   },
   "org/jetbrains/intellij/plugins/verifier-cli/maven-metadata": {
    "xml": {
     "groupId": "org.jetbrains.intellij.plugins",
-    "lastUpdated": "20260401115128",
-    "release": "1.402"
+    "lastUpdated": "20260619080353",
+    "release": "1.407"
    }
   },
   "org/jetbrains/kotlin#abi-tools-api/2.3.20": {
@@ -900,9 +900,9 @@
    "jar": "sha256-cEfOA1P0kSXDx0Z5LU92wyZde3L+YmlLfuwHW7oCUow=",
    "pom": "sha256-B8Ba4tHs4K4e1mAQ7TGNnN3LNYcEbGM8GGvRTM8EYdU="
   },
-  "org/jetbrains/kotlin#kotlin-stdlib-common/2.3.0": {
-   "module": "sha256-/pAljbcTNVWBoBZDfQbAKdBpwgu93uE02R5LiHBz108=",
-   "pom": "sha256-J+2DQuBLgcqy0aP512D06/lQmG9n7Eme1y1cw4d+6NA="
+  "org/jetbrains/kotlin#kotlin-stdlib-common/2.3.20": {
+   "module": "sha256-fV4z3nFM3ddQeGQgmMvL7pfBg5jQNLd9MrSwdLlQOTk=",
+   "pom": "sha256-/Xtj7fb31urrwWoYVgu7koszQlYepcnR92kZiw/puYg="
   },
   "org/jetbrains/kotlin#kotlin-stdlib-jdk7/1.8.0": {
    "pom": "sha256-36lkSmrluJjuR1ux9X6DC6H3cK7mycFfgRKqOBGAGEo="
@@ -920,11 +920,6 @@
   "org/jetbrains/kotlin#kotlin-stdlib-jdk8/1.9.10": {
    "jar": "sha256-pMdNlNZM4avlN2D+A4ndlB9vxVjQ2rNeR8CFoR7IDyg=",
    "pom": "sha256-X0uU3TBlp3ZMN/oV3irW2B9A1Z+Msz8X0YHGOE+3py4="
-  },
-  "org/jetbrains/kotlin#kotlin-stdlib/2.3.0": {
-   "jar": "sha256-iHWHyRcTJQrVL+FK2RZtBCwzg1BJiQ6UN/NV/8WhlbE=",
-   "module": "sha256-CRCoo7aWD8eSxFxWqR18Oj8mKG8DKVVUtRnP83h1baI=",
-   "pom": "sha256-TVJW0+SETmVrDKQF9jUNbyF5XCQ3WzRSUmxUZ92ZtaI="
   },
   "org/jetbrains/kotlin#kotlin-stdlib/2.3.20": {
    "jar": "sha256-CuElBKUEDrrzdwOQhINCDRpWJN0dk/NXZl+Md8hIoB4=",
