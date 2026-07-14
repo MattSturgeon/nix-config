@@ -55,8 +55,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260622132625",
-    "release": "261.25134.203"
+    "lastUpdated": "20260702203644",
+    "release": "261.26222.72"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform#core-nio-fs/261.22158.277": {
@@ -90,8 +90,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260622132702",
-    "release": "261.25134.203"
+    "lastUpdated": "20260702203741",
+    "release": "261.26222.72"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/python#python-ast/253.32098.37": {
@@ -110,24 +110,18 @@
    "jar": "sha256-rz+JiXM4441vUT1IXnlJ8uyWHoGTMSpsBHdLcyqWQKQ=",
    "pom": "sha256-giEQeEuWXQAeaLVSn+dxwIccUK55K/7la7JdTRkDXjA="
   },
-  "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/java#java-compiler-ant-tasks/261.22158.277": {
-   "pom": "sha256-MO5Ms3gP3zRbAJSsmNs5RuzjOUJA13l1RzdsAHbVWgo="
-  },
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260630103017",
-    "release": "262.8665.15"
+    "lastUpdated": "20260714003945",
+    "release": "262.8665.225"
    }
-  },
-  "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform#test-framework/261.22158.277": {
-   "pom": "sha256-rIS6XgjP/KfXkn3lWk/oaOFRriUYGJtibSHYMHkrLYc="
   },
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260630103046",
-    "release": "262.8665.15"
+    "lastUpdated": "20260714004129",
+    "release": "262.8665.225"
    }
   }
  },
@@ -756,18 +750,18 @@
    "module": "sha256-OHR/gY+ee1QREccbKLWV7OLYLHrau7ZG6o9d1ZOxDac=",
    "pom": "sha256-yIUJkBnmKLbGggYzVIy23kBm1hgfpsvRrL0kaqk3V04="
   },
-  "org/jetbrains/intellij/plugins#verifier-cli/1.407": {
-   "module": "sha256-7Z+g0+dMdxPxIKS8CsyjRWaCY48QKudZ4t7Ikg86Zhc=",
-   "pom": "sha256-aQSksjwZp7Mzc1c5lx716iyiJCQNd2EEt9a18ArjKmc="
+  "org/jetbrains/intellij/plugins#verifier-cli/1.408": {
+   "module": "sha256-OJAKXpDNNe49gtVpe9tsFGPuoT7y1UaERdvXBqL/1xQ=",
+   "pom": "sha256-+hw/uUEp1xmuxd4Akjqa/xZ2ZZ/FgTwhwB2WwcyotGw="
   },
-  "org/jetbrains/intellij/plugins#verifier-cli/1.407/all": {
-   "jar": "sha256-EzKW9tmpxIB9zd7kLyaiKpSfDn/LShwt/NMH87gcS5o="
+  "org/jetbrains/intellij/plugins#verifier-cli/1.408/all": {
+   "jar": "sha256-X+wSbWBtNiL1/ziwk7NC6RX83KESeLfW3BNs7lEL6GQ="
   },
   "org/jetbrains/intellij/plugins/verifier-cli/maven-metadata": {
    "xml": {
     "groupId": "org.jetbrains.intellij.plugins",
-    "lastUpdated": "20260619080353",
-    "release": "1.407"
+    "lastUpdated": "20260702223725",
+    "release": "1.408"
    }
   },
   "org/jetbrains/kotlin#abi-tools-api/2.3.20": {
