@@ -70,15 +70,31 @@ jobs:
               --print-build-logs \
               --log-format raw
 
-  # A meta-job that can be referenced by GitHub Rulesets.
-  # It is normally skipped, but if there was a failure it will also fail.
+  # This meta-job exists only as a target for the 'required status checks' ruleset.
+  # It 'needs' all jobs that block merging a PR. Update the 'needs' list as CI requirements evolve.
   check-success:
+    # Important: do not rename this job!
+    # The job name is the unique identifier used by required status checks.
     name: Success
-    runs-on: ubuntu-latest
-    if: failure()
+    runs-on: ubuntu-slim
+    if: always()
+    permissions: {}
+
     needs:
       - build
       - flake-checker
+
     steps:
-      - name: Failed
-        run: exit 1
+      - name: Check results
+        shell: python
+        env:
+          RESULTS: ${{ toJSON(needs.*.result) }}
+        run: |
+          import json, os, sys
+
+          ok = all(
+            result == "success"
+            for result in json.loads(os.environ["RESULTS"])
+          )
+
+          sys.exit(not ok)
