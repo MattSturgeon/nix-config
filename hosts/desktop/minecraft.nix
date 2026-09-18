@@ -28,7 +28,7 @@ in
     servers = {
       "quad" = {
         enable = true;
-        package = minecraftServers.fabric-26_1_2.override (old: {
+        package = minecraftServers.fabric-26_3.override (old: {
           jre_headless = lib.warnIf (
             lib.versions.major old.jre_headless.version == "25"
           ) "nix-minecraft is using Java 25, override is now redundant" pkgs.openjdk25_headless;
@@ -49,12 +49,12 @@ in
         # Modrinth mods defined by their version IDs.
         # Add/update version IDs here, then run: nix run .#update-modrinth-lock
         mods = {
-          fabric-api.modrinth = "BLz7ETCw";
-          lithium.modrinth = "R7MxYvuW";
-          ferrite-core.modrinth = "d5ddUdiB";
-          simple-voice-chat.modrinth = "gVPjsMto";
-          shulker-box-tooltip.modrinth = "Yn66yzx3";
-          apple-skin.modrinth = "HwaLJe3v";
+          fabric-api.modrinth = "BQfN2OGk"; # 0.160.6+26.3
+          lithium.modrinth = "WXHRsMRl"; # mc26.3-0.26.1-fabric
+          ferrite-core.modrinth = "d5ddUdiB"; # 9.0.0-fabric
+          simple-voice-chat.modrinth = "3fRw6NfP"; # 2.6.23+26.3
+          shulker-box-tooltip.modrinth = "Cj9VEeGt"; # 5.4.2+26.3-fabric
+          apple-skin.modrinth = "PHjDtQay"; # 3.0.10+mc26.3
         };
       };
     };
