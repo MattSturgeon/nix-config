@@ -1,15 +1,10 @@
-{ lib, self, ... }:
 {
   perSystem =
-    { config, pkgs, ... }:
+    { pkgs, ... }:
     {
       packages = {
-        update-modrinth-lock = pkgs.callPackage ./update-modrinth-lock/wrapper.nix {
-          inherit (config.packages) update-modrinth-lock-unwrapped;
-          nixosConfigs = lib.attrValues self.nixosConfigurations;
-        };
-        update-modrinth-lock-unwrapped = pkgs.callPackage ./update-modrinth-lock { };
         minecraft-archive = pkgs.callPackage ./minecraft-archive { };
+        quad-modpack = pkgs.callPackage ./quad-modpack { };
         yaemoji-idea-plugin = pkgs.callPackage ./yaemoji-idea-plugin { };
       };
     };

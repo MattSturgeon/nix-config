@@ -45,6 +45,7 @@ in
       nexusmods-app-unfree
       mangohud
       goverlay # mangohud config GUI
+      packwiz # Manage MC modpacks
     ];
 
     nixpkgs.config = {

@@ -1,0 +1,13 @@
+name = "Quad"
+author = "Matt Sturgeon"
+version = "1.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "505dea35db8f1c398a72849d0464be86cda9a19a3a26448d2bbed25626b84803"
+
+[versions]
+fabric = "0.19.5"
+minecraft = "26.3"
