@@ -14,7 +14,5 @@ To migrate to a new Minecraft version, run:
 packwiz migrate minecraft [version]
 ```
 
-and update Quad's nix-minecraft package in [`hosts/desktop/minecraft.nix`](../../hosts/desktop/minecraft.nix) to match.
-
 You can also add or remove mods using `packwiz modrinth add [mod-slug]` and `packwiz remove [mod-slug]`, respectively.
 See `packwiz --help` or the [online reference](https://packwiz.infra.link/reference/commands/packwiz/) for more detail.

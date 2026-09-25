@@ -27,11 +27,17 @@ in
     servers = {
       "quad" = {
         enable = true;
-        package = minecraftServers.fabric-26_3.override (old: {
-          jre_headless = lib.warnIf (
-            lib.versions.major old.jre_headless.version == "25"
-          ) "nix-minecraft is using Java 25, override is now redundant" pkgs.openjdk25_headless;
-        });
+        package =
+          let
+            # Derive nix-minecraft package from quad-modpack's metadata
+            attrName = "fabric-${lib.replaceString "." "_" quad-modpack.pack.versions.minecraft}";
+          in
+          minecraftServers.${attrName}.override (old: {
+            loaderVersion = quad-modpack.pack.versions.fabric;
+            jre_headless = lib.warnIf (
+              lib.versions.major old.jre_headless.version == "25"
+            ) "nix-minecraft is using Java 25, override is now redundant" pkgs.openjdk25_headless;
+          });
         jvmOpts = "-Xmx4G -Xms1G";
         serverProperties = {
           motd = "Matt's Quad world";
