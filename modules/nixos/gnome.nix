@@ -24,31 +24,26 @@ in
 
     xdg.portal.enable = true;
 
-    services.udev.packages = with pkgs; [
-      gnome-settings-daemon
+    services.udev.packages = [
+      pkgs.gnome-settings-daemon
     ];
 
-    environment.systemPackages = with pkgs; [
-      file-roller
-      nautilus-open-any-terminal
+    environment.systemPackages = [
+      pkgs.file-roller
     ];
 
-    # Exclude some default gnome packages
-    environment.gnome.excludePackages = with pkgs; [
-      baobab
-      cheese
-      eog
-      epiphany
-      gnome-connections
-      gnome-console
-      gnome-contacts
-      gnome-maps
-      gnome-music
-      gnome-photos
-      gnome-terminal
-      gnome-weather
-      simple-scan
-      yelp
+    # Exclude some gnome packages
+    # See core apps list in NixOS module:
+    # https://github.com/NixOS/nixpkgs/blob/e554fab7/nixos/modules/services/desktop-managers/gnome.nix#L470
+    environment.gnome.excludePackages = [
+      pkgs.epiphany
+      pkgs.gnome-text-editor
+      pkgs.gnome-calendar
+      pkgs.gnome-console
+      pkgs.gnome-contacts
+      pkgs.gnome-maps
+      pkgs.gnome-music
+      pkgs.yelp
     ];
   };
 }
