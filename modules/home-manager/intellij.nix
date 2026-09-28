@@ -144,6 +144,7 @@ in
       inherit yet-another-emoji-support; # "com.github.shiraji.yaemoji"
       dot-ignore = "mobi.hsz.idea.gitignore";
       archive-browser = "com.github.b3er.idea.plugins.arc.browser";
+      github-actions = "github.actions.helper";
       minecraft-dev = "com.demonwav.minecraft-dev";
       minecraft-architectury = "me.shedaniel.architectury";
       minecraft-stonecutter = "dev.kikugie.stonecutter";
