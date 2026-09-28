@@ -16,6 +16,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = [
+      pkgs.element-desktop
       pkgs.signal-desktop
     ];
   };
