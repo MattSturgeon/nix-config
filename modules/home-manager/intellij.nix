@@ -141,6 +141,7 @@ in
     custom.editors.idea.plugins = {
       ideavim = "IdeaVIM";
       python = "PythonCore";
+      direnv = "io.github.salatmaster.direnv";
       inherit yet-another-emoji-support; # "com.github.shiraji.yaemoji"
       dot-ignore = "mobi.hsz.idea.gitignore";
       archive-browser = "com.github.b3er.idea.plugins.arc.browser";
