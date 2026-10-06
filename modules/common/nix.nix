@@ -24,8 +24,6 @@ in
       # This will add each flake input as a registry
       # To make nix3 commands consistent with your flake
       registry = lib.mapAttrs (_: flake: { inherit flake; }) inputs;
-      # Add flake registries to legacy channels, making legacy nix commands consistent
-      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
       settings = {
         # Enable flakes and new 'nix' command
@@ -39,6 +37,9 @@ in
 
         # Increase download buffer to 256MiB (default 64MiB)
         download-buffer-size = 256 * 1024 * 1024;
+
+        # Add flake registries to legacy channels, making legacy nix commands consistent
+        nix-path = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
         # Inherit substituters and keys from the flake config
         # FIXME: NixOS defines `mkAfter [ "https://cache.nixos.org/" ]` by default,
