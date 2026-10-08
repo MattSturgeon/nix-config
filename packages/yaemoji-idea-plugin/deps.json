@@ -55,8 +55,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260922153139",
-    "release": "262.10968.117"
+    "lastUpdated": "20261001171653",
+    "release": "262.10968.176"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform#core-nio-fs/261.22158.277": {
@@ -90,8 +90,8 @@
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260922153235",
-    "release": "262.10968.117"
+    "lastUpdated": "20261001171745",
+    "release": "262.10968.176"
    }
   },
   "www.jetbrains.com/intellij-repository/releases/com/jetbrains/intellij/python#python-ast/253.32098.37": {
@@ -113,15 +113,15 @@
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/java/java-compiler-ant-tasks/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.java",
-    "lastUpdated": "20260925065839",
-    "release": "263.5701.42"
+    "lastUpdated": "20261001223849",
+    "release": "263.6259.39"
    }
   },
   "www.jetbrains.com/intellij-repository/snapshots/com/jetbrains/intellij/platform/test-framework/maven-metadata": {
    "xml": {
     "groupId": "com.jetbrains.intellij.platform",
-    "lastUpdated": "20260925070055",
-    "release": "263.5701.42"
+    "lastUpdated": "20261001223920",
+    "release": "263.6259.39"
    }
   }
  },
@@ -894,9 +894,9 @@
    "jar": "sha256-cEfOA1P0kSXDx0Z5LU92wyZde3L+YmlLfuwHW7oCUow=",
    "pom": "sha256-B8Ba4tHs4K4e1mAQ7TGNnN3LNYcEbGM8GGvRTM8EYdU="
   },
-  "org/jetbrains/kotlin#kotlin-stdlib-common/2.4.0": {
-   "module": "sha256-sDh/gRgDrxUU8aojhbRgw7gTxvQ861bPreavqiBpedg=",
-   "pom": "sha256-/RpljtvteICsPgoNvSCuGkbJh+QK9UTjprEQglu+/PU="
+  "org/jetbrains/kotlin#kotlin-stdlib-common/2.4.10": {
+   "module": "sha256-Xa9+3NbWMF0LASG+WXqdUElrq/0pkL32sI/XACWpTdE=",
+   "pom": "sha256-AG6dbnsq+nfK5w4W2Ak1yeaqv1r/WUOClXrgcV8tNoc="
   },
   "org/jetbrains/kotlin#kotlin-stdlib-jdk7/1.8.21": {
    "pom": "sha256-m7EH1dXjkwvFl38AekPNILfSTZGxweUo6m7g8kjxTTY="
@@ -917,10 +917,10 @@
    "module": "sha256-9Os0T8TR46KK4WwIbsPkL1I3O0ZtQwgYL7OG45LA76M=",
    "pom": "sha256-yDwC2afi6VRzBJHDPC8dwDwnZi4ntWbsK0TS0Bhjm5g="
   },
-  "org/jetbrains/kotlin#kotlin-stdlib/2.4.0": {
-   "jar": "sha256-zLFP+D+ryxFFi3mNvJgkdIzN/+7HnJq6eJ5u0c2oaxw=",
-   "module": "sha256-wkpH3L2Sldd29EO+Qdd6wkUwlgHtBTcR3uKwJUvgLbY=",
-   "pom": "sha256-gZT/eanuJKf6P3SmsXnAShhZ3ouYek8JgwVuWUUXId4="
+  "org/jetbrains/kotlin#kotlin-stdlib/2.4.10": {
+   "jar": "sha256-TsApO8N1FCOyA/HYSTJRxXxC5z62N3prhWDQl0/wpt8=",
+   "module": "sha256-HASpjxIAyHBdAV3wiXchFYnuy8h88cTG0oqSaC/oRG4=",
+   "pom": "sha256-n4HyXpa5GRUzkt7VO9MyFudmJJCc/QgKPtsnjUT8NPA="
   },
   "org/jetbrains/kotlin#kotlin-tooling-core/2.3.20": {
    "jar": "sha256-NnFCeBKZvA+RIMHe7A5ik0oa+ep/AaqpxaU1TcXY19k=",
