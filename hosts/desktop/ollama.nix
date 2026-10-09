@@ -10,16 +10,21 @@
     host = "0.0.0.0";
     openFirewall = true;
 
+    # TODO: do I need this at all? Pulling and creating models imperatively isn't so bad.
     # Pull these models on boot
     # See: https://ollama.com/library
     loadModels = [
-      "qwen3.8:27b"
-      "qwen3-coder:30b"
-      "gemma4:26b"
-      "gemma4:31b"
+      "qwen2.5-coder:14b"
+      "deepseek-coder-v2:16b"
+
+      # Do I need these smaller models for anything? Maybe for big context problems? But then, wouldn't a small model struggle with such problems?
       "deepseek-coder:1.3b"
       "deepseek-coder:6.7b"
-      "deepseek-coder:33b"
+
+      # Do I need these larger models for anything? They will fit in VRAM only without context...
+      "qwen3.8:27b"
+      "gemma4:26b"
+      "gemma4:31b"
     ];
 
     # Keep model storage on the larger disk, independently of root impermanence.
@@ -29,6 +34,9 @@
     user = "ollama";
     group = "ollama";
   };
+
+  # TODO: consider running `ollama create qwen3-opencode --file Modelfile` setup in a systemd oneshot??
+  # Otherwise I haven models but not a 'model config' with enough context
 
   # Workaround for persistent user:
   # https://github.com/NixOS/nixpkgs/issues/357604
