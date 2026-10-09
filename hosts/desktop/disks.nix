@@ -96,6 +96,16 @@
                         "noatime"
                       ];
                     };
+                    # Give ollama its own persistent subvolume on the larger 4TB disk.
+                    # This avoids dealing with impermanence on the root filesystem,
+                    # but more importantly leaves enough space to pull large models.
+                    "/ollama" = {
+                      mountpoint = "/srv/ollama";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
                   };
                 };
               };
