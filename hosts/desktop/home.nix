@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   custom = {
     editors.vscode = true;
@@ -9,7 +9,7 @@
       "com.heroicgameslauncher.hgl.desktop"
       "org.prismlauncher.PrismLauncher.desktop"
       "com.nexusmods.app.desktop"
-      "idea.desktop"
+      pkgs.intellij-idea.desktopItem.name
       "android-studio.desktop"
     ];
   };
