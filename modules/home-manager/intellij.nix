@@ -9,22 +9,23 @@
 let
   inherit (lib) mkIf mkEnableOption;
   inherit (inputs.nix-jetbrains-plugins.lib) pluginsForIde;
+  inherit (pkgs.jetbrains.plugins) addPlugins;
   inherit (pkgs.stdenv.hostPlatform) system;
 
   yet-another-emoji-support =
     let
       id = "com.github.shiraji.yaemoji";
-      inherit (pkgs.jetbrains) idea;
+      idea = pkgs.intellij-idea;
       plugins = inputs.nix-jetbrains-plugins.plugins.${system}.${idea.pname}.${idea.version};
     in
     if plugins ? id then
-      lib.warn "idea ${idea.version} has a compatible ${id} plugin" id
+      lib.warn "intellij-idea ${idea.version} has a compatible ${id} plugin" id
     else
       self.packages.${system}.yaemoji-idea-plugin;
 
   cfg = config.custom.editors.idea;
 
-  idea = pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea (lib.attrValues cfg.plugins);
+  idea = addPlugins pkgs.intellij-idea (lib.attrValues cfg.plugins);
 
   # NOTE: the jetbrains packages already do similar wrapping internally.
   ideaWrapped = pkgs.symlinkJoin {
@@ -79,7 +80,7 @@ in
   options.custom.editors.idea = {
     enable = mkEnableOption "Enable Intellij IDEA";
     plugins = lib.mkOption {
-      type = lib.types.attrsOf (jetbrainsPluginType pkgs.jetbrains.idea);
+      type = lib.types.attrsOf (jetbrainsPluginType pkgs.intellij-idea);
       default = { };
       description = "Plugins to include with Intellij IDEA.";
     };

@@ -1,11 +1,11 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   custom = {
     editors.vscode = true;
     editors.idea.enable = true;
     gnome.favorites = lib.mkAfter [
       "org.prismlauncher.PrismLauncher.desktop"
-      "idea.desktop"
+      pkgs.intellij-idea.desktopItem.name
     ];
   };
 
