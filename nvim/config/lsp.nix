@@ -1,8 +1,10 @@
 { self, pkgs, ... }:
 {
-  plugins.lsp = {
-    enable = true;
-    inlayHints = true;
+  # nvim-lspconfig has sane defaults for many LSP servers
+  plugins.lspconfig.enable = true;
+
+  lsp = {
+    inlayHints.enable = true;
 
     servers = {
       bashls.enable = true;
@@ -13,7 +15,7 @@
       nixd = {
         # Nix LS
         enable = true;
-        settings =
+        config.settings =
           let
             # The wrapper curries `_nixd-expr.nix` with the `self` and `system` args
             # This makes `init.lua` a bit DRYer and more readable
@@ -46,17 +48,24 @@
           };
       };
       hls.enable = true; # Haskell LS
-      hls.installGhc = true;
       ccls.enable = true; # C/C++/ObjC LS
       #cangd.enable = true; # LLVM C/C++ LS
       gopls.enable = true; # Golang LS
       ts_ls.enable = true; # TypeScript & JavaScript
       zls.enable = true; # Zig
-      rust_analyzer = {
-        enable = true;
-        installCargo = true;
-        installRustc = true;
-      };
+      rust_analyzer.enable = true;
     };
   };
+
+  extraPackagesAfter = [
+    # Needed by rust_analyzer
+    # TODO: use upstream rust_analyzer.cargo.enable options:
+    # https://github.com/nix-community/nixvim/pull/4571
+    pkgs.cargo
+    pkgs.rustc
+
+    # Needed by hls
+    # TODO: migrate legacy hls.installGhc option upstream
+    pkgs.ghc
+  ];
 }
