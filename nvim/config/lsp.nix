@@ -9,15 +9,7 @@
       jdtls.enable = true; # Java LSP from Eclipse
       lua_ls.enable = true;
       ruff.enable = true; # Python linter
-      # Python type-checker
-      pyright = {
-        enable = true;
-        settings = {
-          # Disable ruff conflicts:
-          pyright.disableOrganizeImports = true;
-          python.analysis.ignore = [ "*" ];
-        };
-      };
+      ty.enable = true; # Python type-checker
       nixd = {
         # Nix LS
         enable = true;
