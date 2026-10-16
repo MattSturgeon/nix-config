@@ -28,6 +28,7 @@
     ./sensors.nix
 
     ./minecraft.nix
+    ./ollama.nix
   ];
 
   # TODO: switch to `hardware.fancontrol` or `services.pid-fan-controller`,
