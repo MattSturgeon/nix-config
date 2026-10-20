@@ -21,7 +21,55 @@ jobs:
           app-id: ${{ vars.MS_APP_ID }}
           private-key: ${{ secrets.MS_APP_PRIVATE_KEY }}
       - name: Enable Auto Merge (rebase)
-        uses: alexwilson/enable-github-automerge-action@main
+        uses: actions/github-script@v9
+        env:
+          PR_NODE_ID: ${{ github.event.pull_request.node_id }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          MERGE_METHOD: REBASE
         with:
           github-token: ${{ steps.app.outputs.token }}
-          merge-method: REBASE
+          script: |
+            const response = await github.graphql(
+              `mutation ($pullRequestId: ID!, $expectedHeadOid: GitObjectID!, $mergeMethod: PullRequestMergeMethod!) {
+                enablePullRequestAutoMerge(input: {
+                  pullRequestId: $pullRequestId,
+                  expectedHeadOid: $expectedHeadOid,
+                  mergeMethod: $mergeMethod,
+                }) {
+                  clientMutationId
+                  pullRequest {
+                    id
+                    number
+                    state
+                    autoMergeRequest {
+                      enabledAt
+                      enabledBy {login}
+                    }
+                  }
+                }
+              }`,
+              {
+                pullRequestId: process.env.PR_NODE_ID,
+                expectedHeadOid: process.env.PR_HEAD_SHA,
+                mergeMethod: process.env.MERGE_METHOD.toUpperCase(),
+              },
+            )
+
+            const enabledAt = response?.enablePullRequestAutoMerge?.pullRequest?.autoMergeRequest?.enabledAt
+            const enabledBy = response?.enablePullRequestAutoMerge?.pullRequest?.autoMergeRequest?.enabledBy?.login
+            const prNumber = response?.enablePullRequestAutoMerge?.pullRequest?.number
+            const state = response?.enablePullRequestAutoMerge?.pullRequest?.state
+
+            if (state === "CLOSED") {
+              core.info(`PR #${prNumber} was closed`)
+              return
+            }
+            if (state === "MERGED") {
+              core.info(`PR #${prNumber} is merged`)
+              return
+            }
+            if (enabledAt && enabledBy) {
+              core.info(`Enabled Auto Merge for #${prNumber} as ${enabledBy} at ${enabledAt}`)
+              return
+            }
+            core.setFailed(`Failed to enable Auto Merge. Response: ${JSON.stringify(response)}`)
