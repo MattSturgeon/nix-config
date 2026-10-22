@@ -42,20 +42,9 @@ in
       steam-run
       inputs.umu-launcher.packages.${system}.default
       mcpelauncher-ui-qt
-      nexusmods-app-unfree
       mangohud
       goverlay # mangohud config GUI
       packwiz # Manage MC modpacks
     ];
-
-    nixpkgs.config = {
-      allowInsecurePredicate =
-        pkg:
-        lib.elem (lib.getName pkg) [
-          # NexusMods.App has been abandoned
-          # TODO: Drop from Nixpkgs & my config
-          "nexusmods-app-unfree"
-        ];
-    };
   };
 }
