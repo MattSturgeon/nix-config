@@ -42,7 +42,6 @@ in
     };
 
     boot.initrd.systemd = mkIf cfg.wipeOnBoot {
-      enable = true;
       services.reset-root = {
         description = "Backup & reset root subvolume";
         wantedBy = [

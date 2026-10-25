@@ -19,7 +19,6 @@ in
         theme = "breeze";
       };
       kernelParams = [ "quiet" ];
-      initrd.systemd.enable = true;
     };
   };
 }
