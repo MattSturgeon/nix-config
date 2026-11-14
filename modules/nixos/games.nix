@@ -39,6 +39,7 @@ in
     programs.gamemode.enable = true;
 
     environment.systemPackages = with pkgs; [
+      amethyst-mod-manager-unfree
       heroic
       prismlauncher
       steam-run
