@@ -1,8 +1,4 @@
-{
-  inputs,
-  lib,
-  ...
-}:
+{ inputs, ... }:
 {
   custom = {
     boot.splash = true;
@@ -13,9 +9,6 @@
     flatpak.enable = true;
     gaming.enable = true;
   };
-
-  # Skip installing Steam for now
-  programs.steam.enable = lib.mkForce false;
 
   imports = with inputs.hardware.nixosModules; [
     # Hardware
