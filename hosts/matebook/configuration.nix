@@ -1,4 +1,16 @@
 { inputs, ... }:
+let
+  hardware = {
+    # This is a Huawei MACH-WX9, but MACHC-WA is almost identical
+    inherit (inputs.hardware.nixosModules)
+      huawei-machc-wa
+      common-hidpi
+      ;
+    # huawei-machc-wa assumes newer comet-lake CPUs,
+    # also import config for our older kaby-lake CPU
+    kaby-lake = inputs.hardware + "/common/cpu/intel/kaby-lake";
+  };
+in
 {
   custom = {
     boot.splash = true;
@@ -10,16 +22,7 @@
     gaming.enable = true;
   };
 
-  imports = with inputs.hardware.nixosModules; [
-    # Hardware
-    # intelBusId = "PCI:0:2:0"; nvidiaBusId = "PCI:1:0:0";
-    common-cpu-intel
-    # NOTE: this module is deprecated, planned to be upstreamed to nixpkgs
-    # See https://github.com/NixOS/nixos-hardware/issues/992
-    "${inputs.hardware}/common/cpu/intel/kaby-lake"
-    common-gpu-nvidia-disable # Disable MX150 for better battery
-    common-pc-laptop-ssd
-    common-hidpi
+  imports = builtins.attrValues hardware ++ [
     ./hardware-configuration.nix
     ./disks.nix
   ];
