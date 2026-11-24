@@ -18,7 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Install nix
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@v32
       - name: Generate Nix Matrix
         id: set-matrix
         run: |
@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Install nix
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@v32
       - name: Run flake checker
         uses: DeterminateSystems/flake-checker-action@main
 
@@ -54,7 +54,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Install nix
-        uses: cachix/install-nix-action@v31
+        uses: cachix/install-nix-action@v32
       - name: Setup nix cache
         uses: cachix/cachix-action@v17
         with:
