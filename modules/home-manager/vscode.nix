@@ -102,6 +102,7 @@ in
           # ms-python.python # Python support # FIXME https://github.com/NixOS/nixpkgs/issues/298110
           bmalehorn.vscode-fish # Fish support
           waderyan.gitblame # Show blame info
+          ms-vscode.live-server # Convenient HTTP live server
           davidanson.vscode-markdownlint # Markdown language support (preview is already builtin to vscode)
           bierner.emojisense # 😄 emoji completion
           bierner.markdown-emoji # Support :emoji: syntax in markdown
