@@ -16,6 +16,7 @@ in
   config = mkIf cfg.vscode {
     programs.vscode = {
       enable = true;
+      mutableExtensionsDir = false;
 
       profiles.default = {
         enableUpdateCheck = false;
