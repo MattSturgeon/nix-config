@@ -89,6 +89,38 @@ in
           ];
         };
 
+        keybindings = [
+          # Move up/down/left/right between views
+          {
+            command = "workbench.action.navigateUp";
+            key = "ctrl+k";
+          }
+          {
+            command = "workbench.action.navigateDown";
+            key = "ctrl+j";
+          }
+          {
+            command = "workbench.action.navigateLeft";
+            key = "ctrl+h";
+          }
+          {
+            command = "workbench.action.navigateRight";
+            key = "ctrl+l";
+          }
+
+          # Move left/right through bottom-panel tabs when panel is focused
+          {
+            command = "workbench.action.previousPanelView";
+            key = "ctrl+h";
+            when = "panelFocus";
+          }
+          {
+            command = "workbench.action.nextPanelView";
+            key = "ctrl+l";
+            when = "panelFocus";
+          }
+        ];
+
         extensions = with pkgs.vscode-extensions; [
           # General
           catppuccin.catppuccin-vsc
