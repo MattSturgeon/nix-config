@@ -28,7 +28,7 @@ in
           "workbench.sideBar.location" = "right";
           "workbench.editor.closeOnFileDelete" = true;
           "workbench.editor.enablePreview" = false;
-          "workbench.editor.untitled.hint" = "hidden";
+          "workbench.editor.empty.hint" = "hidden";
           "workbench.iconTheme" = "vs-minimal";
           "workbench.startupEditor" = "none";
           "workbench.statusBar.visible" = true;
