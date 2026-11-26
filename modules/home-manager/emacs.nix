@@ -71,7 +71,7 @@ in
             else
               # Install Doom Emacs
               ${lib.getExe pkgs.gitMinimal} clone --depth 1 https://github.com/doomemacs/doomemacs "$emacs"
-              yes | "$emacs"/bin/doom install
+              "$emacs"/bin/doom install -!
             fi
 
 
@@ -82,7 +82,7 @@ in
             fi
 
             # Sync
-            "$emacs"/bin/doom sync
+            "$emacs"/bin/doom sync -b
 
           }
           setupDoomEmacs
