@@ -6,6 +6,22 @@
 }:
 let
   cfg = config.custom.editors;
+
+  # Doom Emacs dependencies
+  # https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#nixos
+  doomDependencies = with pkgs; [
+    git
+    ripgrep
+    coreutils
+    fd
+    clang
+  ];
+
+  doomVars = {
+    emacs = "${config.xdg.configHome}/emacs";
+    config = "${config.xdg.configHome}/doom";
+    pathPrefix = lib.makeBinPath ([ config.programs.emacs.package ] ++ doomDependencies);
+  };
 in
 {
   options.custom.editors.emacs = lib.mkOption {
@@ -30,15 +46,7 @@ in
       # extraOptions = [ ];
     };
 
-    home.packages = with pkgs; [
-      # Doom Emacs dependencies
-      # https://github.com/doomemacs/doomemacs/blob/master/docs/getting_started.org#nixos
-      git
-      ripgrep
-      coreutils
-      fd
-      clang
-    ];
+    home.packages = doomDependencies;
 
     home.activation.setupDoomEmacs =
       lib.hm.dag.entryAfter [ "writeBoundary" "linkGeneration" "cleanUp" ]
@@ -47,8 +55,12 @@ in
             log() {
               echo "setupDoomEmacs: $*" >&2
             }
-            local ${lib.toShellVar "emacs" "${config.xdg.configHome}/emacs"}
-            local ${lib.toShellVar "config" "${config.xdg.configHome}/doom"}
+
+            local ${toString (lib.attrNames doomVars)}
+            ${lib.toShellVars doomVars}
+
+            # Activation has a minimal PATH, so temporarily add Doom's dependencies
+            local -x PATH="$pathPrefix:$PATH"
 
             if [ -d "$emacs" ]; then
               # Assert Doom Emacs is installed
