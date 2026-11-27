@@ -11,6 +11,9 @@ let
 
   steam = pkgs.steam.override {
     inherit extraEnv;
+    extraArgs = [
+      "-pipewire" # For remote play screen capture
+    ];
   };
 
   heroic = pkgs.heroic.override {
